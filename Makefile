@@ -99,8 +99,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_assignment2_OBJECTS = assignment2-Assignment2.$(OBJEXT) \
 	assignment2-BaseApplication.$(OBJEXT) \
-	assignment2-GameObject.$(OBJEXT) \
-	assignment2-NetworkWrapper.$(OBJEXT)
+	assignment2-GameObject.$(OBJEXT)
 assignment2_OBJECTS = $(am_assignment2_OBJECTS)
 am__DEPENDENCIES_1 =
 assignment2_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -193,13 +192,13 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/missing aclocal-1.14
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/missing autoconf
-AUTOHEADER = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/missing autoheader
-AUTOMAKE = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/missing automake-1.14
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing automake-1.14
 AWK = gawk
 BULLET_CFLAGS = 
 BULLET_LIBS = 
@@ -238,7 +237,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/missing makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -268,10 +267,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /u/chjk122/Documents/cs354R/Multiplayer_cs354R
-abs_srcdir = /u/chjk122/Documents/cs354R/Multiplayer_cs354R
-abs_top_builddir = /u/chjk122/Documents/cs354R/Multiplayer_cs354R
-abs_top_srcdir = /u/chjk122/Documents/cs354R/Multiplayer_cs354R
+abs_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -303,7 +302,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /u/chjk122/Documents/cs354R/Multiplayer_cs354R/install-sh
+install_sh = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -323,9 +322,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h NetworkWrapper.h CSHostList.h
+noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h 
 assignment2_CPPFLAGS = -I$(top_srcdir)
-assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp NetworkWrapper.cpp 
+assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp
 assignment2_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 assignment2_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 assignment2_LDFLAGS = -lOgreOverlay -lboost_system -lSDL -lSDL_net -lSDL_mixer
@@ -448,7 +447,6 @@ distclean-compile:
 include ./$(DEPDIR)/assignment2-Assignment2.Po
 include ./$(DEPDIR)/assignment2-BaseApplication.Po
 include ./$(DEPDIR)/assignment2-GameObject.Po
-include ./$(DEPDIR)/assignment2-NetworkWrapper.Po
 
 .cpp.o:
 	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -512,20 +510,6 @@ assignment2-GameObject.obj: GameObject.cpp
 #	$(AM_V_CXX)source='GameObject.cpp' object='assignment2-GameObject.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-GameObject.obj `if test -f 'GameObject.cpp'; then $(CYGPATH_W) 'GameObject.cpp'; else $(CYGPATH_W) '$(srcdir)/GameObject.cpp'; fi`
-
-assignment2-NetworkWrapper.o: NetworkWrapper.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-NetworkWrapper.o -MD -MP -MF $(DEPDIR)/assignment2-NetworkWrapper.Tpo -c -o assignment2-NetworkWrapper.o `test -f 'NetworkWrapper.cpp' || echo '$(srcdir)/'`NetworkWrapper.cpp
-	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-NetworkWrapper.Tpo $(DEPDIR)/assignment2-NetworkWrapper.Po
-#	$(AM_V_CXX)source='NetworkWrapper.cpp' object='assignment2-NetworkWrapper.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-NetworkWrapper.o `test -f 'NetworkWrapper.cpp' || echo '$(srcdir)/'`NetworkWrapper.cpp
-
-assignment2-NetworkWrapper.obj: NetworkWrapper.cpp
-	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-NetworkWrapper.obj -MD -MP -MF $(DEPDIR)/assignment2-NetworkWrapper.Tpo -c -o assignment2-NetworkWrapper.obj `if test -f 'NetworkWrapper.cpp'; then $(CYGPATH_W) 'NetworkWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/NetworkWrapper.cpp'; fi`
-	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-NetworkWrapper.Tpo $(DEPDIR)/assignment2-NetworkWrapper.Po
-#	$(AM_V_CXX)source='NetworkWrapper.cpp' object='assignment2-NetworkWrapper.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-NetworkWrapper.obj `if test -f 'NetworkWrapper.cpp'; then $(CYGPATH_W) 'NetworkWrapper.cpp'; else $(CYGPATH_W) '$(srcdir)/NetworkWrapper.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

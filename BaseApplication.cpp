@@ -37,14 +37,7 @@ BaseApplication::BaseApplication(void)
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
-    mOverlaySystem(0),
-    mInfoLabel(0),
-    mEnemyInfo(0),
-    mToDoNextLabel(0),
-    mPower(0),
-    mAngle(0),
-    mHeight(0),
-    mGameState(0)
+    mOverlaySystem(0)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -67,8 +60,6 @@ BaseApplication::~BaseApplication(void)
     windowClosed(mWindow);
     delete mRoot;
     delete mSimulator;
-    if(mGameState <= 1)
-        delete playerClient;
     delete playerHost;
 }
 
@@ -116,70 +107,6 @@ void BaseApplication::createCamera(void)
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // Create a default camera controller
 }
 //---------------------------------------------------------------------------
-void BaseApplication::createGUI(void)
-{
-    mToDoNextLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "infoNext", "Press Enter to select the power", 400);
-    mToDoNextLabel->show();
-    mInfoLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "pointCounter", "Round 1             Points: 0", 400);
-    mInfoLabel->show();
-    if(mGameState > 1)
-    {
-        mEnemyInfo = mTrayMgr->createLabel(OgreBites::TL_TOP, "enemyInfo", "Opponent: Round 1   Points: 0", 400);
-        mEnemyInfo->show();
-    }
-    mPower = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT, "power",   "0           Max Power", 200, 20);
-    mPower->show();
-    mAngle = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT, "angle",   " Left    Center   Right", 200, 20);
-    mAngle->show();
-    mHeight = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT, "height", "Low              High", 200, 20);
-    mHeight->show();
-
-    /************************************select menu Gui ****************************************************/
-
-    // mSingleButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "single", "Single Player");
-    // // mSingleButton->
-    // // Ogre::String str = "Single Player";
-    // mTrayMgr->showCursor();
-    // mTrayMgr->moveWidgetToTray(mSingleButton, OgreBites::TL_CENTER, 0);
-
-     /************************************select menu Gui ****************************************************/
-    mTrayMgr->moveWidgetToTray(mToDoNextLabel, OgreBites::TL_TOP, 0);
-    mTrayMgr->moveWidgetToTray(mInfoLabel, OgreBites::TL_TOP, 0);
-    if(mGameState > 1)
-    {
-        mTrayMgr->moveWidgetToTray(mEnemyInfo, OgreBites::TL_TOP, 0);
-    }
-    mTrayMgr->moveWidgetToTray(mHeight, OgreBites::TL_TOPLEFT, 0);
-    mTrayMgr->moveWidgetToTray(mAngle, OgreBites::TL_TOPLEFT, 0);
-    mTrayMgr->moveWidgetToTray(mPower, OgreBites::TL_TOPLEFT, 0);
-}
-
-void BaseApplication::setupSingleOrMultiGUI(void)
-{
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "select game mode", 220);
-    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "single", "Single-Player", 220);
-    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "multi", "MutiPlayer", 220);
-}
-
-void BaseApplication::setupHostOrJoinGUI(void)
-{
-    mMenuLabel->setCaption("host or join game");
-    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "host", "Host Game", 220);
-    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "join", "Join Game", 220);
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "hostOrJoinBack", "Back", 220);
-}
-
-void BaseApplication::setupHostGUI(void)
-{
-    mMenuLabel->setCaption("searching for client...");
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "cancelHost", "Cancel", 220);
-}
-
-void BaseApplication::setupJoinGUI(void)
-{
-    mMenuLabel->setCaption("searching for host...");
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "cancelJoin", "Cancel", 220);
-}
 
 void BaseApplication::createObjects(void)
 {
@@ -195,14 +122,6 @@ void BaseApplication::createObjects(void)
 
     playerHost = new Player("playerHost", mSceneMgr, mSimulator, playerNode, 0.,ball, Ogre::Vector3(0.,-250.,225.));
     playerHost->create();
-
-    if(mGameState != 1) //if not single player
-    {
-        GhostBall* ghostBall = new GhostBall("ghostBall", mSceneMgr, mSimulator, node, 90., Ogre::Vector3(0.,-240.,-210.));
-        ghostBall->create();
-        playerClient = new Player("playerClient", mSceneMgr, mSimulator, playerNode, 0.,ghostBall, Ogre::Vector3(0.,-250.,-225.));
-        playerClient->create(Ogre::Degree(90), Ogre::Degree(0));
-    }
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -377,11 +296,7 @@ bool BaseApplication::setup(void)
     Mix_PlayMusic(music,-1);
     Mix_Volume(-1, 40);
 
-    mNetworkWrapper = new NetworkWrapper();
-    mTrayMgr->showCursor();
-    setupSingleOrMultiGUI();
-    // createGUI();
-   // createObjects();
+    createObjects();
 
     return true;
 };
@@ -389,20 +304,8 @@ bool BaseApplication::setup(void)
 bool shotTheBall = false;
 bool scored = false;
 int points = 0;
-int enemyPoints = 0;
-int enemyRound = 1;
-int roundNum = 1;
-Ogre::Real power = -1;
-Ogre::Real angle = -1;
-Ogre::Real height = -1;
-bool powerUp = true;
-bool angleUp = true;
-bool heightUp = true;
 bool gameIsOver = false;
-bool enemyFinishedGame = false;
 
-int firstGamePoints = -1;
-bool buttonMade = false;
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
@@ -418,259 +321,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
-    //check if both games are done
-    if(mGameState > 1)
+    if(!gameIsOver)
     {
-        //game is done
-        if(firstGamePoints != -1 && enemyFinishedGame && !buttonMade)
-        {
-            std::string result;
-            if(firstGamePoints > enemyPoints)
-                result = "YOU WON :)";
-            else if(firstGamePoints < enemyPoints)
-                result = "YOU LOST :(";
-            else
-                result = "YOU TIED :|";
-            mTrayMgr->showCursor();
-            mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "TESTEND", "GAME OVER", 220);
-            mButtonGameOver = mTrayMgr->createButton(OgreBites::TL_CENTER, "result", result, 220);
-            buttonMade = true;
-        }
-    }
-
-
-    if(mGameState == 2) //host
-    {
-        // PLAYER HOST SENDING DATA TO CLIENT JOIN
-        Ball* testBall = playerHost->playerBall;
-        Ogre::SceneNode* node = testBall->rootNode;
-        Ogre::Vector3 pos = node->getPosition();
-        mNetworkWrapper->sendData(pos.x, pos.y, pos.z, points, roundNum);
-
-        //PLAYER HOST RECIEVING DATA
-        if(!enemyFinishedGame)
-        {
-            node = playerClient->playerBall->rootNode;
-            pos = node->getPosition();
-            vector<float> *ClientInfo = mNetworkWrapper->receiveData();
-            // for(int i = 0; i < HostInfo->size(); i++)
-            // {
-            //     std::cout << "ClentInfo[" << i << "] = " << (*HostInfo)[i] << std::endl;
-
-            // }
-            playerClient->playerBall->setGhostBallPos(-(*ClientInfo)[0], (*ClientInfo)[1], -(*ClientInfo)[2]);
-            enemyPoints = (*ClientInfo)[3];
-            if((*ClientInfo)[4] == 16)
-            {
-                enemyFinishedGame = true;
-            }
-            else
-                enemyRound = (*ClientInfo)[4];
-            delete ClientInfo;
-
-            std::string label3 = "Opponent: Round: ";
-            std::string label4 = "   Points: ";
-            std::ostringstream eTemp1;
-            std::ostringstream eTemp2;
-            eTemp1<<enemyRound;
-            eTemp2<<enemyPoints;
-            std::string ints1=eTemp1.str();
-            std::string ints2=eTemp2.str();
-            mEnemyInfo->setCaption(label3 + ints1 + label4 + ints2);
-        }
-    }
-    if(mGameState == 3) //client
-    {
-        //PLAYER CLIENT RECIEVING DATA
-        Ogre::SceneNode* node;
-        Ogre::Vector3 pos;
-        if(!enemyFinishedGame)
-        {
-            node = playerClient->playerBall->rootNode;
-            pos = node->getPosition();
-            vector<float> *HostInfo = mNetworkWrapper->receiveData();
-            // for(int i = 0; i < HostInfo->size(); i++)
-            // {
-            //     std::cout << "HostInfo[" << i << "] = " << (*HostInfo)[i] << std::endl;
-
-            // }
-            playerClient->playerBall->setGhostBallPos(-(*HostInfo)[0], (*HostInfo)[1], -(*HostInfo)[2]);
-            enemyPoints = (*HostInfo)[3];
-            if((*HostInfo)[4] == 16)
-            {
-                enemyFinishedGame = true;
-            }
-            else
-                enemyRound = (*HostInfo)[4];
-            delete HostInfo;
-
-            std::string label3 = "Opponent: Round: ";
-            std::string label4 = "   Points: ";
-            std::ostringstream eTemp1;
-            std::ostringstream eTemp2;
-            eTemp1<<enemyRound;
-            eTemp2<<enemyPoints;
-            std::string ints1=eTemp1.str();
-            std::string ints2=eTemp2.str();
-            mEnemyInfo->setCaption(label3 + ints1 + label4 + ints2);
-        }
-
-        // PLAYER CLIENT SENDING DATA TO CLIENT JOIN
-        Ball* testBall = playerHost->playerBall;
-        node = testBall->rootNode;
-        pos = node->getPosition();
-        mNetworkWrapper->sendData(pos.x, pos.y, pos.z, points, roundNum);
-    }
-
-
-
-    if(mGameState != 0)
-    {
-        if(!gameIsOver)
-        {
-            if(mGameState != 1)
-            {
-                // if(mGameState == 2) //host
-                // {
-                //     // PLAYER HOST SENDING DATA TO CLIENT JOIN
-                //     Ball* testBall = playerHost->playerBall;
-                //     Ogre::SceneNode* node = testBall->rootNode;
-                //     Ogre::Vector3 pos = node->getPosition();
-                //     mNetworkWrapper->sendData(pos.x, pos.y, pos.z, points, roundNum);
-
-                //     //PLAYER HOST RECIEVING DATA
-                //     if(!enemyFinishedGame)
-                //     {
-                //         node = playerClient->playerBall->rootNode;
-                //         pos = node->getPosition();
-                //         vector<float> *ClientInfo = mNetworkWrapper->receiveData();
-                //         // for(int i = 0; i < HostInfo->size(); i++)
-                //         // {
-                //         //     std::cout << "ClentInfo[" << i << "] = " << (*HostInfo)[i] << std::endl;
-
-                //         // }
-                //         playerClient->playerBall->setGhostBallPos(-(*ClientInfo)[0], (*ClientInfo)[1], -(*ClientInfo)[2]);
-                //         enemyPoints = (*ClientInfo)[3];
-                //         if((*ClientInfo)[4] == 16)
-                //         {
-                //             enemyFinishedGame = true;
-                //         }
-                //         else
-                //             enemyRound = (*ClientInfo)[4];
-                //         delete ClientInfo;
-                //     }
-                // }
-                // if(mGameState == 3) //client
-                // {
-                //     //PLAYER CLIENT RECIEVING DATA
-                //     Ogre::SceneNode* node;
-                //     Ogre::Vector3 pos;
-                //     if(!enemyFinishedGame)
-                //     {
-                //         node = playerClient->playerBall->rootNode;
-                //         pos = node->getPosition();
-                //         vector<float> *HostInfo = mNetworkWrapper->receiveData();
-                //         // for(int i = 0; i < HostInfo->size(); i++)
-                //         // {
-                //         //     std::cout << "HostInfo[" << i << "] = " << (*HostInfo)[i] << std::endl;
-
-                //         // }
-                //         playerClient->playerBall->setGhostBallPos(-(*HostInfo)[0], (*HostInfo)[1], -(*HostInfo)[2]);
-                //         enemyPoints = (*HostInfo)[3];
-                //         if((*HostInfo)[4] == 16)
-                //         {
-                //             enemyFinishedGame = true;
-                //         }
-                //         else
-                //             enemyRound = (*HostInfo)[4];
-                //         delete HostInfo;
-                //     }
-
-                //     // PLAYER CLIENT SENDING DATA TO CLIENT JOIN
-                //     Ball* testBall = playerHost->playerBall;
-                //     node = testBall->rootNode;
-                //     pos = node->getPosition();
-                //     mNetworkWrapper->sendData(pos.x, pos.y, pos.z, points, roundNum);
-                // }
-            }
-            if(!shotTheBall)
-            {
-                if(power == -1)
-                {
-                    if(powerUp)
-                    {
-                        mPower->setProgress(mPower->getProgress() + progressStepValue);
-                        if(mPower->getProgress() >= 1)
-                            powerUp = false;
-                    }
-                    else
-                    {
-                        mPower->setProgress(mPower->getProgress() - progressStepValue);
-                        if(mPower->getProgress() <= .1)
-                            powerUp = true;
-                    }
-                }
-                else if(angle == -1)
-                {
-                    if(angleUp)
-                    {
-                        mAngle->setProgress(mAngle->getProgress() + progressStepValue);
-                        if(mAngle->getProgress() >= 1)
-                            angleUp = false;
-                    }
-                    else
-                    {
-                        mAngle->setProgress(mAngle->getProgress() - progressStepValue);
-                        if(mAngle->getProgress() <= .1)
-                            angleUp = true;
-                    }
-                }
-                else if(height == -1)
-                {
-                    if(heightUp)
-                    {
-                        mHeight->setProgress(mHeight->getProgress() + progressStepValue);
-                        if(mHeight->getProgress() >= 1)
-                            heightUp = false;
-                    }
-                    else
-                    {
-                        mHeight->setProgress(mHeight->getProgress() - progressStepValue);
-                        if(mHeight->getProgress() <= .1)
-                            heightUp = true;
-                    }
-                }
-            }
-
-            bool scoredNow = mSimulator->stepSimulation(scored, evt.timeSinceLastFrame, music2);
-            if(scoredNow && !scored)
-            {   
-                Mix_Chunk* chunk;
-                chunk = Mix_LoadWAV("196461__paulw2k__football-crowd-goal.wav");
-                if(Mix_PlayChannel( -1, chunk, 0 ) == -1)
-                {
-                    printf("Mix_PlayChannel: %s\n",Mix_GetError());
-                }
-                Mix_Volume(-1, 20);
-                scored = scoredNow;
-                points++;
-            }
-            std::string label1 = "Round: ";
-            std::string label2 = "              Points: ";
-            std::string ints1;
-            std::string ints2;
-            std::ostringstream temp1;
-            std::ostringstream temp2;
-            temp1<<roundNum;
-            temp2<<points;
-            ints1=temp1.str();
-            ints2=temp2.str();
-            mInfoLabel->setCaption(label1 + ints1 + label2 + ints2);
-        }
-        else
-        {
-            mSimulator->stepSimulation(scored, evt.timeSinceLastFrame, music2);
-        }
+        mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
     }
 
     mTrayMgr->frameRenderingQueued(evt);
@@ -749,115 +402,13 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
         mDetailsPanel->setParamValue(9, newVal);
     }
-    else if(arg.key == OIS::KC_SPACE){
-        if(height != -1 && shotTheBall && !gameIsOver)
-        {
-            shotTheBall = false;
-            scored = false;
-            power = -1;
-            height = -1;
-            angle = -1;
-            mHeight->show();
-            mAngle->show();
-            mPower->show();
-            mTrayMgr->moveWidgetToTray(mHeight, OgreBites::TL_TOPLEFT, 0);
-            mTrayMgr->moveWidgetToTray(mAngle, OgreBites::TL_TOPLEFT, 0);
-            mTrayMgr->moveWidgetToTray(mPower, OgreBites::TL_TOPLEFT, 0);
-            mToDoNextLabel->setCaption("Press Enter to select the power");
-            if(roundNum > 15)
-            {
+    else if(arg.key == OIS::KC_SPACE)
+    {
 
-            }
-            if(roundNum == 15)
-            {
-                mToDoNextLabel->setCaption("Press M to replay or ESC to quit");
-                std::string label1;
-                if(points == 0 )
-                {
-                    label1 = "You're garbage... press ESC ";
-                }
-                else if(points <= 4)
-                {
-                    label1 = "You're almost garbage ";
-                }
-                else if(points <= 8)
-                {
-                    label1 = "you're average ";
-                }
-                else if(points <= 9)
-                {
-                    label1 = "You almost won ";
-                }
-                else if(points <= 12)
-                {
-                    label1 = "You won";
-                }
-                else if(points <= 14)
-                {
-                    label1 = "Almost scored them all :(";
-                }
-                else if(points <= 15)
-                {
-                    label1 = "PERFECT GAME OMG ";
-                }
-                std::string label2 = "    Points: ";
-                std::string ints2;
-                std::ostringstream temp2;
-                temp2<<points;
-                ints2=temp2.str();
-                mInfoLabel->setCaption(label1 + label2 + ints2);
-                gameIsOver = true;
-                if(firstGamePoints == -1)
-                    firstGamePoints = points;
-                roundNum++;
-            }
-            else
-            {
-                roundNum++;
-                playerHost->playerBall = mSimulator->reload();
-            }
-        }
     }
-    else if(arg.key == OIS::KC_RETURN){
-        if(mGameState != 0)
-        {
-            if(!gameIsOver)
-            {
-                if(power == -1)
-                {
-                    //scale the range of [.1, 1] to [0, 1]
-                    power = (mPower->getProgress() - .1) * (1/.9);
-                    mToDoNextLabel->setCaption("Press Enter to select the angle");
-                }
-                else if(angle == -1)
-                {
-                    angle = (mAngle->getProgress() - .1) * (1/.9);
-                    mToDoNextLabel->setCaption("Press Enter to select the height");
-                }
-                else if(height == -1)
-                {
-                    height = (mHeight->getProgress() - .1) * (1/.9);
-                    mSimulator->kickBall(-15000 * power, angle - .5, height);
-                    Mix_Chunk* chunk;
-                    chunk = Mix_LoadWAV("Ball_Single_Kick_Sound_Effect.wav");
-                    if(Mix_PlayChannel( 0, chunk, 0 ) == -1)
-                    {
-                        printf("Mix_PlayChannel: %s\n",Mix_GetError());
-                    }
-                    shotTheBall = true;
-                    mHeight->setProgress(.1);
-                    mAngle->setProgress(.1);
-                    mPower->setProgress(.1);
-                    mHeight->hide();
-                    mAngle->hide();
-                    mPower->hide();
-                    mTrayMgr->removeWidgetFromTray(mHeight);
-                    mTrayMgr->removeWidgetFromTray(mAngle);
-                    mTrayMgr->removeWidgetFromTray(mPower);
-                    mToDoNextLabel->setCaption("Press Space to go to the next round");
-                }
-            }
-        }
+    else if(arg.key == OIS::KC_RETURN)
+    {
+
     }
 
     else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
@@ -882,17 +433,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 
         mCamera->setPolygonMode(pm);
         mDetailsPanel->setParamValue(10, newVal);
-    }
-    else if(arg.key == OIS::KC_M)   // refresh all textures
-    {
-        if(gameIsOver)
-        {
-            gameIsOver = false;
-            roundNum = 1;
-            points = 0;
-            mToDoNextLabel->setCaption("Press Enter to select the power");
-            playerHost->playerBall = mSimulator->reload();
-        }
     }
     else if(arg.key == OIS::KC_F5)   // refresh all textures
     {
@@ -927,173 +467,40 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             playingMusic = true;
         }
     }
-    else if(mGameState != 0)
-        mCameraMan->injectKeyDown(arg);
+    mCameraMan->injectKeyDown(arg);
     return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
-    if(mGameState != 0)
-        mCameraMan->injectKeyUp(arg);
+    mCameraMan->injectKeyUp(arg);
     return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
-    if(mGameState != 0)
-        mCameraMan->injectMouseMove(arg);
+    mCameraMan->injectMouseMove(arg);
     return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
-    if(mGameState != 0)
-        mCameraMan->injectMouseDown(arg, id);
+    mCameraMan->injectMouseDown(arg, id);
     return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id)
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
-    if(mGameState != 0)
-        mCameraMan->injectMouseUp(arg, id);
+    mCameraMan->injectMouseUp(arg, id);
     return true;
 }
 void BaseApplication::buttonHit(OgreBites::Button* button)
 {
-    if(button->getName().compare("single") == 0 )
-    {
-        mTrayMgr->destroyWidget("single");
-        mTrayMgr->destroyWidget("multi");
-        mTrayMgr->destroyWidget("menuLabel");
-        mGameState = 1; // singleMode
-        createObjects();
-        createGUI();
-        mTrayMgr->hideCursor();
-        /**************STARTS THE GAME FOR SINGLE PLAYER**************************/
-    }
-    else if(button->getName().compare("multi") == 0 )
-    {
-        mTrayMgr->destroyWidget("single");
-        mTrayMgr->destroyWidget("multi");
-        setupHostOrJoinGUI();
-        // vector<float>* result = mNetworkWrapper->decode("x:1.534y:532.3245z:-456.34points:2rounds:3");
-        // for(int i = 0; i < result->size(); i++)
-        // {
-        //     std::cout << "result[" << i << "] = " << (*result)[i] << std::endl;
-        // }
-        // delete result;
-    }
-    else if(button->getName().compare("host") == 0 )
-    {
-        mTrayMgr->destroyWidget("host");
-        mTrayMgr->destroyWidget("join");
-        mTrayMgr->destroyWidget("hostOrJoinBack");
-        setupHostGUI();
 
-        //search for client
-        mNetworkWrapper->initNetwork(true);
-        bool foundClient = mNetworkWrapper->findClient();
-        if(foundClient)
-        {
-            mTrayMgr->destroyWidget("cancelHost");
-            mTrayMgr->destroyWidget("menuLabel");
-            mGameState = 2; // multiplayer host
-            createObjects();
-            createGUI();
-            mTrayMgr->hideCursor();
-            /**************STARTS THE GAME FOR HOST**************************/
-        }
-        else
-        {
-            mNetworkWrapper->closeSocket();
-            delete mNetworkWrapper;
-            mNetworkWrapper = new NetworkWrapper();
-            mMenuLabel->setCaption("Failed to find Client");
-
-        }
-    }
-    else if(button->getName().compare("join") == 0 )
-    {
-        mTrayMgr->destroyWidget("host");
-        mTrayMgr->destroyWidget("join");
-        mTrayMgr->destroyWidget("hostOrJoinBack");
-        setupJoinGUI();
-
-        //search for server
-        mNetworkWrapper->initNetwork(false);
-        bool foundServer = mNetworkWrapper->findServer();
-        if(foundServer)
-        {
-            mTrayMgr->destroyWidget("cancelJoin");
-            mTrayMgr->destroyWidget("menuLabel");
-            mGameState = 3; // multiplayer client
-            createObjects();
-            createGUI();
-            mTrayMgr->hideCursor();
-            /**************STARTS THE GAME FOR CLIENT**************************/
-        }
-        else
-        {
-            mNetworkWrapper->closeSocket();
-            delete mNetworkWrapper;
-            mNetworkWrapper = new NetworkWrapper();
-            mMenuLabel->setCaption("Failed to find server");
-
-        }
-    }
-    else if(button->getName().compare("hostOrJoinBack") == 0 )
-    {
-
-        mTrayMgr->destroyWidget("host");
-        mTrayMgr->destroyWidget("join");
-        mTrayMgr->destroyWidget("hostOrJoinBack");
-        mTrayMgr->destroyWidget("menuLabel");
-        setupSingleOrMultiGUI();
-    }
-    else if(button->getName().compare("cancelHost") == 0 )
-    {
-        mNetworkWrapper->cancelSearch(); // might "break" the code
-        mTrayMgr->destroyWidget("cancelHost");
-        setupHostOrJoinGUI();
-    }
-    else if(button->getName().compare("cancelJoin") == 0 )
-    {
-        //add netowrking
-        mTrayMgr->destroyWidget("cancelJoin");
-        setupHostOrJoinGUI();
-    }
-    else if(button->getName().compare("result") == 0 )
-    {
-        //add netowrking
-        mTrayMgr->destroyWidget("result");
-        mTrayMgr->destroyWidget("TESTEND");
-        mTrayMgr->hideCursor();
-    }
 }
-
-// void BaseApplication::setupHostOrJoinGUI(void)
-// {
-//     mMenuLabel->setCaption("host or join game");
-//     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "host", "Host Game", 220);
-//     mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "join", "Join Game", 220);
-//     mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "hostOrJoinBack", "Back", 220);
-// }
-
-// void BaseApplication::setupHostGUI(void)
-// {
-//     mMenuLabel->setCaption("searching for client...");
-//     mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "cancelHost", "Cancel", 220);
-// }
-
-// void BaseApplication::setupJoinGUI(void)
-// {
-//     mMenuLabel->setCaption("searching for host...");
-//     mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "cancelJoin", "Cancel", 220);
-// }
 //---------------------------------------------------------------------------
 // Adjust mouse clipping area
 void BaseApplication::windowResized(Ogre::RenderWindow* rw)

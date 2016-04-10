@@ -144,7 +144,7 @@ public:
 	~Simulator();
 	void addObject(GameObject* o);
 	bool removeObject(GameObject* o);
-	bool stepSimulation(bool scored, const Ogre::Real elapsedTime, Mix_Music* music,
+	bool stepSimulation(const Ogre::Real elapsedTime, Mix_Music* music,
 	int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f);
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 	void kickBall(btScalar power, btScalar angle, btScalar height);

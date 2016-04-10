@@ -370,7 +370,7 @@ bool Simulator::removeObject (GameObject* o)
 
 int playedSound = 0;
 
-bool Simulator::stepSimulation (bool scored, const Ogre::Real elapsedTime, Mix_Music* music,
+bool Simulator::stepSimulation (const Ogre::Real elapsedTime, Mix_Music* music,
 								int maxSubSteps, 
 								const Ogre::Real fixedTimestep
 								)

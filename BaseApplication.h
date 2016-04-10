@@ -28,7 +28,6 @@ http://www.ogre3d.org/wiki/
 #include <OgreConfigFile.h>
 #include <btBulletDynamicsCommon.h>
 #include "GameObject.h"
-#include "NetworkWrapper.h"
 #include <sstream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
@@ -89,12 +88,6 @@ protected:
     virtual bool configure(void);
     virtual void chooseSceneManager(void);
     virtual void createCamera(void);
-    virtual void createGUI(void);
-
-    virtual void setupSingleOrMultiGUI(void);
-    virtual void setupHostOrJoinGUI(void);
-    virtual void setupHostGUI(void);
-    virtual void setupJoinGUI(void);
 
     virtual void createObjects(void);
     virtual void createFrameListener(void);
@@ -132,20 +125,6 @@ protected:
     OgreBites::SdkTrayManager*	mTrayMgr;
     OgreBites::SdkCameraMan*    mCameraMan;     	// Basic camera controller
     OgreBites::ParamsPanel*     mDetailsPanel;   	// Sample details panel
-    OgreBites::Label*           mInfoLabel;
-    OgreBites::Label*           mToDoNextLabel;
-    OgreBites::ProgressBar*     mPower;
-    OgreBites::ProgressBar*     mAngle;
-    OgreBites::ProgressBar*     mHeight;
-
-    OgreBites::Label*           mMenuLabel;
-    OgreBites::Button*          mButton1;
-    OgreBites::Button*          mButton2;
-    OgreBites::Button*          mButtonBack;
-
-    OgreBites::Button*          mButtonGameOver;
-
-    OgreBites::Label*           mEnemyInfo;
     
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
@@ -158,10 +137,7 @@ protected:
     Mix_Music*                  music;
     Mix_Music*                  music2;
 
-    NetworkWrapper*             mNetworkWrapper;
-
     Player*                     playerHost;
-    Player*                     playerClient;
 
     Ogre::Real                  mGameState;
 
