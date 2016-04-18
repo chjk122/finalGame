@@ -227,7 +227,6 @@ void Wall::create()
     entity->setCastShadows(false);
 }
 
-
 Goal::Goal(Ogre::String n,
     Ogre::SceneManager* mgr,
     Simulator* sim,
@@ -267,6 +266,9 @@ void Goal::create()
     this->xTrans = -200 + (value%5)*100;
     this->yTrans = 200 - (value/5)*100;
         goal.setOrigin(btVector3(this->xTrans, this->yTrans, distFromCenter -10 +1.6));
+
+
+
     inertia = btVector3(0,0,0);
 
     // btScalar x1(xLength/(2.));
@@ -318,7 +320,226 @@ bool Goal::ballScored(Ogre::Vector3 pos)
 	}
 }
 
+/*--------------------------------------Tile ------------------------------------------*/
+Tile::Tile(Ogre::String n,
+    Ogre::SceneManager* mgr,
+    Simulator* sim,
+    Ogre::SceneNode* node,
+    btScalar m, double x, double z, Ogre::Vector3 pos, Ogre::Vector3 norm, int dist):
+    GameObject(n,mgr,sim,node,m),
+    xLength(x), zLength(z), position(pos), normal(norm), distFromCenter(dist)
+{
 
+}
+Tile::~Tile()
+{
+
+}
+
+void Tile::create()
+{
+	Ogre::Plane plane(normal, +10);
+
+    Ogre::Vector3 up = Ogre::Vector3::UNIT_Z;
+    Ogre::MeshManager::getSingleton().createPlane(name, 
+        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
+        xLength,zLength,20,20,true,1,5,5,up);
+
+    btTransform tile;
+    tile.setIdentity();
+    // if(norm.x < 0 || norm.y < 0 || norm.z < 0)  //roof, posZ, posX
+    //     goal.setOrigin(btVector3((distFromCenter*norm.x)+(5*norm.x), (distFromCenter*norm.y) - (5*norm.y) + 5, (distFromCenter*norm.z) - (norm.z *5)));
+    // else
+    // double xTrans;
+    // double yTrans;
+    // srand(static_cast<unsigned int>(time(0)));
+    // int value = 22; 
+    // while(value == 22)
+    // {
+    // 	value =(int)(rand()%25);
+    // }
+    // this->xTrans = -200 + (value%5)*100;
+    // this->yTrans = 200 - (value/5)*100;
+    tile.setOrigin(btVector3(position.x, position.y, position.z));
+    inertia = btVector3(0,0,0);
+
+    // btScalar x1(xLength/(2.));
+    // btScalar y1(yLength/(2.));
+    // btScalar z1(10.);
+    btScalar x1(xLength/2.);
+    btScalar y1(10.);
+    btScalar z1(zLength/2.);
+
+    shape = new btBoxShape(btVector3(x1, y1, z1));
+    motionState = new btDefaultMotionState(tile);
+    shape->calculateLocalInertia(mass, inertia);
+
+    btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
+    body = new btRigidBody(groundRBInfo);
+    body->setRestitution(.5);
+    // body->setUserPointer(rootNode);
+
+
+	Ogre::Entity* entity = sceneMgr->createEntity(name); 
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+    rootNode->attachObject(entity);
+    //rootNode->translate(Ogre::Vector3(xTrans,yTrans,0));
+    entity->setMaterialName("Examples/GrassFloor"); 
+    entity->setCastShadows(false);
+
+    body->setUserPointer(rootNode);
+    simulator->addObject(this);
+}
+/*------------------------------------PathTile ------------------------------------------*/
+PathTile::PathTile(Ogre::String n,
+    Ogre::SceneManager* mgr,
+    Simulator* sim,
+    Ogre::SceneNode* node,
+    btScalar m, double x, double z, Ogre::Vector3 pos, Ogre::Vector3 norm, int dist):
+    Tile(n,mgr,sim,node,m, x, z, pos, norm,  dist)
+{
+
+}
+PathTile::~PathTile()
+{
+
+}
+
+void PathTile::create()
+{
+	Ogre::Plane plane(normal, +10);
+
+    Ogre::Vector3 up = Ogre::Vector3::UNIT_Z;
+    Ogre::MeshManager::getSingleton().createPlane(name, 
+        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
+        xLength,zLength,20,20,true,1,5,5,up);
+
+    btTransform tile;
+    tile.setIdentity();
+    // if(norm.x < 0 || norm.y < 0 || norm.z < 0)  //roof, posZ, posX
+    //     goal.setOrigin(btVector3((distFromCenter*norm.x)+(5*norm.x), (distFromCenter*norm.y) - (5*norm.y) + 5, (distFromCenter*norm.z) - (norm.z *5)));
+    // else
+    // double xTrans;
+    // double yTrans;
+    // srand(static_cast<unsigned int>(time(0)));
+    // int value = 22; 
+    // while(value == 22)
+    // {
+    // 	value =(int)(rand()%25);
+    // }
+    // this->xTrans = -200 + (value%5)*100;
+    // this->yTrans = 200 - (value/5)*100;
+    tile.setOrigin(btVector3(position.x, position.y, position.z));
+    inertia = btVector3(0,0,0);
+
+    // btScalar x1(xLength/(2.));
+    // btScalar y1(yLength/(2.));
+    // btScalar z1(10.);
+    btScalar x1(xLength/2.);
+    btScalar y1(10.);
+    btScalar z1(zLength/2.);
+
+    shape = new btBoxShape(btVector3(x1, y1, z1));
+    motionState = new btDefaultMotionState(tile);
+    shape->calculateLocalInertia(mass, inertia);
+
+    btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
+    body = new btRigidBody(groundRBInfo);
+    body->setRestitution(.5);
+    // body->setUserPointer(rootNode);
+
+
+	Ogre::Entity* entity = sceneMgr->createEntity(name); 
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+    rootNode->attachObject(entity);
+    //rootNode->translate(Ogre::Vector3(xTrans,yTrans,0));
+    entity->setMaterialName("Examples/GrassFloor"); 
+    entity->setCastShadows(false);
+
+    body->setUserPointer(rootNode);
+    simulator->addObject(this);
+}
+/*-----------------------------OutterTile----------------------------------*/
+OutterTile::OutterTile(Ogre::String n,
+    Ogre::SceneManager* mgr,
+    Simulator* sim,
+    Ogre::SceneNode* node,
+    btScalar m, double x, double z, Ogre::Vector3 pos, Ogre::Vector3 norm, int dist):
+    Tile(n,mgr,sim,node,m, x, z, pos, norm,  dist)
+{
+
+}
+OutterTile::~OutterTile()
+{
+
+}
+
+void OutterTile::create()
+{
+	Ogre::Plane plane(normal, +10);
+
+    Ogre::Vector3 up = Ogre::Vector3::UNIT_Z;
+    Ogre::MeshManager::getSingleton().createPlane(name, 
+        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
+        xLength,zLength,20,20,true,1,5,5,up);
+
+    btTransform tile;
+    tile.setIdentity();
+    // if(norm.x < 0 || norm.y < 0 || norm.z < 0)  //roof, posZ, posX
+    //     goal.setOrigin(btVector3((distFromCenter*norm.x)+(5*norm.x), (distFromCenter*norm.y) - (5*norm.y) + 5, (distFromCenter*norm.z) - (norm.z *5)));
+    // else
+    // double xTrans;
+    // double yTrans;
+    // srand(static_cast<unsigned int>(time(0)));
+    // int value = 22; 
+    // while(value == 22)
+    // {
+    // 	value =(int)(rand()%25);
+    // }
+    // this->xTrans = -200 + (value%5)*100;
+    // this->yTrans = 200 - (value/5)*100;
+    tile.setOrigin(btVector3(position.x, position.y, position.z));
+    inertia = btVector3(0,0,0);
+
+    // btScalar x1(xLength/(2.));
+    // btScalar y1(yLength/(2.));
+    // btScalar z1(10.);
+    btScalar x1(xLength/2.);
+    btScalar y1(10.);
+    btScalar z1(zLength/2.);
+
+    shape = new btBoxShape(btVector3(x1, y1, z1));
+    motionState = new btDefaultMotionState(tile);
+    shape->calculateLocalInertia(mass, inertia);
+
+    btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
+    body = new btRigidBody(groundRBInfo);
+    body->setRestitution(.5);
+    // body->setUserPointer(rootNode);
+
+
+	Ogre::Entity* entity = sceneMgr->createEntity(name); 
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
+    rootNode->attachObject(entity);
+    //rootNode->translate(Ogre::Vector3(xTrans,yTrans,0));
+    entity->setMaterialName("Examples/GrassFloor"); 
+    entity->setCastShadows(false);
+
+    body->setUserPointer(rootNode);
+    simulator->addObject(this);
+}
+
+bool OutterTile::healthDamage(Ogre::Vector3 pos)
+{
+	if((pos.x >= position.x - distFromCenter) && (pos.x <= position.x + distFromCenter) && (pos.z >= position.z - distFromCenter) && (pos.z <= position.z + distFromCenter))
+		{
+			return true;
+		}
+		return false;
+}
+
+
+/*--------------------------------end of tile--------------------------------*/
 Simulator::Simulator()
 {
 	collisionConfiguration = new btDefaultCollisionConfiguration();

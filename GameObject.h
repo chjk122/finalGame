@@ -129,6 +129,52 @@ public:
 
 };
 
+class Tile : public GameObject
+{
+protected:
+	double xLength;
+	double zLength;
+	Ogre::Vector3 position;
+	Ogre::Vector3 normal;
+	int distFromCenter;
+public:
+	Tile(Ogre::String n,
+	Ogre::SceneManager* mgr,
+	Simulator* sim,
+	Ogre::SceneNode* node,
+	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
+	virtual ~Tile();
+	virtual void create();
+
+};
+
+class PathTile : public Tile
+{
+public:
+	PathTile(Ogre::String n,
+	Ogre::SceneManager* mgr,
+	Simulator* sim,
+	Ogre::SceneNode* node,
+	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
+	virtual ~PathTile();
+	virtual void create();
+
+};
+
+class OutterTile : public Tile
+{
+public:
+	OutterTile(Ogre::String n,
+	Ogre::SceneManager* mgr,
+	Simulator* sim,
+	Ogre::SceneNode* node,
+	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
+	virtual ~OutterTile();
+	virtual void create();
+	virtual bool healthDamage(Ogre::Vector3 pos);
+
+};
+
 
 class Simulator {
 protected:
