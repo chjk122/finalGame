@@ -113,14 +113,8 @@ void BaseApplication::createObjects(void)
     Ogre::SceneNode* node;
     Ogre::SceneNode* playerNode;
 
-    Ball* ball = new Ball("ball", mSceneMgr, mSimulator, node, 90., Ogre::Vector3(0.,-240.,210.));
-    ball->create();
 
-    Goal* goal = new Goal("goal", mSceneMgr, mSimulator, node, 0.,100, 100, Ogre::Vector3::UNIT_Z, -249.6);
-    goal->create();
-
-
-    playerHost = new Player("playerHost", mSceneMgr, mSimulator, playerNode, 0.,ball, Ogre::Vector3(0.,-250.,225.));
+    playerHost = new Player("playerHost", mSceneMgr, mSimulator, playerNode, 0., Ogre::Vector3(0.,-250.,225.));
     playerHost->create();
 }
 //---------------------------------------------------------------------------
@@ -301,7 +295,6 @@ bool BaseApplication::setup(void)
     return true;
 };
 //---------------------------------------------------------------------------
-bool shotTheBall = false;
 bool scored = false;
 int points = 0;
 bool gameIsOver = false;
@@ -309,7 +302,6 @@ bool gameIsOver = false;
 
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-    // updateMultiplayerBalls();
     double progressStepValue = evt.timeSinceLastFrame*.8;
     if(mWindow->isClosed())
         return false;

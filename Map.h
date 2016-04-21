@@ -2,18 +2,46 @@
 #define Map_H
 
 #include "GameObject.h"
+#include "Tile.h"
 #include <vector>
+#include <string>
+#include <iostream>
 
 class Map
 {
 protected:
-	std::vector<vector<Tile>> map;
-	int size;
+	std::vector< std::vector<Tile *> > map;
+	std::vector< Cubester *> cubesters;
+	Player *player;
+	Simulator *sim;
+	Ogre::SceneManager* mgr;
+	//items
+
+	//player
+		//goingUp = true;
+		//right/left/down -- for the noobs to know what other 3 i was talking about
+	//  "aaFaaaa" 
+	//  "aabaaaa"
+	//  "aabaaaa"
+	//  "lllllaa"
+	//  "aabaaaa"
+	//  "aapaaaa"
+	//  "aaSaaaa"
+
+
 public:
-	Map(int size);
+	Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> >);
+	Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string >);
 	virtual ~Map();
-	void addTile(Tile t);
-	std::vector<Tile> getTileMap();
+
+	int getLength();
+	// int getNumCubesters();
+	// Player *getPlayer();
+	bool move(int direction);
+	void simulate();
+
+private:
+	bool canMove(int tileX, int tileY, int direction);
 
 };
 

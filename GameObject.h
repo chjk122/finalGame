@@ -15,7 +15,6 @@
 #include <SDL/SDL_mixer.h>
 
 class Simulator;
-class Ball;
 
 class GameObject
 {
@@ -47,8 +46,8 @@ class Player : public GameObject
 {
 public:
 	Ogre::Vector3 position;
-	Ball* playerBall;
-	Ogre::Real points;
+	int playerX;
+	int playerY;
 
 public:
 	Player(Ogre::String n,
@@ -56,43 +55,17 @@ public:
 	Simulator* sim,
 	Ogre::SceneNode* node,
 	btScalar m, 
-	Ball* ball,
-	Ogre::Vector3 pos = Ogre::Vector3(0.0, 0.0, 0.0),
-	Ogre::Real score = 0);
+	Ogre::Vector3 pos = Ogre::Vector3(0.0, 0.0, 0.0));
 	virtual ~Player();
 	void create(Ogre::Degree p = Ogre::Degree(90), Ogre::Degree = Ogre::Degree(180), Ogre::Degree = Ogre::Degree(0));
-	void scored();
-};
-
-class Ball : public GameObject
-{
-public:
-	Ogre::Vector3 position;
-
-public:
-	Ball(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Simulator* sim,
-	Ogre::SceneNode* node,
-	btScalar m, Ogre::Vector3 pos = Ogre::Vector3(0.0, 0.0, 0.0));
-	virtual ~Ball();
-	void create();
-	void kickBall(btScalar power, btScalar angle, btScalar height);
-	void setGhostBallPos(float x, float y, float z);
+	bool move(int direction);
+	bool canMove();
+	int getPlayerX();
+	int getPlayerY();
 
 };
 
-class GhostBall : public Ball
-{
-public:
-	GhostBall(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Simulator* sim,
-	Ogre::SceneNode* node,
-	btScalar m, Ogre::Vector3 pos = Ogre::Vector3(0.0, 0.0, 0.0));
-	virtual ~GhostBall();
-	void create();
-};
+
 
 class Wall : public GameObject
 {
@@ -112,67 +85,18 @@ public:
 
 };
 
-class Goal : public Wall
-{
-private:
-	double xTrans;
-	double yTrans;
-public:
-	Goal(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Simulator* sim,
-	Ogre::SceneNode* node,
-	btScalar m, double x, double y, Ogre::Vector3 norm, int dist);
-	virtual ~Goal();
-	virtual void create();
-	virtual bool ballScored(Ogre::Vector3 pos);
-
-};
-
-class Tile : public GameObject
+class Cubester : public GameObject
 {
 protected:
-	double xLength;
-	double zLength;
 	Ogre::Vector3 position;
-	Ogre::Vector3 normal;
-	int distFromCenter;
 public:
-	Tile(Ogre::String n,
+	Cubester(Ogre::String n,
 	Ogre::SceneManager* mgr,
 	Simulator* sim,
 	Ogre::SceneNode* node,
-	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
-	virtual ~Tile();
+	btScalar m, Ogre::Vector3 position);
+	virtual ~Cubester();
 	virtual void create();
-
-};
-
-class PathTile : public Tile
-{
-public:
-	PathTile(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Simulator* sim,
-	Ogre::SceneNode* node,
-	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
-	virtual ~PathTile();
-	virtual void create();
-
-};
-
-class OutterTile : public Tile
-{
-public:
-	OutterTile(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Simulator* sim,
-	Ogre::SceneNode* node,
-	btScalar m, double x, double z, Ogre::Vector3 position, Ogre::Vector3 norm, int dist);
-	virtual ~OutterTile();
-	virtual void create();
-	virtual bool healthDamage(Ogre::Vector3 pos);
-
 };
 
 
@@ -193,9 +117,8 @@ public:
 	bool stepSimulation(const Ogre::Real elapsedTime, Mix_Music* music,
 	int maxSubSteps = 1, const Ogre::Real fixedTimestep = 1.0f/60.0f);
 	btDiscreteDynamicsWorld* getDynamicsWorld();
-	void kickBall(btScalar power, btScalar angle, btScalar height);
 	void destroyNode(Ogre::SceneNode* node);
-	Ball* reload();
+	void reload();
 
 };
 #endif // #ifndef __GameObject_h_

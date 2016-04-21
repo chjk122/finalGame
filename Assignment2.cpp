@@ -51,8 +51,8 @@ void Assignment2::createScene(void)
     // btScalar m,
 
     /*****  CONSTUCTING THE ROOM PLANES *****/
-    Wall* ground = new Wall("ground", mSceneMgr, mSimulator, node, 0., 500, 500, Ogre::Vector3::UNIT_Y, -250);
-    ground->create();
+    // Wall* ground = new Wall("ground", mSceneMgr, mSimulator, node, 0., 500, 500, Ogre::Vector3::UNIT_Y, -250);
+    // ground->create();
     Wall* roof = new Wall("roof", mSceneMgr, mSimulator, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Y, -250);
     roof->create();
     Wall* posZ = new Wall("posZ", mSceneMgr, mSimulator, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Z, -250);
