@@ -945,7 +945,7 @@ assignment2-BaseApplication.o: BaseApplication.cpp \
  /usr/include/SDL/SDL_joystick.h /usr/include/SDL/SDL_quit.h \
  /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
  /usr/include/SDL/SDL_version.h /usr/include/SDL/SDL_mixer.h \
- /usr/include/SDL/SDL_types.h /usr/include/ois/OISEvents.h \
+ /usr/include/SDL/SDL_types.h Map.h Tile.h /usr/include/ois/OISEvents.h \
  /usr/include/ois/OISPrereqs.h /usr/include/ois/OISConfig.h \
  /usr/include/ois/OISInputManager.h /usr/include/ois/OISKeyboard.h \
  /usr/include/ois/OISObject.h /usr/include/ois/OISInterface.h \
@@ -3150,6 +3150,10 @@ GameObject.h:
 /usr/include/SDL/SDL_mixer.h:
 
 /usr/include/SDL/SDL_types.h:
+
+Map.h:
+
+Tile.h:
 
 /usr/include/ois/OISEvents.h:
 

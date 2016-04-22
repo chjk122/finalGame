@@ -31,6 +31,7 @@ Player::Player(Ogre::String n,
 	GameObject(n,mgr,sim,node,m),
 	position(pos)
 {
+    inMotion = false;
 	inertia = btVector3(0,0,0);
 }
 
@@ -40,33 +41,145 @@ Player::~Player()
 
 void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
 {
-	Ogre::MeshManager::getSingleton().create("outfit_soccer_player_shirt1.001.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	Ogre::Entity* entity = sceneMgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
-		"outfit_soccer_player_shirt1.001.mesh", 
-		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
+	// Ogre::MeshManager::getSingleton().create("outfit_soccer_player_shirt1.001.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	// Ogre::Entity* entity = sceneMgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
+	// 	"outfit_soccer_player_shirt1.001.mesh", 
+	// 	Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
 
-    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, position);
+    Ogre::MeshManager::getSingleton().create("cube.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    Ogre::Entity* entity = sceneMgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
+     "cube.mesh", 
+     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
+    Ogre::Vector3 newPos(position.x, position.y, position.z);
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, newPos);
+    rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
-    rootNode->setScale(60, 60, 60);
+    // rootNode->setScale(.6, .6, .6);
+    entity->setMaterialName("Cube/Blend"); 
     rootNode->pitch(Ogre::Degree(p));
     rootNode->roll(Ogre::Degree(r));
+
+    shape = new btBoxShape(btVector3(Player::length(),Player::length(),Player::length()));
+    motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(position.x, position.y, position.z)));
+    shape->calculateLocalInertia(mass, inertia);
+
+    btRigidBody::btRigidBodyConstructionInfo shapeRBInfo(mass, motionState, shape, inertia);
+    body = new btRigidBody(shapeRBInfo);
+    body->setRestitution(1); //bouncing
+    // body->setFriction(50.0);
+    // body->setRollingFriction(20.3f);
+    body->setDamping(0.02f, 0.8f);
+    body->setLinearFactor(btVector3(1,0,1)); // unable to move in the Y
+    body->setUserPointer(rootNode);
+
+
+    simulator->addObject(this);
 }
 
-bool Player::move(int direction)
+bool Player::move(int dir, Ogre::Vector3 p)
 {
     if(canMove())
     {
-        //execute move code
-        return false;
+        // p.y = p.y + (length()/2);
+        direction = dir;
+        endPos = p;
+        double xDir = 0.0;
+        double zDir = 0.0;
+        if(dir == 0)
+        {
+            zDir = -1.0;
+            xDir = 0.0;
+        }
+        else if(dir == 1)
+        {
+            xDir = 1.0;
+            zDir = 0.0;
+        }
+        else if(dir == 2)
+        {
+            zDir = 1.0;
+            xDir = 0.0;
+        }
+        else if(dir == 3)
+        {
+            xDir = -1.0;
+            zDir = 0.0;
+        }
+        btVector3 linDirection(xDir * moveSpeed(), 0.0, zDir * moveSpeed());
+        body->setLinearVelocity(linDirection);
+        std::cout << "moving in x " << xDir << "moving in z " << zDir << std::endl;
+        inMotion = true;
+        return true;
     }
     else
+    {
         return false;
+    }
+}
+
+
+void Player::simulate(const Ogre::Real elapsedTime)
+{
+    if(inMotion)
+    {
+        // btTransform trans;
+        // body->getMotionState()->getWorldTransform(trans);
+        // std::cout << trans.getOrigin().getX() << ", " << trans.getOrigin().getY() << ", " << trans.getOrigin().getZ() << std::endl;
+        // rootNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+        Ogre::Vector3 nowPos = rootNode->getPosition();
+        if(direction == 0)
+        {
+            rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z - moveSpeed() * elapsedTime));
+            if(rootNode->getPosition().z < endPos.z)
+            {
+                body->setLinearVelocity(btVector3(0.0,0.0,0.0));
+                // rootNode->setPosition(endPos);
+                playerX -= 1;
+                inMotion = false;
+            }
+        }
+        else if(direction == 1)
+        {
+            rootNode->setPosition(Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
+            if(rootNode->getPosition().x > endPos.x)
+            {
+                std::cout << "stopped in 1" << std::endl;
+                body->setLinearVelocity(btVector3(0.0,0.0,0.0));
+                // rootNode->setPosition(endPos);
+                playerY += 1;
+                inMotion = false;
+            }
+        }
+        else if(direction == 2)
+        {
+            rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z + moveSpeed() * elapsedTime));
+            if(rootNode->getPosition().z > endPos.z)
+            {
+                std::cout << "stopped in 2" << std::endl;
+                body->setLinearVelocity(btVector3(0.0,0.0,0.0));
+                // rootNode->setPosition(endPos);
+                playerX += 1;
+                inMotion = false;
+            }
+        }
+        else if(direction == 3)
+        {
+            rootNode->setPosition(Ogre::Vector3(nowPos.x - moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
+            if(rootNode->getPosition().x < endPos.x)
+            {
+                std::cout << "stopped in 3" << std::endl;
+                body->setLinearVelocity(btVector3(0.0,0.0,0.0));
+                // rootNode->setPosition(endPos);
+                playerY -= 1;
+                inMotion = false;
+            }
+        }
+    }
 }
 
 bool Player::canMove()
 {
-    //if player not in motion and is alive return true
-    return false;
+    return (!inMotion);
 }
 
 int Player::getPlayerX()
@@ -77,6 +190,16 @@ int Player::getPlayerY()
 {
     return playerY;
 }   
+
+void Player::setPlayerCord(int xI, int yI, int lengthTile, double xCord, double zCord)
+{
+    playerX = xI;
+    playerY = yI;
+    Ogre::Vector3 newPos(xCord + (yI * lengthTile), position.y + (length()/2), zCord+ (xI * lengthTile));
+    position = newPos;
+    this->create();
+    rootNode->setPosition(newPos);
+}
 
 Wall::Wall(Ogre::String n,
     Ogre::SceneManager* mgr,
@@ -110,40 +233,37 @@ void Wall::create()
         Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
         xLength,yLength,20,20,true,1,5,5,up);
 
-    btTransform groundTransform;
-    groundTransform.setIdentity();
-    // if(norm.x < 0 || norm.y < 0 || norm.z < 0)  //roof, posZ, posX
-    //     groundTransform.setOrigin(btVector3((distFromCenter*norm.x)+(5*norm.x), (distFromCenter*norm.y) - (5*norm.y) + 5, (distFromCenter*norm.z) - (norm.z *5)));
-    // else
-        groundTransform.setOrigin(btVector3((distFromCenter*normal.x)-(10*normal.x), (distFromCenter*normal.y) - (10*normal.y), (distFromCenter*normal.z) - (normal.z *10)));
-    inertia = btVector3(0,0,0);
+    // btTransform groundTransform;
+    // groundTransform.setIdentity();
+    // groundTransform.setOrigin(btVector3((distFromCenter*normal.x)-(10*normal.x), (distFromCenter*normal.y) - (10*normal.y), (distFromCenter*normal.z) - (normal.z *10)));
+    // inertia = btVector3(0,0,0);
 
-    btScalar x1(250.);
-    btScalar y1(250.);
-    btScalar z1(250.);
+    // btScalar x1(250.);
+    // btScalar y1(250.);
+    // btScalar z1(250.);
 
-    if(normal.x != 0){
-        x1 = 10.;
-    }
-    else if(normal.y != 0){
-        y1 = 10.;
-    }
-    else if(normal.z != 0) {
-        z1 = 10.;
-    }
+    // if(normal.x != 0){
+    //     x1 = 10.;
+    // }
+    // else if(normal.y != 0){
+    //     y1 = 10.;
+    // }
+    // else if(normal.z != 0) {
+    //     z1 = 10.;
+    // }
 
-    shape = new btBoxShape(btVector3(x1, y1, z1));
-    motionState = new btDefaultMotionState(groundTransform);
-    shape->calculateLocalInertia(mass, inertia);
+    // shape = new btBoxShape(btVector3(x1, y1, z1));
+    // motionState = new btDefaultMotionState(groundTransform);
+    // shape->calculateLocalInertia(mass, inertia);
 
-    btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
-    body = new btRigidBody(groundRBInfo);
-    body->setRestitution(.5);
-    body->setFriction(50.0);
-    body->setRollingFriction(20.3f);
+    // btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
+    // body = new btRigidBody(groundRBInfo);
+    // body->setRestitution(.5);
+    // body->setFriction(50.0);
+    // body->setRollingFriction(20.3f);
 
 
-    simulator->addObject(this);
+    // simulator->addObject(this);
 	Ogre::Entity* entity = sceneMgr->createEntity(name); 
     sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entity); 
     entity->setMaterialName("Examples/Rocky"); 
@@ -247,33 +367,41 @@ bool Simulator::stepSimulation (const Ogre::Real elapsedTime, Mix_Music* music,
 	dynamicsWorld->stepSimulation(elapsedTime, maxSubSteps, fixedTimestep);
 	// dynamicsWorld->stepSimulation(1 / 60.f, 10);
 	// std::cout << objList.size() << std::endl;
-	// Ogre::Vector3 ball;
-	// for (std::deque<GameObject*>::iterator it = objList.begin(); it!=objList.end(); ++it)
-	// {
-	// 	GameObject* obj = *it;
-	// 	btRigidBody* body = obj->getBody();
-	// 	if (body && body->getMotionState()){
-	// 		btTransform trans;
-	// 		body->getMotionState()->getWorldTransform(trans);
+	Ogre::Vector3 playePos;
+	for (std::deque<GameObject*>::iterator it = objList.begin(); it!=objList.end(); ++it)
+	{
+		GameObject* obj = *it;
+		btRigidBody* body = obj->getBody();
+		if (body && body->getMotionState()){
+			btTransform trans;
+			body->getMotionState()->getWorldTransform(trans);
 
-	// 		void *nodePointer = body->getUserPointer();
-	// 		if (nodePointer) {
-	// 			btQuaternion orientation = trans.getRotation();
-	// 			Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(nodePointer);
-	// 			sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-	// 			if(obj->name == "ball" || obj->name == "ball1"){
-	// 				ball = sceneNode->getPosition();
-	// 			}
-	// 			// std::cout << "elapsedTime == " << elapsedTime <<": sphere x: " << trans.getOrigin().getX();
- //    //     std::cout << "  sphere y: " << trans.getOrigin().getY();
- //    //     std::cout << "  sphere z: " << trans.getOrigin().getZ() << std::endl;
-	// 			sceneNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-	// 			// sceneNode->rotate (Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			void *nodePointer = body->getUserPointer();
+            // body->setLinearVelocity( Ogre::Vector3::NEGATIVE_UNIT_Z * 5.f);
+			if (nodePointer) {
+				btQuaternion orientation = trans.getRotation();
+				Ogre::SceneNode *sceneNode = static_cast<Ogre::SceneNode *>(nodePointer);
+				// sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+				if(obj->name == "player"){
+                    Player *playerObj = dynamic_cast<Player *>(obj);
+                    playerObj->simulate(elapsedTime);
+					// playePos = sceneNode->getPosition();
+     //                btVector3 direction(0.0, 0.0, -5.0);
+     //                body->setLinearVelocity( direction);
+                    //body->setLinearVelocity( direction * 30.f);
+                    // std::cout << body->getLinearVelocity() << std::endl;
+                    // sceneNode->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+				}
+				// std::cout << "elapsedTime == " << elapsedTime <<": sphere x: " << trans.getOrigin().getX();
+    //     std::cout << "  sphere y: " << trans.getOrigin().getY();
+    //     std::cout << "  sphere z: " << trans.getOrigin().getZ() << std::endl;
+				// sceneNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+				// sceneNode->rotate (Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-	// 		}
-	// 	}
+			}
+		}
 
-	// }
+	}
 	// playedSound--;
 
 	// if((Ogre::Math::Abs(ball.x) >= 240 || Ogre::Math::Abs(ball.y) >= 240 || Ogre::Math::Abs(ball.z) >= 240)){

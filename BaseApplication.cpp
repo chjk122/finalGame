@@ -60,7 +60,8 @@ BaseApplication::~BaseApplication(void)
     windowClosed(mWindow);
     delete mRoot;
     delete mSimulator;
-    delete playerHost;
+    delete player;
+    delete gameMap;
 }
 
 //---------------------------------------------------------------------------
@@ -114,8 +115,20 @@ void BaseApplication::createObjects(void)
     Ogre::SceneNode* playerNode;
 
 
-    playerHost = new Player("playerHost", mSceneMgr, mSimulator, playerNode, 0., Ogre::Vector3(0.,-250.,225.));
-    playerHost->create();
+    player = new Player("player", mSceneMgr, mSimulator, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
+    // player->create();
+
+    std::vector<std::string> v;
+    for(int x = 0; x < 9; x++)
+    {
+        if(x%2 == 0)
+            v.push_back("+++x+xx+++");
+        else
+            v.push_back("++++x+++xx");
+    }
+    v.push_back("sx++x+++xx");
+
+    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v);
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -300,6 +313,10 @@ int points = 0;
 bool gameIsOver = false;
 
 
+bool wisDown = false;
+bool disDown = false;
+bool sisDown = false;
+bool aisDown = false;
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
     double progressStepValue = evt.timeSinceLastFrame*.8;
@@ -315,6 +332,19 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     if(!gameIsOver)
     {
+        if(wisDown)
+        {
+            bool result = false;
+            result = gameMap->move(0);
+            if(result)
+                std::cout << " moving up: true"  << std::endl;
+        }
+        else if(disDown)
+            gameMap->move(1);
+        else if(sisDown)
+            gameMap->move(2);
+        else if(aisDown)
+            gameMap->move(3);
         mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
     }
 
@@ -438,10 +468,22 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mShutDown = true;
     }
-    // else if(arg.key == OIS::KC_W ||
-    //         arg.key == OIS::KC_A ||
-    //         arg.key == OIS::KC_S ||
-    //         arg.key == OIS::KC_D ||
+    else if(arg.key == OIS::KC_W)
+    {
+        wisDown = true;
+    }
+    else if(arg.key == OIS::KC_D)
+    {
+        disDown = true;
+    }
+    else if(arg.key == OIS::KC_S)
+    {
+        sisDown = true;
+    }
+    else if(arg.key == OIS::KC_A)
+    {
+        aisDown = true;
+    }
     //         arg.key == OIS::KC_UP ||
     //         arg.key == OIS::KC_DOWN ||
     //         arg.key == OIS::KC_RIGHT ||
@@ -459,12 +501,34 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             playingMusic = true;
         }
     }
-    mCameraMan->injectKeyDown(arg);
+    if(!(arg.key == OIS::KC_W ||
+            arg.key == OIS::KC_A ||
+            arg.key == OIS::KC_S ||
+            arg.key == OIS::KC_D))
+    {
+        mCameraMan->injectKeyDown(arg);
+    }
     return true;
 }
 //---------------------------------------------------------------------------
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
+    if(arg.key == OIS::KC_W)
+    {
+        wisDown = false;
+    }
+    else if(arg.key == OIS::KC_D)
+    {
+        disDown = false;
+    }
+    else if(arg.key == OIS::KC_S)
+    {
+        sisDown = false;
+    }
+    else if(arg.key == OIS::KC_A)
+    {
+        aisDown = false;
+    }
     mCameraMan->injectKeyUp(arg);
     return true;
 }

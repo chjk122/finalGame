@@ -28,7 +28,9 @@ http://www.ogre3d.org/wiki/
 #include <OgreConfigFile.h>
 #include <btBulletDynamicsCommon.h>
 #include "GameObject.h"
+#include "Map.h"
 #include <sstream>
+#include <vector>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 
@@ -137,7 +139,8 @@ protected:
     Mix_Music*                  music;
     Mix_Music*                  music2;
 
-    Player*                     playerHost;
+    Player*                     player;
+    Map*                        gameMap;
 
     Ogre::Real                  mGameState;
 

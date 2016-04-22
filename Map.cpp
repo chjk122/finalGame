@@ -1,14 +1,13 @@
 #include "Map.h"
 
-Map::Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > v)
+Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > v)
 {
 	
 }
 
-Map::Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string > v):
-mgr(sceneMgr)
+Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string > v):
+mgr(sceneMgr), player(play)
 {
-	std::string name;
 	Tile *temp;
 	Ogre::Vector3 pos(centerOfTopleftTilePos.x, centerOfTopleftTilePos.y, centerOfTopleftTilePos.z);
 	for(int x = 0; x < v.size(); x++)
@@ -16,9 +15,12 @@ mgr(sceneMgr)
 		map.push_back(std::vector<Tile *>());
 		for(int y = 0; y < v.size(); y++)
 		{
-			name = x + "y" + y;
 			temp = new Tile(mgr,pos, x, y, v[x][y]);
 			map[x].push_back(temp);
+			if(v[x][y] == Tile::typeForStartTile())
+			{
+				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
+			}
 			pos.x = pos.x + AbstractTile::length(); // + length to the right in 2d
 		}
 		pos.z = pos.z + AbstractTile::length(); // + length downward in 2d
@@ -66,8 +68,10 @@ bool Map::move(int direction)
 		nextY--;
 	}
 
-	if(canMove(nextX, nextY, direction) && player->move(direction))
-		return true;
+	if(canMove(nextX, nextY, direction))
+	{
+		return player->move(direction, map[nextX][nextY]->getPosition());
+	}
 	else
 		return false;
 }

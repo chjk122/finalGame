@@ -48,20 +48,28 @@ public:
 	Ogre::Vector3 position;
 	int playerX;
 	int playerY;
+	static double length() { return 25; }
 
+	//movement information
+	static double moveSpeed() { return 100; } //raise to 50ish
+	Ogre::Vector3 endPos;
+	int direction;
+	bool inMotion;
 public:
 	Player(Ogre::String n,
 	Ogre::SceneManager* mgr,
 	Simulator* sim,
 	Ogre::SceneNode* node,
-	btScalar m, 
+	btScalar m,
 	Ogre::Vector3 pos = Ogre::Vector3(0.0, 0.0, 0.0));
 	virtual ~Player();
 	void create(Ogre::Degree p = Ogre::Degree(90), Ogre::Degree = Ogre::Degree(180), Ogre::Degree = Ogre::Degree(0));
-	bool move(int direction);
+	bool move(int dir, Ogre::Vector3 p);
+	void simulate(const Ogre::Real elapsedTime);
 	bool canMove();
 	int getPlayerX();
 	int getPlayerY();
+	void setPlayerCord(int xI, int yI, int legthTile, double xCord, double zCord);
 
 };
 

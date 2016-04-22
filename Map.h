@@ -17,21 +17,10 @@ protected:
 	Ogre::SceneManager* mgr;
 	//items
 
-	//player
-		//goingUp = true;
-		//right/left/down -- for the noobs to know what other 3 i was talking about
-	//  "aaFaaaa" 
-	//  "aabaaaa"
-	//  "aabaaaa"
-	//  "lllllaa"
-	//  "aabaaaa"
-	//  "aapaaaa"
-	//  "aaSaaaa"
-
 
 public:
-	Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> >);
-	Map(Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string >);
+	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> >);
+	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string >);
 	virtual ~Map();
 
 	int getLength();

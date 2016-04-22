@@ -21,6 +21,7 @@ protected:
 public:
 	static double length() { return 50; }   //cosnt length for all tiles
 	virtual bool getIsWalkable(); 			//for children to all have
+	virtual Ogre::Vector3 getPosition();
 	virtual void create() = 0; 				//cant call
 	virtual ~AbstractTile() {} 				//does nothing
 };
@@ -35,12 +36,21 @@ public:
 
 };
 
-// basic nonwalkable tile
-class OutterTile : public AbstractTile
+// start tile
+class StartTile : public PathTile
 {
 public:
-	OutterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
-	virtual ~OutterTile();
+	StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~StartTile();
+
+};
+
+// basic nonwalkable tile
+class OuterTile : public AbstractTile
+{
+public:
+	OuterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~OuterTile();
 	virtual void create();
 	//virtual bool healthDamage(Ogre::Vector3 pos);
 };
@@ -56,4 +66,11 @@ public:
 	void create();
 	double length() { return AbstractTile::length(); }
 	bool getIsWalkable();
+	Ogre::Vector3 getPosition();
+
+
+	static char typeForPathTile() { return '+'; }
+	static char typeForOuterTile() { return 'x'; }
+	static char typeForStartTile() { return 's'; }
+	static char typeForFinishTile() { return 'f'; }
 };

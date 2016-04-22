@@ -1,0 +1,38 @@
+material Cube/Blend
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture red.png
+          }
+          texture_unit
+          {
+             texture blend3.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+
+ material Cube/Rakan
+ {
+    technique
+    {
+       pass
+       {
+        ambient .2 .2 .2
+          texture_unit
+          {
+            texture rakan.jpg
+          }
+       }
+    }
+ }
