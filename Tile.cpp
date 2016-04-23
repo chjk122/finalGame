@@ -47,7 +47,12 @@ void PathTile::create()
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);
-    entity->setMaterialName("Tile/Path"); 
+    entity->setMaterialName("Tile/Cool"); 
+}
+
+void PathTile::event(Player* p)
+{
+    printf("%i yindex %i", xIndex, yIndex );
 }
 /*-----------------------------StartTile----------------------------------*/
 StartTile::StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
@@ -59,6 +64,53 @@ StartTile::~StartTile()
 {
 
 }
+
+/*-----------------------------FinishTile----------------------------------*/
+FinishTile::FinishTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+FinishTile::~FinishTile()
+{
+
+}
+void FinishTile::event(Player* p)
+{
+    printf("Finish");
+}
+
+
+/*-----------------------------LavaTile----------------------------------*/
+LavaTile::LavaTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+LavaTile::~LavaTile()
+{
+
+}
+void LavaTile::event(Player* p)
+{
+    printf("Lava");
+}
+
+/*-----------------------------PoisonTile----------------------------------*/
+PoisonTile::PoisonTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+PoisonTile::~PoisonTile()
+{
+
+}
+void PoisonTile::event(Player* p)
+{
+    printf("PoisonTile");
+}
+
 
 /*-----------------------------OuterTile----------------------------------*/
 OuterTile::OuterTile(Ogre::SceneManager* sceneMgr, 
@@ -88,7 +140,12 @@ void OuterTile::create()
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);
-    entity->setMaterialName("Tile/Outer");
+    entity->setMaterialName("Tile/Poison");
+}
+
+void OuterTile::event(Player* p)
+{
+    
 }
 
 Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t)
@@ -132,4 +189,9 @@ bool Tile::getIsWalkable()
 Ogre::Vector3 Tile::getPosition()
 {
     return tile->getPosition();
+}
+
+void Tile::event(Player* p)
+{
+     tile->event(p);
 }

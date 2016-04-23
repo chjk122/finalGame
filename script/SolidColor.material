@@ -31,7 +31,7 @@ material Cube/Blend
         ambient .2 .2 .2
           texture_unit
           {
-            texture rakan.jpg
+            texture blend3.jpg
           }
        }
     }
@@ -43,10 +43,180 @@ material Cube/Blend
     {
        pass
        {
-          ambient .2 .2 .2
           texture_unit
           {
-            texture cow.png
+            texture path.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Lava
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture lava.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Spike
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture spike.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Water
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture water.png
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Ice
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture ice.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Ice2
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture ice2.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Poison
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture poison.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Cool
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture cool.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
           }
        }
     }

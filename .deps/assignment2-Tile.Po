@@ -923,7 +923,7 @@ assignment2-Tile.o: Tile.cpp /usr/include/stdc-predef.h Tile.h \
  /usr/include/bullet/BulletDynamics/Vehicle/btWheelInfo.h \
  /usr/include/bullet/BulletDynamics/Dynamics/btActionInterface.h \
  /usr/include/bullet/BulletDynamics/Dynamics/btRigidBody.h \
- /lusr/opt/ogre-1.9/include/OGRE/OgreSubMesh.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSubMesh.h GameObject.h \
  /lusr/opt/ogre-1.9/include/OGRE/OgreMath.h /usr/include/SDL/SDL.h \
  /usr/include/SDL/SDL_main.h /usr/include/SDL/SDL_stdinc.h \
  /usr/include/SDL/SDL_config.h /usr/include/SDL/SDL_platform.h \
@@ -2968,6 +2968,8 @@ Tile.h:
 /usr/include/bullet/BulletDynamics/Dynamics/btRigidBody.h:
 
 /lusr/opt/ogre-1.9/include/OGRE/OgreSubMesh.h:
+
+GameObject.h:
 
 /lusr/opt/ogre-1.9/include/OGRE/OgreMath.h:
 
