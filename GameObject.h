@@ -48,7 +48,7 @@ public:
 	Ogre::Vector3 position;
 	int playerX;
 	int playerY;
-	static double length() { return 25; }
+	static double length() { return 50; }
 
 	//movement information
 	static double moveSpeed() { return 100; } //raise to 50ish

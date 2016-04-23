@@ -10,7 +10,7 @@ material Cube/Blend
           }
           texture_unit
           {
-             texture blend3.png             
+             texture blackoutline.png             
              colour_op alpha_blend
           }
           texture_unit
@@ -22,7 +22,7 @@ material Cube/Blend
     }
  }
 
- material Cube/Rakan
+ material Tile/Outer
  {
     technique
     {
@@ -32,6 +32,21 @@ material Cube/Blend
           texture_unit
           {
             texture rakan.jpg
+          }
+       }
+    }
+ }
+
+ material Tile/Path
+ {
+    technique
+    {
+       pass
+       {
+          ambient .2 .2 .2
+          texture_unit
+          {
+            texture cow.png
           }
        }
     }

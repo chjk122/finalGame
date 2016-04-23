@@ -1,5 +1,15 @@
 #include "Tile.h"
 
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 bool AbstractTile::getIsWalkable()
 {
     return isWalkable;
@@ -27,21 +37,17 @@ PathTile::~PathTile()
 
 void PathTile::create()
 {
-    // creates the tile on the ground plane
-    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0.0);
-    Ogre::Vector3 up = Ogre::Vector3::UNIT_Z;
-    std::string name = xIndex + "y" + yIndex;
-    Ogre::MeshManager::getSingleton().createPlane(name, 
-        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
-        AbstractTile::length(),AbstractTile::length(),20,20,true,1,5,5,up);
-
-    //add the entity to a new child node
-    Ogre::Entity* entity = mgr->createEntity(name); 
-    Ogre::SceneNode* childNode = mgr->getRootSceneNode()->createChildSceneNode();
-    childNode->attachObject(entity);
-    childNode->setPosition(Ogre::Vector3(position.x, position.y, position.z));
-    entity->setMaterialName("Examples/Rocky"); 
-    entity->setCastShadows(true);
+    std::string name = patch::to_string(xIndex) + "y" + patch::to_string(yIndex);
+    Ogre::MeshManager::getSingleton().create("cube.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    Ogre::Entity* entity = mgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
+     "cube.mesh", 
+     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
+    Ogre::Vector3 newPos(position.x, position.y - (length()/2), position.z);
+    Ogre::SceneNode* rootNode = mgr->getRootSceneNode()->createChildSceneNode(name, newPos);
+    rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
+    rootNode->attachObject(entity);
+    // rootNode->setScale(.6, .6, .6);
+    entity->setMaterialName("Tile/Path"); 
 }
 /*-----------------------------StartTile----------------------------------*/
 StartTile::StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
@@ -72,22 +78,17 @@ OuterTile::~OuterTile()
 
 void OuterTile::create()
 {
-
-    // creates the tile on the ground plane
-    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0.0);
-    Ogre::Vector3 up = Ogre::Vector3::UNIT_Z;
-    std::string name = xIndex + "y" + yIndex;
-    Ogre::MeshManager::getSingleton().createPlane(name, 
-        Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
-        AbstractTile::length(),AbstractTile::length(),20,20,true,1,5,5,up);
-
-    //add the entity to a new child node
-    Ogre::Entity* entity = mgr->createEntity(name); 
-    Ogre::SceneNode* childNode = mgr->getRootSceneNode()->createChildSceneNode();
-    childNode->attachObject(entity);
-    childNode->setPosition(Ogre::Vector3(position.x, position.y, position.z));
-    entity->setMaterialName("Examples/GrassFloor"); 
-    entity->setCastShadows(true);
+    std::string name = patch::to_string(xIndex) + "y" + patch::to_string(yIndex);
+    Ogre::MeshManager::getSingleton().create("cube.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    Ogre::Entity* entity = mgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
+     "cube.mesh", 
+     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
+    Ogre::Vector3 newPos(position.x, position.y - (length()/2), position.z);
+    Ogre::SceneNode* rootNode = mgr->getRootSceneNode()->createChildSceneNode(name, newPos);
+    rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
+    rootNode->attachObject(entity);
+    // rootNode->setScale(.6, .6, .6);
+    entity->setMaterialName("Tile/Outer");
 }
 
 Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t)

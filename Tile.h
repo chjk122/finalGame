@@ -2,6 +2,7 @@
 #include <OgreRoot.h>
 #include <OgreSceneManager.h>
 #include <string>
+#include <sstream>
 #include <iostream>
 #include <OgreMeshManager.h>
 #include <btBulletDynamicsCommon.h>
