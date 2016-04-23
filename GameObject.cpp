@@ -30,6 +30,7 @@ Player::Player(Ogre::String n,
 {
     inMotion = false;
 	inertia = btVector3(0,0,0);
+    health = 100;
 }
 
 Player::~Player()
@@ -68,7 +69,7 @@ bool Player::move(int dir, Ogre::Vector3 p)
 }
 
 
-void Player::simulate(const Ogre::Real elapsedTime)
+bool Player::simulate(const Ogre::Real elapsedTime)
 {
     if(inMotion)
     {
@@ -80,6 +81,7 @@ void Player::simulate(const Ogre::Real elapsedTime)
             {
                 playerX -= 1;
                 inMotion = false;
+                return true;
             }
         }
         else if(direction == 1)
@@ -87,10 +89,9 @@ void Player::simulate(const Ogre::Real elapsedTime)
             rootNode->setPosition(Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
             if(rootNode->getPosition().x > endPos.x)
             {
-                Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-                mEntity->setMaterialName("Tile/Outer");
                 playerY += 1;
                 inMotion = false;
+                return true;
             }
         }
         else if(direction == 2)
@@ -100,6 +101,7 @@ void Player::simulate(const Ogre::Real elapsedTime)
             {
                 playerX += 1;
                 inMotion = false;
+                return true;
             }
         }
         else if(direction == 3)
@@ -109,9 +111,11 @@ void Player::simulate(const Ogre::Real elapsedTime)
             {
                 playerY -= 1;
                 inMotion = false;
+                return true;
             }
         }
     }
+    return false;
 }
 
 bool Player::canMove()
@@ -136,6 +140,12 @@ void Player::setPlayerCord(int xI, int yI, int lengthTile, double xCord, double 
     position = newPos;
     this->create();
     rootNode->setPosition(newPos);
+}
+
+void Player::changeMaterial(std::string s)
+{
+    Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
+    mEntity->setMaterialName(s);
 }
 
 Wall::Wall(Ogre::String n,

@@ -1,3 +1,4 @@
+
 #include <OgreEntity.h>
 #include <OgreRoot.h>
 #include <OgreSceneManager.h>
@@ -46,6 +47,7 @@ class StartTile : public PathTile
 public:
 	StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~StartTile();
+	virtual void create();
 	
 
 };
@@ -55,6 +57,7 @@ class FinishTile : public PathTile
 public:
 	FinishTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~FinishTile();
+	virtual void create();
 	virtual void event(Player* p);
 
 };
@@ -64,6 +67,7 @@ class LavaTile : public PathTile
 public:
 	LavaTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~LavaTile();
+	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -74,11 +78,76 @@ class PoisonTile : public PathTile
 public:
 	PoisonTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~PoisonTile();
+	virtual void create();
 	virtual void event(Player* p);
 	
 };
 
 //Ice tile
+class IceTile : public PathTile
+{
+public:
+	IceTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~IceTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
+//Water tile
+class WaterTile : public PathTile
+{
+public:
+	WaterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~WaterTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
+//Teleport tile
+class TeleportTile : public PathTile
+{
+public:
+	TeleportTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~TeleportTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
+//Slow tile
+class SlowTile : public PathTile
+{
+public:
+	SlowTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~SlowTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
+//Door tile
+class DoorTile : public PathTile
+{
+public:
+	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~DoorTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
+class RakanTile : public PathTile
+{
+public:
+	RakanTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~RakanTile();
+	virtual void create();
+	virtual void event(Player* p);
+	
+};
+
 
 
 // basic nonwalkable tile
@@ -91,6 +160,7 @@ public:
 	virtual void event(Player* p);
 	//virtual bool healthDamage(Ogre::Vector3 pos);
 };
+
 
 
 
@@ -125,3 +195,4 @@ public:
 	static char typeForRakanTile() { return 'r'; }
 
 };
+

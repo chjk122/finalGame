@@ -331,7 +331,7 @@ material Cube/Blend
        }
     }
  }
-material Cube/Poison
+material SolidColor/Posion
   {
     technique
     {

@@ -117,14 +117,15 @@ void BaseApplication::createObjects(void)
     // player->create();
 
     std::vector<std::string> v;
-    for(int x = 0; x < 9; x++)
+     v.push_back("++++++++++");
+    for(int x = 0; x < 8; x++)
     {
         if(x%2 == 0)
-            v.push_back("+++x+xx+++");
+            v.push_back("+rrrrrrrr+");
         else
-            v.push_back("++++x+++xx");
+            v.push_back("+lipwtdol+");
     }
-    v.push_back("sx++x+++xx");
+    v.push_back("sxlrlrlrxf");
 
     gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v);
 }

@@ -93,6 +93,10 @@ bool Map::canMove(int tileX, int tileY, int direction)
 
 void Map::simulate(const Ogre::Real elapsedTime)
 {
-	player->simulate(elapsedTime);
+	bool eventFire = player->simulate(elapsedTime);
+	if(eventFire)
+	{
+		map[player->getPlayerX()][player->getPlayerY()]->event(player);
+	}
 	//loop through enemy/player and call thier simulate method
 }

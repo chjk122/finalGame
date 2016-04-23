@@ -13,7 +13,7 @@
 #include <OgreMath.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
-
+#include <vector>
 
 class GameObject
 {
@@ -45,7 +45,8 @@ public:
 	Ogre::Vector3 position;
 	int playerX;
 	int playerY;
-	static double length() { return 25; }
+	int health;
+	static double length() { return 20; }
 
 	//movement information
 	static double moveSpeed() { return 100; } //raise to 50ish
@@ -61,11 +62,12 @@ public:
 	virtual ~Player();
 	void create(Ogre::Degree p = Ogre::Degree(90), Ogre::Degree = Ogre::Degree(180), Ogre::Degree = Ogre::Degree(0));
 	bool move(int dir, Ogre::Vector3 p);
-	void simulate(const Ogre::Real elapsedTime);
+	bool simulate(const Ogre::Real elapsedTime);
 	bool canMove();
 	int getPlayerX();
 	int getPlayerY();
 	void setPlayerCord(int xI, int yI, int legthTile, double xCord, double zCord);
+	void changeMaterial(std::string s);
 
 };
 
