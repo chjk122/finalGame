@@ -68,7 +68,7 @@ OuterTile::OuterTile(Ogre::SceneManager* sceneMgr,
     position = pos;
     xIndex = xInd;
     yIndex = yInd;
-    isWalkable = false;
+    isWalkable = true;
 }
 
 OuterTile::~OuterTile()

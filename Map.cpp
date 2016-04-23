@@ -91,7 +91,8 @@ bool Map::canMove(int tileX, int tileY, int direction)
 	}
 }
 
-void Map::simulate()
+void Map::simulate(const Ogre::Real elapsedTime)
 {
+	player->simulate(elapsedTime);
 	//loop through enemy/player and call thier simulate method
 }

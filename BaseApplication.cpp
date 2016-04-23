@@ -45,7 +45,6 @@ BaseApplication::BaseApplication(void)
     m_ResourcePath = "";
 #endif
 
-    mSimulator = new Simulator;
 }
 
 //---------------------------------------------------------------------------
@@ -59,7 +58,6 @@ BaseApplication::~BaseApplication(void)
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
     delete mRoot;
-    delete mSimulator;
     delete player;
     delete gameMap;
 }
@@ -115,7 +113,7 @@ void BaseApplication::createObjects(void)
     Ogre::SceneNode* playerNode;
 
 
-    player = new Player("player", mSceneMgr, mSimulator, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
+    player = new Player("player", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
     // player->create();
 
     std::vector<std::string> v;
@@ -345,7 +343,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             gameMap->move(2);
         else if(aisDown)
             gameMap->move(3);
-        mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
+        gameMap->simulate(evt.timeSinceLastFrame);
+        // mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
     }
 
     mTrayMgr->frameRenderingQueued(evt);

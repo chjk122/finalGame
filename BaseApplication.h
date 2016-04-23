@@ -135,7 +135,6 @@ protected:
     OIS::InputManager*          mInputManager;
     OIS::Mouse*                 mMouse;
     OIS::Keyboard*              mKeyboard;
-    Simulator*                  mSimulator;
     Mix_Music*                  music;
     Mix_Music*                  music2;
 

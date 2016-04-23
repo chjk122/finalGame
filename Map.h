@@ -13,7 +13,6 @@ protected:
 	std::vector< std::vector<Tile *> > map;
 	std::vector< Cubester *> cubesters;
 	Player *player;
-	Simulator *sim;
 	Ogre::SceneManager* mgr;
 	//items
 
@@ -27,7 +26,7 @@ public:
 	// int getNumCubesters();
 	// Player *getPlayer();
 	bool move(int direction);
-	void simulate();
+	void simulate(const Ogre::Real elapsedTime);
 
 private:
 	bool canMove(int tileX, int tileY, int direction);
