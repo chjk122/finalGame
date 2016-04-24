@@ -25,7 +25,7 @@ public:
 	static double length() { return 50; }   //cosnt length for all tiles
 	virtual bool getIsWalkable(); 			//for children to all have
 	virtual Ogre::Vector3 getPosition();
-	virtual void create() = 0; 				//cant call
+	virtual void create(std::string material) = 0; 				//cant call
 	virtual ~AbstractTile() {} 				//does nothing
 	virtual void event(Player* p) = 0;
 };
@@ -36,7 +36,7 @@ class PathTile : public AbstractTile
 public:
 	PathTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~PathTile();
-	virtual void create();
+	virtual void create(std::string material);
 	virtual void event(Player* p);
 
 };
@@ -47,7 +47,6 @@ class StartTile : public PathTile
 public:
 	StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~StartTile();
-	virtual void create();
 	
 
 };
@@ -57,7 +56,6 @@ class FinishTile : public PathTile
 public:
 	FinishTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~FinishTile();
-	virtual void create();
 	virtual void event(Player* p);
 
 };
@@ -67,7 +65,6 @@ class LavaTile : public PathTile
 public:
 	LavaTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~LavaTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -78,7 +75,6 @@ class PoisonTile : public PathTile
 public:
 	PoisonTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~PoisonTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -89,7 +85,6 @@ class IceTile : public PathTile
 public:
 	IceTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~IceTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -100,7 +95,6 @@ class WaterTile : public PathTile
 public:
 	WaterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~WaterTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -111,7 +105,6 @@ class TeleportTile : public PathTile
 public:
 	TeleportTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~TeleportTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -122,7 +115,6 @@ class SlowTile : public PathTile
 public:
 	SlowTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~SlowTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -133,7 +125,6 @@ class DoorTile : public PathTile
 public:
 	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~DoorTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
@@ -143,28 +134,18 @@ class RakanTile : public PathTile
 public:
 	RakanTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~RakanTile();
-	virtual void create();
 	virtual void event(Player* p);
 	
 };
 
-
-
 // basic nonwalkable tile
-class OuterTile : public AbstractTile
+class OuterTile : public PathTile
 {
 public:
 	OuterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~OuterTile();
-	virtual void create();
 	virtual void event(Player* p);
-	//virtual bool healthDamage(Ogre::Vector3 pos);
 };
-
-
-
-
-
 
 // wrapper class
 class Tile
@@ -174,12 +155,11 @@ protected:
 public:
 	Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t);
 	~Tile();
-	void create();
+	void create(std::string material);
 	double length() { return AbstractTile::length(); }
 	bool getIsWalkable();
 	Ogre::Vector3 getPosition();
     void event(Player* p);
-
 
 	static char typeForPathTile() { return '+'; }
 	static char typeForOuterTile() { return 'x'; }
