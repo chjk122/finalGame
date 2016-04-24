@@ -117,15 +117,24 @@ void BaseApplication::createObjects(void)
     // player->create();
 
     std::vector<std::string> v;
-     v.push_back("++++++++++");
-    for(int x = 0; x < 8; x++)
-    {
-        if(x%2 == 0)
-            v.push_back("+rrrrrrrr+");
-        else
-            v.push_back("+lipwtdol+");
-    }
-    v.push_back("sxlrlrlrxf");
+    v.push_back("+++wwwvkxf");
+    v.push_back("ixxwxxxxx+");
+    v.push_back("ixxwxxxxx+");
+    v.push_back("ixx+xxxxx+");
+    v.push_back("ivv+llllx+");
+    v.push_back("++++++++pd");
+    v.push_back("ivv++llxxp");
+    v.push_back("ixx+++xxx+");
+    v.push_back("ixxxx+xxx+");
+    v.push_back("sxc+++++++");
+    // for(int x = 0; x < 8; x++)
+    // {
+    //     if(x%2 == 0)
+    //         v.push_back("+rrrrrrrr+");
+    //     else
+    //         v.push_back("+lipwtdol+");
+    // }
+    //v.push_back("sxlrlrlrxf");
 
     gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v);
 }

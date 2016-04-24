@@ -31,7 +31,17 @@ material Cube/Blend
         ambient .2 .2 .2
           texture_unit
           {
-            texture rakan.jpg
+            texture outer.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
           }
        }
     }
@@ -120,6 +130,29 @@ material Cube/Blend
        }
     }
  }
+ material Item/Cure
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture itemCure.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
  material Tile/Water
  {
     technique
@@ -166,29 +199,6 @@ material Cube/Blend
        }
     }
  }
- material Tile/Ice2
- {
-    technique
-    {
-       pass
-       {
-          texture_unit
-          {
-            texture ice2.jpg
-          }
-          texture_unit
-          {
-             texture blackoutline.png             
-             colour_op alpha_blend
-          }
-          texture_unit
-          {
-             texture black.png
-             colour_op_ex blend_current_alpha src_texture src_current
-          }
-       }
-    }
- }
  material Tile/Poison
  {
     technique
@@ -197,7 +207,7 @@ material Cube/Blend
        {
           texture_unit
           {
-            texture poison.jpg
+            texture poison2.jpg
           }
           texture_unit
           {
@@ -295,7 +305,7 @@ material Cube/Blend
        }
     }
  }
- material Tile/Door
+ material Tile/DoorLocked
  {
     technique
     {
@@ -303,7 +313,7 @@ material Cube/Blend
        {
           texture_unit
           {
-            texture door.jpg
+            texture doorLocked.jpg
           }
           texture_unit
           {
@@ -318,6 +328,54 @@ material Cube/Blend
        }
     }
  }
+
+ material Tile/DoorUnlocked
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture doorUnlocked.jpg
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+ material Tile/Key
+ {
+    technique
+    {
+       pass
+       {
+          texture_unit
+          {
+            texture key.png
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+
  material Tile/Rakan
  {
     technique
@@ -332,25 +390,675 @@ material Cube/Blend
     }
  }
 material Cube/Poison
-  {
+{
     technique
     {
       pass
       {
         texture_unit
         {
-          texture red.png
+          texture black.png
         }
         texture_unit
-          {
+        {
              texture PoisonBlendMask.png             
              colour_op alpha_blend
-          }
-          texture_unit
-          {
-             texture solidpoison.jpg 
-             colour_op_ex blend_current_alpha src_texture src_current
-          }
         }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
     }
-  }
+}
+material Cube/Burn5
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend5.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Burn4
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend4.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Burn3
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend3.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg  
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Burn2
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend2.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg  
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Burn1
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend1.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg  
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBurn5
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend5.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBurn4
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend4.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBurn3
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend3.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBurn2
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend2.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBurn1
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture BurnBlend1.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/PBubble9
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble9.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble8
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble8.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble7
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble7.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble6
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble6.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble5
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble5.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble4
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble4.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble3
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble3.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble2
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble2.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/PBubble1
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble1.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture poison.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble9
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble9.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble8
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble8.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble7
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble7.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble6
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble6.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble5
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble5.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble4
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble4.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble3
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble3.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble2
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble2.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/Bubble1
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture Bubble1.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture water.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}

@@ -10,7 +10,7 @@ namespace patch
     }
 }
 
-bool AbstractTile::getIsWalkable()
+bool AbstractTile::getIsWalkable(Player *p)
 {
     return isWalkable;
 }
@@ -39,21 +39,23 @@ void PathTile::create(std::string material)
 {
     std::string name = patch::to_string(xIndex) + "y" + patch::to_string(yIndex);
     Ogre::MeshManager::getSingleton().create("cube.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-    Ogre::Entity* entity = mgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
+    ent = mgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
      "cube.mesh", 
      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
     Ogre::Vector3 newPos(position.x, position.y - (length()/2), position.z);
     Ogre::SceneNode* rootNode = mgr->getRootSceneNode()->createChildSceneNode(name, newPos);
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
-    rootNode->attachObject(entity);
+    rootNode->attachObject(ent);
     // rootNode->setScale(.6, .6, .6); 
-    entity->setMaterialName(material);
+    ent->setMaterialName(material);
 }
 
 void PathTile::event(Player* p)
 {
+    p->oxygen = 10;
     printf("%i yindex %i\n", xIndex, yIndex );
 }
+
 /*-----------------------------StartTile----------------------------------*/
 StartTile::StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
 PathTile(sceneMgr, pos, xInd, yInd)
@@ -78,9 +80,26 @@ FinishTile::~FinishTile()
 
 void FinishTile::event(Player* p)
 {
+    p->oxygen = 10;
     printf("Finish\n");
 }
 
+/*-----------------------------SpikeTile----------------------------------*/
+SpikeTile::SpikeTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+   
+}
+
+SpikeTile::~SpikeTile()
+{
+
+}
+void SpikeTile::event(Player* p)
+{
+    p->oxygen = 10;
+    printf("SpikeTile\n");
+}
 
 /*-----------------------------LavaTile----------------------------------*/
 LavaTile::LavaTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
@@ -95,7 +114,9 @@ LavaTile::~LavaTile()
 }
 void LavaTile::event(Player* p)
 {
-    printf("Lava");
+    p->oxygen = 10;
+    p->burn = 5;
+    printf("Lava\n");
 }
 
 /*-----------------------------PoisonTile----------------------------------*/
@@ -111,7 +132,8 @@ PoisonTile::~PoisonTile()
 
 void PoisonTile::event(Player* p)
 {
-    p->health -= 5;
+    p->oxygen = 10;
+    p->poison = true;
     printf("%i health\n", p->health);
 }
 
@@ -128,7 +150,8 @@ IceTile::~IceTile()
 
 void IceTile::event(Player* p)
 {
-    printf("IceTile");
+    p->oxygen = 10;
+    printf("IceTile\n");
 }
 
 /*-----------------------------WaterTile----------------------------------*/
@@ -144,7 +167,9 @@ WaterTile::~WaterTile()
 
 void WaterTile::event(Player* p)
 {
-    printf("WaterTile");
+    p->oxygen -= 1;
+    p->removeBurn();
+    printf("WaterTile\n");
 }
 
 /*-----------------------------TeleportTile----------------------------------*/
@@ -160,7 +185,8 @@ TeleportTile::~TeleportTile()
 
 void TeleportTile::event(Player* p)
 {
-    printf("TeleportTile");
+    p->oxygen = 10;
+    printf("TeleportTile\n");
 }
 
 /*-----------------------------SlowTile----------------------------------*/
@@ -176,14 +202,33 @@ SlowTile::~SlowTile()
 
 void SlowTile::event(Player* p)
 {
-    printf("SlowTile");
+    p->oxygen = 10;
+    printf("SlowTile\n");
+}
+
+/*-----------------------------CureTile----------------------------------*/
+CureTile::CureTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+CureTile::~CureTile()
+{
+
+}
+
+void CureTile::event(Player* p)
+{
+    p->oxygen = 10;
+    p->poison = false;
+    printf("Poison removed\n");
 }
 
 /*-----------------------------DoorTile----------------------------------*/
 DoorTile::DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
 PathTile(sceneMgr, pos, xInd, yInd)
 {
-
+     isWalkable = false;
 }
 DoorTile::~DoorTile()
 {
@@ -192,7 +237,38 @@ DoorTile::~DoorTile()
 
 void DoorTile::event(Player* p)
 {
-    printf("DoorTile");
+    p->oxygen = 10;
+    printf("DoorTile\n");
+}
+
+bool DoorTile::getIsWalkable(Player* p)
+{
+    if(p->hasKey()) 
+    {
+        ent->setMaterialName("Tile/DoorUnlocked");
+        return true;
+    }
+    else
+        return false;
+}
+
+/*-----------------------------KeyTile----------------------------------*/
+KeyTile::KeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+KeyTile::~KeyTile()
+{
+    
+}
+
+void KeyTile::event(Player* p)
+{
+    ent->setMaterialName("Tile/Path");
+    p->oxygen = 10;
+    p->gotKey();
+    printf("KeyTile\n");
 }
 
 /*-----------------------------RakanTile----------------------------------*/
@@ -208,8 +284,9 @@ RakanTile::~RakanTile()
 }
 void RakanTile::event(Player* p)
 {
+    p->oxygen = 10;
     p->changeMaterial("Tile/Rakan");
-    printf("RakanTile");
+    printf("RakanTile\n");
 }
 
 
@@ -287,12 +364,27 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
     else if(t == typeForDoorTile())
     {
         tile = new DoorTile(sceneMgr, pos, xInd, yInd);
-        material = "Tile/Door";
+        material = "Tile/DoorLocked";
+    }
+    else if(t == typeForKeyTile())
+    {
+        tile = new KeyTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/Key";
     }
     else if(t == typeForRakanTile())
     {
         tile = new RakanTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Rakan";
+    }
+    else if(t == typeForSpikeTile())
+    {
+        tile = new SpikeTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/Spike";
+    }
+    else if(t == typeForCureTile())
+    {
+        tile = new CureTile(sceneMgr, pos, xInd, yInd);
+        material = "Item/Cure";
     }
 
     create(material);
@@ -309,9 +401,9 @@ void Tile::create(std::string material)
     tile->create(material);
 }
 
-bool Tile::getIsWalkable()
+bool Tile::getIsWalkable(Player *p)
 {
-    return tile->getIsWalkable();
+    return tile->getIsWalkable(p);
 }
 
 Ogre::Vector3 Tile::getPosition()

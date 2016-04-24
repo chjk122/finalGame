@@ -1,4 +1,14 @@
 #include "GameObject.h"
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 
 GameObject::GameObject(Ogre::String n,
 	Ogre::SceneManager* mgr,
@@ -31,6 +41,10 @@ Player::Player(Ogre::String n,
     inMotion = false;
 	inertia = btVector3(0,0,0);
     health = 100;
+    key = false;
+    burn = 0;
+    oxygen = 10;
+    poison = false;
 }
 
 Player::~Player()
@@ -146,6 +160,53 @@ void Player::changeMaterial(std::string s)
 {
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
     mEntity->setMaterialName(s);
+}
+
+void Player::gotKey()
+{
+    key = true;
+}
+
+bool Player::hasKey()
+{
+    return key;
+}
+void Player::updateStatus()
+{
+    Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
+    if(poison && burn >0)
+    {
+         std::string newMaterial = "Cube/PBurn" + patch::to_string(burn);
+         mEntity->setMaterialName(newMaterial);
+    }
+    else if(poison && oxygen<10)
+    {
+        std::string newMaterial = "Cube/PBubble" + patch::to_string(oxygen);
+         mEntity->setMaterialName(newMaterial);
+    }
+    else if(burn > 0)
+    {
+         std::string newMaterial = "Cube/Burn" + patch::to_string(burn);
+         mEntity->setMaterialName(newMaterial);
+    }
+    else if (poison)
+    {
+        mEntity->setMaterialName("Cube/Poison");
+    }
+    else if(oxygen != 10)
+    {
+         std::string newMaterial = "Cube/Bubble" + patch::to_string(oxygen);
+         mEntity->setMaterialName(newMaterial);
+    }
+    else
+                mEntity->setMaterialName("Cube/Blend");
+     burn -= 1;
+}
+void Player::removeBurn()
+{
+    burn =0;
+    Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
+    mEntity->setMaterialName("Cube/Blend");
 }
 
 Wall::Wall(Ogre::String n,

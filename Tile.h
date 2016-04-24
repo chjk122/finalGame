@@ -21,9 +21,10 @@ protected:
 	int xIndex;
 	int yIndex;
 	bool isWalkable;
+	Ogre::Entity* ent;
 public:
 	static double length() { return 50; }   //cosnt length for all tiles
-	virtual bool getIsWalkable(); 			//for children to all have
+	virtual bool getIsWalkable(Player* p); 			//for children to all have
 	virtual Ogre::Vector3 getPosition();
 	virtual void create(std::string material) = 0; 				//cant call
 	virtual ~AbstractTile() {} 				//does nothing
@@ -58,6 +59,16 @@ public:
 	virtual ~FinishTile();
 	virtual void event(Player* p);
 
+};
+
+//Lava tile
+class SpikeTile : public PathTile
+{
+public:
+	SpikeTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~SpikeTile();
+	virtual void event(Player* p);
+	
 };
 //Lava tile
 class LavaTile : public PathTile
@@ -126,6 +137,17 @@ public:
 	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~DoorTile();
 	virtual void event(Player* p);
+	virtual bool getIsWalkable(Player* p);
+	
+};
+
+//Key tile
+class KeyTile : public PathTile
+{
+public:
+	KeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~KeyTile();
+	virtual void event(Player* p);
 	
 };
 
@@ -134,6 +156,15 @@ class RakanTile : public PathTile
 public:
 	RakanTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~RakanTile();
+	virtual void event(Player* p);
+	
+};
+
+class CureTile : public PathTile
+{
+public:
+	CureTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~CureTile();
 	virtual void event(Player* p);
 	
 };
@@ -156,9 +187,10 @@ public:
 	Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t);
 	~Tile();
 	void create(std::string material);
-	double length() { return AbstractTile::length(); }
-	bool getIsWalkable();
+	double    length() { return AbstractTile::length(); }
+	bool getIsWalkable(Player *p);
 	Ogre::Vector3 getPosition();
+
     void event(Player* p);
 
 	static char typeForPathTile() { return '+'; }
@@ -172,7 +204,10 @@ public:
 	static char typeForTeleportTile() { return 't'; }
 	static char typeForSlowTile() { return 'o'; }
 	static char typeForDoorTile() {return 'd';}
+	static char typeForKeyTile() {return 'k';}
 	static char typeForRakanTile() { return 'r'; }
+	static char typeForSpikeTile() { return 'v'; }
+	static char typeForCureTile() {return 'c';}
 
 };
 

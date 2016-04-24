@@ -81,7 +81,7 @@ bool Map::canMove(int tileX, int tileY, int direction)
 	if(tileX < 0 || tileY < 0 || tileX >= getLength() || tileY >= getLength()) //case: out of bounds
 		return false;
 
-	if(map[tileX][tileY]->getIsWalkable())
+	if(map[tileX][tileY]->getIsWalkable(player))
 	{
 		return true; //exists and is walkable
 	}
@@ -97,6 +97,7 @@ void Map::simulate(const Ogre::Real elapsedTime)
 	if(eventFire)
 	{
 		map[player->getPlayerX()][player->getPlayerY()]->event(player);
+		player->updateStatus();
 	}
 	//loop through enemy/player and call thier simulate method
 }

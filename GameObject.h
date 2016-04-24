@@ -46,10 +46,14 @@ public:
 	int playerX;
 	int playerY;
 	int health;
-	static double length() { return 20; }
+	bool poison;
+	int burn;
+	int oxygen;
+	bool key;
+	static double length() { return 50; }
 
 	//movement information
-	static double moveSpeed() { return 100; } //raise to 50ish
+	static double moveSpeed() { return 200; } //raise to 50ish
 	Ogre::Vector3 endPos;
 	int direction;
 	bool inMotion;
@@ -64,10 +68,14 @@ public:
 	bool move(int dir, Ogre::Vector3 p);
 	bool simulate(const Ogre::Real elapsedTime);
 	bool canMove();
+	void gotKey();
+	bool hasKey();
 	int getPlayerX();
 	int getPlayerY();
 	void setPlayerCord(int xI, int yI, int legthTile, double xCord, double zCord);
 	void changeMaterial(std::string s);
+	void removeBurn();
+	void updateStatus();
 
 };
 
