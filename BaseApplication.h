@@ -112,6 +112,9 @@ protected:
     virtual void windowResized(Ogre::RenderWindow* rw);
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
+    virtual void setupMainMenu(void);
+    virtual void setupDifficultyMenu(void);
+    virtual void setupIntroLevelSelect(void);
 
     Ogre::Root*                 mRoot;
     Ogre::Camera*               mCamera;
@@ -127,11 +130,17 @@ protected:
     OgreBites::SdkTrayManager*	mTrayMgr;
     OgreBites::SdkCameraMan*    mCameraMan;     	// Basic camera controller
     OgreBites::ParamsPanel*     mDetailsPanel;   	// Sample details panel
+    OgreBites::Label*           mMenuLabel;
+    OgreBites::Button*          mButton1;
+    OgreBites::Button*          mButton2;
+    OgreBites::Button*          mButton3;
+    OgreBites::Button*          mButtonBack;
     
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
 
     //OIS Input devices
+
     OIS::InputManager*          mInputManager;
     OIS::Mouse*                 mMouse;
     OIS::Keyboard*              mKeyboard;

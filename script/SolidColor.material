@@ -1,4 +1,4 @@
-material Cube/Blend
+material Cube/Dragon
  {
     technique
     {
@@ -22,6 +22,8 @@ material Cube/Blend
        }
     }
  }
+
+
 
  material Tile/Outer
  {
@@ -362,7 +364,7 @@ material Cube/Blend
        ambient .2 .2 .2
           texture_unit
           {
-            texture doorUnlocked.jpg
+            texture doorUnlocked.png
           }
           texture_unit
           {
@@ -1090,3 +1092,120 @@ material Cube/Bubble1
       }
     }
 }
+
+material Cube/Blend
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture black.png
+        }
+        texture_unit
+        {
+             texture dragon.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture fire.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/DeathFire
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture fire.jpg
+        }
+        texture_unit
+        {
+             texture death.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/DeathPoison
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture poison2.jpg
+        }
+        texture_unit
+        {
+             texture death.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/DeathDrown
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture water.png
+        }
+        texture_unit
+        {
+             texture death.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cube/DeathSpike
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture spike.jpg
+        }
+        texture_unit
+        {
+             texture death2.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+

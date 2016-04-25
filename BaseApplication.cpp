@@ -105,6 +105,27 @@ void BaseApplication::createCamera(void)
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // Create a default camera controller
 }
+
+//*-----------------------------------menu setup ------------------------------*//
+void BaseApplication::setupMainMenu(void)
+{
+    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 220);
+    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 220);
+    mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 220);
+
+}
+
+void BaseApplication::setupDifficultyMenu(void)
+{
+    mMenuLabel->setCaption("Select Difficulty");
+    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 220);
+    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "back", "Back to Main Menu", 220);
+}
+
+void BaseApplication::setupIntroLevelSelect(void)
+{
+
+}
 //---------------------------------------------------------------------------
 
 void BaseApplication::createObjects(void)
@@ -323,7 +344,8 @@ bool BaseApplication::setup(void)
     Mix_PlayMusic(music,-1);
     Mix_Volume(-1, 40);
 
-    createObjects();
+     mTrayMgr->showCursor();            
+    setupMainMenu();
 
     return true;
 };
@@ -331,7 +353,7 @@ bool BaseApplication::setup(void)
 bool scored = false;
 int points = 0;
 bool gameIsOver = false;
-
+bool gameStart = false;
 
 bool wisDown = false;
 bool disDown = false;
@@ -349,12 +371,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
-    Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
-    Ogre::Vector3 position = tem->getPosition();
-    mCamera->setPosition(position.x , 300, position.z+100);
+    
 
-    if(!gameIsOver)
+    if(gameStart)
     {
+        Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
+        Ogre::Vector3 position = tem->getPosition();
+        mCamera->setPosition(position.x , 300, position.z+100);
         if(wisDown)
         {
             bool result = false;
@@ -582,7 +605,24 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 }
 void BaseApplication::buttonHit(OgreBites::Button* button)
 {
-
+    if(button->getName().compare("start") == 0 )        
+    {       
+        mTrayMgr->destroyWidget("start");       
+        mTrayMgr->destroyWidget("sound");       
+        mTrayMgr->destroyWidget("credit");      
+        //setupDifficultyMenu();        
+        gameStart= true;        
+        createObjects();        
+    }       
+    else if(button->getName().compare("intro") == 0 )       
+    {       
+        mTrayMgr->destroyWidget("intro");       
+        mTrayMgr->destroyWidget("back");        
+        //mTrayMgr->destroyWidget("menuLabel");     
+        //createObjects();      
+        //gameStart = true;     
+        mTrayMgr->hideCursor();     
+    }
 }
 //---------------------------------------------------------------------------
 // Adjust mouse clipping area

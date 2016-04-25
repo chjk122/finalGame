@@ -134,7 +134,7 @@ bool Player::simulate(const Ogre::Real elapsedTime)
 
 bool Player::canMove()
 {
-    return (!inMotion);
+    return (!inMotion && isAlive());
 }
 
 int Player::getPlayerX()
@@ -246,7 +246,18 @@ void Player::kill()
     std::cout << "player killed" << std::endl;
     health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    mEntity->setMaterialName("Tile/Rakan");
+    if(poison)   
+    {       
+        mEntity->setMaterialName("Cube/DeathPoison");       
+    }       
+    else if(burn>0)     
+    {       
+         mEntity->setMaterialName("Cube/DeathFire");        
+    }       
+    else        
+    {       
+        mEntity->setMaterialName("Cube/DeathDrown");        
+    }
 }
 
 bool Player::isAlive()

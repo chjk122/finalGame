@@ -99,6 +99,11 @@ void SpikeTile::event(Player* p)
 {
     p->breath();
     p->damageTaken(Player::spikeDamage());
+    if(p->health <=0)
+    {
+        p->kill();
+        p->changeMaterial("Cube/DeathSpike");
+    }
     printf("SpikeTile\n");
 }
 
@@ -151,6 +156,23 @@ IceTile::~IceTile()
 void IceTile::event(Player* p)
 {
     p->breath();
+    Ogre::Vector3 pos = p->endPos;
+    if(p->direction == 0)
+    {
+        p->move(0, Ogre::Vector3(pos.x, pos.y , pos.z-50));
+    }
+    else if(p->direction == 1)
+    {        
+        p->move(1, Ogre::Vector3(pos.x+50, pos.y , pos.z));
+    }
+    else if(p->direction == 2)
+    {
+        p->move(2, Ogre::Vector3(pos.x, pos.y , pos.z+50));
+    }
+    else if(p->direction == 3)
+    {
+        p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z));
+    }
     printf("IceTile\n");
 }
 
