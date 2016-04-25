@@ -52,7 +52,7 @@ void PathTile::create(std::string material)
 
 void PathTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("%i yindex %i\n", xIndex, yIndex );
 }
 
@@ -80,7 +80,7 @@ FinishTile::~FinishTile()
 
 void FinishTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("Finish\n");
 }
 
@@ -97,7 +97,8 @@ SpikeTile::~SpikeTile()
 }
 void SpikeTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
+    p->damageTaken(Player::spikeDamage());
     printf("SpikeTile\n");
 }
 
@@ -114,7 +115,7 @@ LavaTile::~LavaTile()
 }
 void LavaTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     p->burn = 5;
     printf("Lava\n");
 }
@@ -132,9 +133,8 @@ PoisonTile::~PoisonTile()
 
 void PoisonTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     p->poison = true;
-    printf("%i health\n", p->health);
 }
 
 /*-----------------------------IceTile----------------------------------*/
@@ -150,7 +150,7 @@ IceTile::~IceTile()
 
 void IceTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("IceTile\n");
 }
 
@@ -167,7 +167,7 @@ WaterTile::~WaterTile()
 
 void WaterTile::event(Player* p)
 {
-    p->oxygen -= 1;
+    p->oxygenLost(1);
     p->removeBurn();
     printf("WaterTile\n");
 }
@@ -185,7 +185,7 @@ TeleportTile::~TeleportTile()
 
 void TeleportTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("TeleportTile\n");
 }
 
@@ -202,7 +202,7 @@ SlowTile::~SlowTile()
 
 void SlowTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("SlowTile\n");
 }
 
@@ -219,7 +219,7 @@ CureTile::~CureTile()
 
 void CureTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     p->poison = false;
     printf("Poison removed\n");
 }
@@ -237,7 +237,7 @@ DoorTile::~DoorTile()
 
 void DoorTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     printf("DoorTile\n");
 }
 
@@ -266,7 +266,7 @@ KeyTile::~KeyTile()
 void KeyTile::event(Player* p)
 {
     ent->setMaterialName("Tile/Path");
-    p->oxygen = 10;
+    p->breath();
     p->gotKey();
     printf("KeyTile\n");
 }
@@ -284,7 +284,7 @@ RakanTile::~RakanTile()
 }
 void RakanTile::event(Player* p)
 {
-    p->oxygen = 10;
+    p->breath();
     p->changeMaterial("Tile/Rakan");
     printf("RakanTile\n");
 }

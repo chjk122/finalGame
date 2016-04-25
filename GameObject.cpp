@@ -58,7 +58,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
      "cube.mesh", 
      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
     Ogre::Vector3 newPos(position.x, position.y, position.z);
-    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, newPos);
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("playerNode", newPos);
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);
@@ -174,26 +174,35 @@ bool Player::hasKey()
 void Player::updateStatus()
 {
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    if(poison && burn >0)
+    if(!isAlive())
+    {
+        // std::string newMaterial = "Tile/Rakan";
+        //  mEntity->setMaterialName(newMaterial);
+    }
+    else if(poison && burn >0)
     {
          std::string newMaterial = "Cube/PBurn" + patch::to_string(burn);
          mEntity->setMaterialName(newMaterial);
+         damageTaken(burnDamage()+poisonDamage());
     }
     else if(poison && oxygen<10)
     {
         std::string newMaterial = "Cube/PBubble" + patch::to_string(oxygen);
          mEntity->setMaterialName(newMaterial);
+         damageTaken(poisonDamage());
     }
     else if(burn > 0)
     {
          std::string newMaterial = "Cube/Burn" + patch::to_string(burn);
          mEntity->setMaterialName(newMaterial);
+         damageTaken(burnDamage());
     }
     else if (poison)
     {
         mEntity->setMaterialName("Cube/Poison");
+        damageTaken(poisonDamage());
     }
-    else if(oxygen != 10)
+    else if(oxygen < 10 && oxygen >= 1)
     {
          std::string newMaterial = "Cube/Bubble" + patch::to_string(oxygen);
          mEntity->setMaterialName(newMaterial);
@@ -202,11 +211,47 @@ void Player::updateStatus()
                 mEntity->setMaterialName("Cube/Blend");
      burn -= 1;
 }
+
 void Player::removeBurn()
 {
-    burn =0;
+    burn = 0;
+}
+
+void Player::damageTaken(double damage)
+{
+    health -= damage;
+    if(health <= 0)
+    {
+        kill();
+    }
+}
+
+void Player::oxygenLost(int amount)
+{
+    oxygen -= amount;
+    if(oxygen <= 0)
+    {
+        kill();
+    }
+}
+
+void Player::breath()
+{
+    if(isAlive())
+        oxygen = 10;
+}
+
+void Player::kill()
+{
+    std::cout << "player killed" << std::endl;
+    health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    mEntity->setMaterialName("Cube/Blend");
+    mEntity->setMaterialName("Tile/Rakan");
+}
+
+bool Player::isAlive()
+{
+    return (health > 0 && oxygen > 0);
 }
 
 Wall::Wall(Ogre::String n,

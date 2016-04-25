@@ -67,7 +67,7 @@ void Assignment2::createScene(void)
  
     
     mCamera->setPosition(0, -170.0, +300.0);
-    mCamera->pitch(Ogre::Degree(15.0));
+    mCamera->pitch(Ogre::Degree(-75.0));
     // negative z and this will be client v
     // mCamera->yaw(Ogre::Degree(180.0));
 

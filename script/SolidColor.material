@@ -4,6 +4,7 @@ material Cube/Blend
     {
        pass
        {
+        
           texture_unit
           {
             texture red.png
@@ -28,7 +29,7 @@ material Cube/Blend
     {
        pass
        {
-        ambient .2 .2 .2
+          ambient .2 .2 .2
           texture_unit
           {
             texture outer.jpg
@@ -53,6 +54,7 @@ material Cube/Blend
     {
        pass
        {
+        ambient .2 .2 .2
           texture_unit
           {
             texture path.jpg
@@ -77,6 +79,7 @@ material Cube/Blend
     {
        pass
        {
+        ambient .2 .2 .2
           texture_unit
           {
             texture finish.jpg
@@ -100,9 +103,20 @@ material Cube/Blend
     {
        pass
        {
+        ambient .2 .2 .2
           texture_unit
           {
             texture lava.png
+          }
+           texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
           }
        }
     }
@@ -113,6 +127,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture spike.jpg
@@ -136,6 +151,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture itemCure.jpg
@@ -159,6 +175,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture water.png
@@ -182,6 +199,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture ice.jpg
@@ -205,6 +223,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture poison2.jpg
@@ -226,6 +245,7 @@ material Cube/Blend
  {
     technique
     {
+    ambient .2 .2 .2
        pass
        {
           ambient 1 1 1
@@ -242,6 +262,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture teleport.jpg
@@ -265,6 +286,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture cool.jpg
@@ -288,6 +310,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture water.png
@@ -311,6 +334,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture doorLocked.jpg
@@ -335,6 +359,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture doorUnlocked.jpg
@@ -358,6 +383,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture key.png
@@ -382,6 +408,7 @@ material Cube/Blend
     {
        pass
        {
+       ambient .2 .2 .2
           texture_unit
           {
             texture rakan.jpg
@@ -395,6 +422,7 @@ material Cube/Poison
     {
       pass
       {
+
         texture_unit
         {
           texture black.png

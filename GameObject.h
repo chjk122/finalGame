@@ -45,13 +45,15 @@ public:
 	Ogre::Vector3 position;
 	int playerX;
 	int playerY;
-	int health;
+	double health;
 	bool poison;
 	int burn;
 	int oxygen;
 	bool key;
 	static double length() { return 50; }
-
+	static double burnDamage(){return 5;}
+	static double poisonDamage(){return 2;}
+	static double spikeDamage(){return 39;}
 	//movement information
 	static double moveSpeed() { return 200; } //raise to 50ish
 	Ogre::Vector3 endPos;
@@ -76,6 +78,11 @@ public:
 	void changeMaterial(std::string s);
 	void removeBurn();
 	void updateStatus();
+	void damageTaken(double damage);
+	void oxygenLost(int amount);
+	void breath();
+	void kill();
+	bool isAlive();
 
 };
 

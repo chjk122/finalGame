@@ -117,16 +117,18 @@ void BaseApplication::createObjects(void)
     // player->create();
 
     std::vector<std::string> v;
-    v.push_back("+++wwwvkxf");
-    v.push_back("ixxwxxxxx+");
-    v.push_back("ixxwxxxxx+");
-    v.push_back("ixx+xxxxx+");
-    v.push_back("ivv+llllx+");
-    v.push_back("++++++++pd");
-    v.push_back("ivv++llxxp");
-    v.push_back("ixx+++xxx+");
-    v.push_back("ixxxx+xxx+");
-    v.push_back("sxc+++++++");
+    v.push_back("xxxxxxxxxxxx");
+    v.push_back("x+++wwwvkxfx");
+    v.push_back("xixxwxxxxx+x");
+    v.push_back("xixxwxxxxx+x");
+    v.push_back("xixx+xxxxx+x");
+    v.push_back("xivv+llllx+x");
+    v.push_back("x++++++++pdx");
+    v.push_back("xivv++llxxpx");
+    v.push_back("xixx+++xxx+x");
+    v.push_back("xixxxx+xxx+x");
+    v.push_back("xsxc+++++++x");
+    v.push_back("xxxxxxxxxxxx");
     // for(int x = 0; x < 8; x++)
     // {
     //     if(x%2 == 0)
@@ -337,6 +339,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
+    Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
+    Ogre::Vector3 position = tem->getPosition();
+    mCamera->setPosition(position.x , 120, position.z+100);
 
     if(!gameIsOver)
     {
@@ -477,19 +482,19 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mShutDown = true;
     }
-    else if(arg.key == OIS::KC_W)
+    else if(arg.key == OIS::KC_W || arg.key == OIS::KC_UP )
     {
         wisDown = true;
     }
-    else if(arg.key == OIS::KC_D)
+    else if(arg.key == OIS::KC_D || arg.key == OIS::KC_RIGHT )
     {
         disDown = true;
     }
-    else if(arg.key == OIS::KC_S)
+    else if(arg.key == OIS::KC_S || arg.key == OIS::KC_DOWN)
     {
         sisDown = true;
     }
-    else if(arg.key == OIS::KC_A)
+    else if(arg.key == OIS::KC_A||  arg.key == OIS::KC_LEFT)
     {
         aisDown = true;
     }
@@ -513,7 +518,10 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     if(!(arg.key == OIS::KC_W ||
             arg.key == OIS::KC_A ||
             arg.key == OIS::KC_S ||
-            arg.key == OIS::KC_D))
+            arg.key == OIS::KC_D || arg.key == OIS::KC_UP ||
+             arg.key == OIS::KC_DOWN ||
+            arg.key == OIS::KC_RIGHT ||
+             arg.key == OIS::KC_LEFT))
     {
         mCameraMan->injectKeyDown(arg);
     }
@@ -522,19 +530,19 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 //---------------------------------------------------------------------------
 bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 {
-    if(arg.key == OIS::KC_W)
+    if(arg.key == OIS::KC_W || arg.key == OIS::KC_UP )
     {
         wisDown = false;
     }
-    else if(arg.key == OIS::KC_D)
+    else if(arg.key == OIS::KC_D || arg.key == OIS::KC_RIGHT )
     {
         disDown = false;
     }
-    else if(arg.key == OIS::KC_S)
+    else if(arg.key == OIS::KC_S || arg.key == OIS::KC_DOWN)
     {
         sisDown = false;
     }
-    else if(arg.key == OIS::KC_A)
+    else if(arg.key == OIS::KC_A||  arg.key == OIS::KC_LEFT)
     {
         aisDown = false;
     }
@@ -545,7 +553,7 @@ bool BaseApplication::keyReleased(const OIS::KeyEvent &arg)
 bool BaseApplication::mouseMoved(const OIS::MouseEvent &arg)
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
-    mCameraMan->injectMouseMove(arg);
+    //mCameraMan->injectMouseMove(arg);
     return true;
 }
 //---------------------------------------------------------------------------
