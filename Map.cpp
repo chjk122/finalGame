@@ -5,7 +5,8 @@ Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTople
 	
 }
 
-Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string > v):
+Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos,
+		 std::vector< std::string > v, std::vector< std::string > e):
 mgr(sceneMgr), player(play)
 {
 	Tile *temp;
@@ -15,12 +16,42 @@ mgr(sceneMgr), player(play)
 		map.push_back(std::vector<Tile *>());
 		for(int y = 0; y < v.size(); y++)
 		{
+			// code for the tiles
 			temp = new Tile(mgr,pos, x, y, v[x][y]);
 			map[x].push_back(temp);
 			if(v[x][y] == Tile::typeForStartTile())
 			{
 				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
 			}
+			//code for enemy locations
+			if(e[x][y] != 'x')
+			{
+				//know it should be part of an sqaure movement enemy
+				if(e[x][y] >= 'a' && e[x][y] <= 'd')
+				{
+					char enemyType = e[x][y];
+					for(int i = x+1; i < e.size(); i++) //find the dist of square the enmemy walks
+					{
+						if(e[i][y] == enemyType)
+						{
+							std::cout << "found match for " << enemyType << " at " << x <<", " << y <<" and for i " << i <<std::endl;
+							//here we found the dist of side (i-x) and know the type of enemy
+							int dist = i-x;
+							Cubester *creature = new Cubester(sceneMgr, pos, x, y, dist, enemyType);
+							cubesters.push_back(creature);
+							//remove the creature from the parser
+							e[x][y] = 'x';
+							e[x+dist][y] = 'x';
+							e[x][y+dist] = 'x';
+							e[x+dist][y+dist] = 'x';
+							break;
+						}
+					}
+				}
+			}
+
+
+			//increment position
 			pos.x = pos.x + AbstractTile::length(); // + length to the right in 2d
 		}
 		pos.z = pos.z + AbstractTile::length(); // + length downward in 2d
@@ -39,6 +70,13 @@ Map::~Map()
 		map[x].clear();
 	}
 	map.clear();
+
+
+	for(int x = 0; x < getLength(); x++)
+	{
+		delete cubesters[x];
+	}
+	cubesters.clear();
 
 }
 
@@ -98,6 +136,11 @@ void Map::simulate(const Ogre::Real elapsedTime)
 	{
 		map[player->getPlayerX()][player->getPlayerY()]->event(player);
 		player->updateStatus();
+	}
+
+	for(int x = 0; x < cubesters.size(); x++)
+	{
+		cubesters[x]->simulate(elapsedTime);
 	}
 	//loop through enemy/player and call thier simulate method
 }

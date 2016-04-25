@@ -55,7 +55,7 @@ public:
 	static double poisonDamage(){return 2;}
 	static double spikeDamage(){return 39;}
 	//movement information
-	static double moveSpeed() { return 200; } //raise to 50ish
+	static double moveSpeed() { return 200; } //raise to 150ish
 	Ogre::Vector3 endPos;
 	int direction;
 	bool inMotion;
@@ -104,20 +104,6 @@ public:
 	virtual void create();
 
 };
-
-class Cubester : public GameObject
-{
-protected:
-	Ogre::Vector3 position;
-public:
-	Cubester(Ogre::String n,
-	Ogre::SceneManager* mgr,
-	Ogre::SceneNode* node,
-	btScalar m, Ogre::Vector3 position);
-	virtual ~Cubester();
-	virtual void create();
-};
-
 
 	// void destroyNode(Ogre::SceneNode* node);
 	// void reload();

@@ -117,28 +117,38 @@ void BaseApplication::createObjects(void)
     // player->create();
 
     std::vector<std::string> v;
-    v.push_back("xxxxxxxxxxxx");
-    v.push_back("x+++wwwvkxfx");
-    v.push_back("xixxwxxxxx+x");
-    v.push_back("xixxwxxxxx+x");
-    v.push_back("xixx+xxxxx+x");
-    v.push_back("xivv+llllx+x");
-    v.push_back("x++++++++pdx");
-    v.push_back("xivv++llxxpx");
-    v.push_back("xixx+++xxx+x");
-    v.push_back("xixxxx+xxx+x");
-    v.push_back("xsxc+++++++x");
-    v.push_back("xxxxxxxxxxxx");
-    // for(int x = 0; x < 8; x++)
-    // {
-    //     if(x%2 == 0)
-    //         v.push_back("+rrrrrrrr+");
-    //     else
-    //         v.push_back("+lipwtdol+");
-    // }
-    //v.push_back("sxlrlrlrxf");
+    std::vector<std::string> e;
+    v.push_back("xxxxxxx");  //y, q, e, z
+    v.push_back("xwwwwwx");
+    v.push_back("xwxwxwx");
+    v.push_back("xwxwxwx");
+    v.push_back("xlxwxvx");
+    v.push_back("xlxwxdx");
+    v.push_back("xsxkxfx");
 
-    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v);
+    //enemy key (y,u,a,b,c,d,l,r,h,i,j,k)
+    // y (starts top goes down)
+        //other version is u starts down goes top
+    //a (starts top left goes top right bottom right bottom left)
+        //b top right bottom right bottom left top left
+        //c bottom right bottom left top left top right
+        //d bottom left top left goes top right bottom
+    //l starts left goes right
+        //r starts right goes left
+    //h goes up to next h and telports back to first h
+        //i goes right to next i and telports back to first i
+        //j goes down to next j and telports back to first j
+        //k goes left to next k and telports back to first k
+
+    e.push_back("abxxabx"); 
+    e.push_back("cdxxcdx");
+    e.push_back("xxxxxxx");
+    e.push_back("xxxxxxx");
+    e.push_back("abxxabx");
+    e.push_back("cdxxcdx");
+    e.push_back("xxxxxxx");
+
+    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v, e);
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -341,7 +351,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
     Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
     Ogre::Vector3 position = tem->getPosition();
-    mCamera->setPosition(position.x , 120, position.z+100);
+    mCamera->setPosition(position.x , 300, position.z+100);
 
     if(!gameIsOver)
     {

@@ -284,73 +284,12 @@ void Wall::create()
     Ogre::MeshManager::getSingleton().createPlane(name, 
         Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane, 
         xLength,yLength,20,20,true,1,5,5,up);
-
-    // btTransform groundTransform;
-    // groundTransform.setIdentity();
-    // groundTransform.setOrigin(btVector3((distFromCenter*normal.x)-(10*normal.x), (distFromCenter*normal.y) - (10*normal.y), (distFromCenter*normal.z) - (normal.z *10)));
-    // inertia = btVector3(0,0,0);
-
-    // btScalar x1(250.);
-    // btScalar y1(250.);
-    // btScalar z1(250.);
-
-    // if(normal.x != 0){
-    //     x1 = 10.;
-    // }
-    // else if(normal.y != 0){
-    //     y1 = 10.;
-    // }
-    // else if(normal.z != 0) {
-    //     z1 = 10.;
-    // }
-
-    // shape = new btBoxShape(btVector3(x1, y1, z1));
-    // motionState = new btDefaultMotionState(groundTransform);
-    // shape->calculateLocalInertia(mass, inertia);
-
-    // btRigidBody::btRigidBodyConstructionInfo groundRBInfo(mass, motionState, shape, inertia);
-    // body = new btRigidBody(groundRBInfo);
-    // body->setRestitution(.5);
-    // body->setFriction(50.0);
-    // body->setRollingFriction(20.3f);
-
-
-    // simulator->addObject(this);
 	Ogre::Entity* entity = sceneMgr->createEntity(name); 
     sceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entity); 
     entity->setMaterialName("Examples/Rocky"); 
     entity->setCastShadows(false);
 }
 
-/*-----------------------------Start of Cubester-----------------------------*/
-Cubester::Cubester(Ogre::String n,
-    Ogre::SceneManager* mgr,
-    Ogre::SceneNode* node,
-    btScalar m,
-    Ogre::Vector3 pos) :
-    GameObject(n,mgr,node,m),
-    position(pos)
-{
-    inertia = btVector3(0,0,0);
-}
-
-Cubester::~Cubester()
-{
-}
-
-void Cubester::create(/*Ogre::Degree p, Ogre::Degree r, Ogre::Degree y*/)
-{
-    // Ogre::MeshManager::getSingleton().create("outfit_soccer_player_shirt1.001.mesh", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-    // Ogre::Entity* entity = sceneMgr->createEntity(Ogre::MeshManager::getSingleton().getByName(
-    //     "outfit_soccer_player_shirt1.001.mesh", 
-    //     Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
-
-    // rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, position);
-    // rootNode->attachObject(entity);
-    // rootNode->setScale(60, 60, 60);
-    // rootNode->pitch(Ogre::Degree(p));
-    // rootNode->roll(Ogre::Degree(r));
-}
 // void Simulator::destroyNode(Ogre::SceneNode* node)
 // {
 // 	if(!node) return;

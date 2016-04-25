@@ -100,7 +100,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_assignment2_OBJECTS = assignment2-Assignment2.$(OBJEXT) \
 	assignment2-BaseApplication.$(OBJEXT) \
 	assignment2-GameObject.$(OBJEXT) assignment2-Map.$(OBJEXT) \
-	assignment2-Tile.$(OBJEXT)
+	assignment2-Tile.$(OBJEXT) assignment2-Cubester.$(OBJEXT)
 assignment2_OBJECTS = $(am_assignment2_OBJECTS)
 am__DEPENDENCIES_1 =
 assignment2_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -193,13 +193,13 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} "/u/williamz/csr354/final project/finalGame/missing" aclocal-1.14
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} "/u/williamz/csr354/final project/finalGame/missing" autoconf
-AUTOHEADER = ${SHELL} "/u/williamz/csr354/final project/finalGame/missing" autoheader
-AUTOMAKE = ${SHELL} "/u/williamz/csr354/final project/finalGame/missing" automake-1.14
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing automake-1.14
 AWK = gawk
 BULLET_CFLAGS = 
 BULLET_LIBS = 
@@ -238,7 +238,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} "/u/williamz/csr354/final project/finalGame/missing" makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -268,10 +268,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /u/williamz/csr354/final project/finalGame
-abs_srcdir = /u/williamz/csr354/final project/finalGame
-abs_top_builddir = /u/williamz/csr354/final project/finalGame
-abs_top_srcdir = /u/williamz/csr354/final project/finalGame
+abs_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -303,7 +303,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} '/u/williamz/csr354/final project/finalGame/install-sh'
+install_sh = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -323,9 +323,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h
+noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h Cubester.h
 assignment2_CPPFLAGS = -I$(top_srcdir)
-assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp
+assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp Cubester.cpp
 assignment2_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 assignment2_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 assignment2_LDFLAGS = -lOgreOverlay -lboost_system -lSDL -lSDL_net -lSDL_mixer
@@ -447,6 +447,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/assignment2-Assignment2.Po
 include ./$(DEPDIR)/assignment2-BaseApplication.Po
+include ./$(DEPDIR)/assignment2-Cubester.Po
 include ./$(DEPDIR)/assignment2-GameObject.Po
 include ./$(DEPDIR)/assignment2-Map.Po
 include ./$(DEPDIR)/assignment2-Tile.Po
@@ -541,6 +542,20 @@ assignment2-Tile.obj: Tile.cpp
 #	$(AM_V_CXX)source='Tile.cpp' object='assignment2-Tile.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Tile.obj `if test -f 'Tile.cpp'; then $(CYGPATH_W) 'Tile.cpp'; else $(CYGPATH_W) '$(srcdir)/Tile.cpp'; fi`
+
+assignment2-Cubester.o: Cubester.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Cubester.o -MD -MP -MF $(DEPDIR)/assignment2-Cubester.Tpo -c -o assignment2-Cubester.o `test -f 'Cubester.cpp' || echo '$(srcdir)/'`Cubester.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Cubester.Tpo $(DEPDIR)/assignment2-Cubester.Po
+#	$(AM_V_CXX)source='Cubester.cpp' object='assignment2-Cubester.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Cubester.o `test -f 'Cubester.cpp' || echo '$(srcdir)/'`Cubester.cpp
+
+assignment2-Cubester.obj: Cubester.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Cubester.obj -MD -MP -MF $(DEPDIR)/assignment2-Cubester.Tpo -c -o assignment2-Cubester.obj `if test -f 'Cubester.cpp'; then $(CYGPATH_W) 'Cubester.cpp'; else $(CYGPATH_W) '$(srcdir)/Cubester.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Cubester.Tpo $(DEPDIR)/assignment2-Cubester.Po
+#	$(AM_V_CXX)source='Cubester.cpp' object='assignment2-Cubester.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Cubester.obj `if test -f 'Cubester.cpp'; then $(CYGPATH_W) 'Cubester.cpp'; else $(CYGPATH_W) '$(srcdir)/Cubester.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

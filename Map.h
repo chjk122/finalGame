@@ -2,6 +2,7 @@
 #define Map_H
 
 #include "GameObject.h"
+#include "Cubester.h"
 #include "Tile.h"
 #include <vector>
 #include <string>
@@ -18,8 +19,8 @@ protected:
 
 
 public:
-	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> >);
-	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string >);
+	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > mapWithTiles);
+	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string > v, std::vector< std::string > e);
 	virtual ~Map();
 
 	int getLength();
