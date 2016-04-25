@@ -78,6 +78,17 @@ void AbstractCubester::simulate(const Ogre::Real elapsedTime)
         }
     }
 }
+
+Ogre::SceneNode * AbstractCubester::getNode()
+{
+    return rootNode;
+}
+
+std::string AbstractCubester::getName()
+{
+    return name;
+}
+
 int AbstractCubester::getX()
 {
     return xIndex;
@@ -277,6 +288,15 @@ void Cubester::create(std::string material)
     cubester->create(material);
 }
 
+Ogre::SceneNode * Cubester::getNode()
+{
+    return cubester->getNode();
+}
+
+std::string Cubester::getName()
+{
+    return cubester->getName();
+}
 void Cubester::simulate(const Ogre::Real elapsedTime)
 {
     cubester->simulate(elapsedTime);

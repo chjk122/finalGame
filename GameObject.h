@@ -43,6 +43,7 @@ class Player : public GameObject
 {
 public:
 	Ogre::Vector3 position;
+	int level;
 	int playerX;
 	int playerY;
 	double health;

@@ -28,6 +28,8 @@ public:
 	// Player *getPlayer();
 	bool move(int direction);
 	void simulate(const Ogre::Real elapsedTime);
+	void destroyNode(Ogre::SceneNode* node);
+	void destoryAllSceneNodes();
 
 private:
 	bool canMove(int tileX, int tileY, int direction);

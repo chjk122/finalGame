@@ -112,7 +112,6 @@ void BaseApplication::setupMainMenu(void)
     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 220);
     mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 220);
     mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 220);
-
 }
 
 void BaseApplication::setupDifficultyMenu(void)
@@ -128,24 +127,84 @@ void BaseApplication::setupIntroLevelSelect(void)
 }
 //---------------------------------------------------------------------------
 
-void BaseApplication::createObjects(void)
+void BaseApplication::createObjects(int a)
 {
     Ogre::SceneNode* node;
     Ogre::SceneNode* playerNode;
-
-
-    player = new Player("player", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
-    // player->create();
-
+    if(a != 0)
+    {
+        delete gameMap;
+    }
+    //name doesnt mater rakans code is boosted
+    player = new Player("playerNode", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
+    player->level = a;
     std::vector<std::string> v;
     std::vector<std::string> e;
-    v.push_back("xxxxxxx");  //y, q, e, z
-    v.push_back("xwwwwwx");
-    v.push_back("xwxwxwx");
-    v.push_back("xwxwxwx");
-    v.push_back("xlxwxvx");
-    v.push_back("xlxwxdx");
-    v.push_back("xsxkxfx");
+    if(a ==1)
+    {
+        v.push_back("xxxxxxx");  //y, q, e, z
+        v.push_back("xwwwwwx");
+        v.push_back("xwxwxwx");
+        v.push_back("xwxwxwx");
+        v.push_back("xlxwxvx");
+        v.push_back("xlxwxdx");
+        v.push_back("xsxkxfx");
+
+        e.push_back("abxxabx"); 
+        e.push_back("cdxxcdx");
+        e.push_back("xxxxxxx");
+        e.push_back("xxxxxxx");
+        e.push_back("abxxabx");
+        e.push_back("cdxxcdx");
+        e.push_back("xxxxxxx");
+
+    }
+    else if(a==0)
+    {
+
+        v.push_back("xxxxxxxxxxxx");
+        v.push_back("x+++wwwvkxfx");
+        v.push_back("xixxwxxxxx+x");
+        v.push_back("xixxwxxxxx+x");
+        v.push_back("xixx+xxxxx+x");
+        v.push_back("xivv+llllx+x");
+        v.push_back("x++++++++pdx");
+        v.push_back("xivv++llxxpx");
+        v.push_back("xixx+++xxx+x");
+        v.push_back("xixxxx+xxx+x");
+        v.push_back("xsxc+++++++x");
+        v.push_back("xxxxxxxxxxxx");
+
+        e.push_back("abxxababxxab"); 
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab");
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab"); 
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab");
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+
+    }
+    else 
+    {
+        v.push_back("xxxxxxxxxxxx");
+        v.push_back("x+++wwwvkxfx");
+        v.push_back("xixxwxxxxx+x");
+        v.push_back("xixxwxxxxx+x");
+        v.push_back("xixx+xxxxx+x");
+        v.push_back("xivv+llllx+x");
+        v.push_back("x++++++++pdx");
+        v.push_back("xivv++llxxpx");
+        v.push_back("xixx+++xxx+x");
+        v.push_back("xixxxx+xxx+x");
+        v.push_back("xsxc+++++++x");
+        v.push_back("xxxxxxxxxxxx");
 
     //enemy key (y,u,a,b,c,d,l,r,h,i,j,k)
     // y (starts top goes down)
@@ -160,14 +219,21 @@ void BaseApplication::createObjects(void)
         //i goes right to next i and telports back to first i
         //j goes down to next j and telports back to first j
         //k goes left to next k and telports back to first k
-
-    e.push_back("abxxabx"); 
-    e.push_back("cdxxcdx");
-    e.push_back("xxxxxxx");
-    e.push_back("xxxxxxx");
-    e.push_back("abxxabx");
-    e.push_back("cdxxcdx");
-    e.push_back("xxxxxxx");
+        e.push_back("abxxababxxab"); 
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab");
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab"); 
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("xxxxxxxxxxxx");
+        e.push_back("abxxababxxab");
+        e.push_back("cdxxcdcdxxcd");
+        e.push_back("xxxxxxxxxxxx");
+    }
 
     gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v, e);
 }
@@ -371,7 +437,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
-    
+    if(player->level == 1)
+    {
+        createObjects(1);
+    }
 
     if(gameStart)
     {
@@ -612,7 +681,8 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         mTrayMgr->destroyWidget("credit");      
         //setupDifficultyMenu();        
         gameStart= true;        
-        createObjects();        
+        mTrayMgr->hideCursor(); 
+        createObjects(0);        
     }       
     else if(button->getName().compare("intro") == 0 )       
     {       

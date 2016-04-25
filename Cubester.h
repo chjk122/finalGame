@@ -33,7 +33,8 @@ public:
 	virtual Ogre::Vector3 getPosition();
 	virtual void create(std::string material); 				//cant call
 	virtual ~AbstractCubester() {} 				//does nothing
-
+	virtual Ogre::SceneNode * getNode();
+	virtual std::string getName();
 	virtual void simulate(const Ogre::Real elapsedTime);
 	virtual int getAction();
 	virtual int getX();
@@ -89,6 +90,8 @@ public:
 	~Cubester();
 
 	void simulate(const Ogre::Real elapsedTime);
+	Ogre::SceneNode * getNode();
+	std::string getName();
 	int getX();
 	int getY();
 

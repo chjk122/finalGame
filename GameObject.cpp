@@ -21,9 +21,7 @@ GameObject::GameObject(Ogre::String n,
 
 GameObject::~GameObject()
 {
-	delete shape;
-	delete motionState;
-	delete body;
+
 }
 btRigidBody* GameObject::getBody()
 {
@@ -45,6 +43,7 @@ Player::Player(Ogre::String n,
     burn = 0;
     oxygen = 10;
     poison = false;
+    level =0;
 }
 
 Player::~Player()
@@ -300,46 +299,3 @@ void Wall::create()
     entity->setMaterialName("Examples/Rocky"); 
     entity->setCastShadows(false);
 }
-
-// void Simulator::destroyNode(Ogre::SceneNode* node)
-// {
-// 	if(!node) return;
-
-// 	// Destroy all the attached objects
-// 	Ogre::SceneNode::ObjectIterator itObject = node->getAttachedObjectIterator();
-
-// 	while ( itObject.hasMoreElements() )
-// 	  node->getCreator()->destroyMovableObject(itObject.getNext());
-
-// 	// Recurse to child SceneNodes
-// 	Ogre::SceneNode::ChildNodeIterator itChild = node->getChildIterator();
-
-// 	while ( itChild.hasMoreElements() )
-// 	{
-// 	  Ogre::SceneNode* pChildNode = static_cast<Ogre::SceneNode*>(itChild.getNext());
-// 	  destroyNode( pChildNode );
-// 	}
-// }
-
-// void Simulator::reload()
-// {
-// 	Ball* newBall;
-// 	for (std::deque<GameObject*>::iterator it = objList.begin(); it!=objList.end(); ++it)
-// 	{
-// 		GameObject* obj = *it;
-// 		if(obj->name == "ball")
-// 		{
-// 			Simulator* sim = obj->simulator;
-// 			Ogre::SceneManager* mgr = obj->sceneMgr;
-// 			Ogre::SceneNode* node = obj->rootNode;
-// 			destroyNode(node);
-// 			node->removeAndDestroyAllChildren();
-// 			node->getCreator()->destroySceneNode(node);
-// 			delete obj;
-// 			Ogre::SceneNode* newNode;
-// 			newBall = new Ball("ball", mgr, sim, newNode, 90., Ogre::Vector3(0,-240,210));
-//     		newBall->create();
-//     		break;
-//     	}
-// 	}
-// }

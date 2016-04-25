@@ -1,5 +1,15 @@
 #include "Map.h"
 
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > v)
 {
 	
@@ -65,6 +75,11 @@ Map::~Map()
 	{
 		for(int y = 0; y < getLength(); y++)
 		{
+			std::string name = patch::to_string(x) + "y" + patch::to_string(y);
+			Ogre::SceneNode* node = mgr->getSceneNode(name); 
+			destroyNode(node);
+			node->removeAndDestroyAllChildren();
+			node->getCreator()->destroySceneNode(node);
 			delete map[x][y];
 		}
 		map[x].clear();
@@ -72,11 +87,23 @@ Map::~Map()
 	map.clear();
 
 
-	for(int x = 0; x < getLength(); x++)
+	for(int x = 0; x < cubesters.size(); x++)
 	{
+		std::string name = cubesters[x]->getName();
+		Ogre::SceneNode* node = mgr->getSceneNode(name); 
+		destroyNode(node);
+		node->removeAndDestroyAllChildren();
+		node->getCreator()->destroySceneNode(node);
 		delete cubesters[x];
 	}
 	cubesters.clear();
+
+	std::string name = "playerNode";
+	Ogre::SceneNode* node = mgr->getSceneNode(name); 
+	destroyNode(node);
+	node->removeAndDestroyAllChildren();
+	node->getCreator()->destroySceneNode(node);
+	delete player;
 
 }
 
@@ -143,4 +170,49 @@ void Map::simulate(const Ogre::Real elapsedTime)
 		cubesters[x]->simulate(elapsedTime);
 	}
 	//loop through enemy/player and call thier simulate method
+}
+
+void Map::destroyNode(Ogre::SceneNode* node)
+{
+	if(!node) return;
+
+	// Destroy all the attached objects
+	Ogre::SceneNode::ObjectIterator itObject = node->getAttachedObjectIterator();
+
+	while ( itObject.hasMoreElements() )
+	  node->getCreator()->destroyMovableObject(itObject.getNext());
+
+	// Recurse to child SceneNodes
+	Ogre::SceneNode::ChildNodeIterator itChild = node->getChildIterator();
+
+	while ( itChild.hasMoreElements() )
+	{
+	  Ogre::SceneNode* pChildNode = static_cast<Ogre::SceneNode*>(itChild.getNext());
+	  destroyNode( pChildNode );
+	}
+}
+
+void Map::destoryAllSceneNodes()
+{
+	//destory tiles
+	// for (int x = 0; x < map.size(); x++)
+	// {
+	// 	for(int y = 0; y < map.size(); y++)
+	// 	{  
+	// 		std::string name = patch::to_string(x) + "y" + patch::to_string(y);
+	// 		Ogre::SceneNode* node = mgr->getSceneNode("playerNode"); 
+	// 		destroyNode(node);
+	// 		node->removeAndDestroyAllChildren();
+	// 		node->getCreator()->destroySceneNode(node);
+	// 	}
+	// }
+
+	// //destroy cubesters
+	// for (int x = 0; x < cubesters.size(); x++)
+	// {
+	// 	Ogre::SceneNode* node = cubesters[x]->rootNode; 
+	// 	destroyNode(node);
+	// 	node->removeAndDestroyAllChildren();
+	// 	node->getCreator()->destroySceneNode(node);
+	// }
 }
