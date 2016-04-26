@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Cubester.h"
 #include "Tile.h"
+#include "Level.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -19,8 +20,8 @@ protected:
 
 
 public:
-	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > mapWithTiles);
 	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::string > v, std::vector< std::string > e);
+	Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, int catNum, int levNum);
 	virtual ~Map();
 
 	int getLength();
@@ -30,6 +31,8 @@ public:
 	void simulate(const Ogre::Real elapsedTime);
 	void destroyNode(Ogre::SceneNode* node);
 	void destoryAllSceneNodes();
+	void parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
+		 	   std::vector< std::string > v, std::vector< std::string > e);
 
 private:
 	bool canMove(int tileX, int tileY, int direction);

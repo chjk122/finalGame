@@ -10,93 +10,19 @@ namespace patch
     }
 }
 
-Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, std::vector< std::vector<Tile *> > v)
-{
-	
-}
-
 Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos,
 		 std::vector< std::string > v, std::vector< std::string > e):
 mgr(sceneMgr), player(play)
 {
-	Tile *temp;
-	Ogre::Vector3 pos(centerOfTopleftTilePos.x, centerOfTopleftTilePos.y, centerOfTopleftTilePos.z);
-	for(int x = 0; x < v.size(); x++)
-	{
-		map.push_back(std::vector<Tile *>());
-		for(int y = 0; y < v.size(); y++)
-		{
-			// code for the tiles
-			temp = new Tile(mgr,pos, x, y, v[x][y]);
-			map[x].push_back(temp);
-			if(v[x][y] == Tile::typeForStartTile())
-			{
-				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
-			}
-			//code for enemy locations
-			if(e[x][y] != 'x')
-			{
-				//know it should be part of an sqaure movement enemy
-				if(e[x][y] >= 'a' && e[x][y] <= 'd')
-				{
-					char enemyType = e[x][y];
-					for(int i = x+1; i < e.size(); i++) //find the dist of square the enmemy walks
-					{
-						if(e[i][y] == enemyType)
-						{
-							std::cout << "found match for " << enemyType << " at " << x <<", " << y <<" and for i " << i <<std::endl;
-							//here we found the dist of side (i-x) and know the type of enemy
-							int dist = i-x;
-							Cubester *creature = new Cubester(sceneMgr, pos, x, y, dist, enemyType);
-							cubesters.push_back(creature);
-							//remove the creature from the parser
-							e[x][y] = 'x';
-							e[x+dist][y] = 'x';
-							e[x][y+dist] = 'x';
-							e[x+dist][y+dist] = 'x';
-							break;
-						}
-					}
-				}
-			}
+	parseMaps(centerOfTopleftTilePos, v, e);
+}
 
-
-			//increment position
-			pos.x = pos.x + AbstractTile::length(); // + length to the right in 2d
-		}
-		pos.z = pos.z + AbstractTile::length(); // + length downward in 2d
-		pos.x = centerOfTopleftTilePos.x; // reset the x 
-	}
-
-
-	//pass #2 for the ice cause William code is bad
-	for(int x = 0; x < map.size(); x++)
-	{
-		for(int y = 0; y < map.size(); y++)
-		{
-			if(v[x][y] == Tile::typeForIceTile())
-			{
-				Tile *up = NULL;
-				Tile *right = NULL;
-				Tile *down = NULL;
-				Tile *left = NULL;
-				//check above tile
-				if(x-1 >= 0)
-					up = map[x-1][y];
-				//check right tile
-				if(y+1 < map.size())
-					right = map[x][y+1];
-				//check down tile
-				if(x+1 < map.size())
-					down = map[x+1][y];
-				//check left tile
-				if(y-1 >= 0)
-					left = map[x][y-1];
-				map[x][y]->setNeighbors(up,right,down,left);
-				std::cout << "ice tile " << x << ", " << y << " up: " << up << " right: " << right << " down: " << down << " left : " << left << std::endl; 
-			}
-		}
-	}
+Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, int catNum, int levNum):
+mgr(sceneMgr), player(play)
+{
+	Level l(catNum, levNum);
+	std::cout << "l.getTileMap().size is  " << l.getTileMap().size() << std::endl;
+	parseMaps(centerOfTopleftTilePos, l.getTileMap(), l.getCubesterMap());
 }
 
 Map::~Map()
@@ -222,27 +148,87 @@ void Map::destroyNode(Ogre::SceneNode* node)
 	}
 }
 
-void Map::destoryAllSceneNodes()
+void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
+		 	   std::vector< std::string > v, std::vector< std::string > e)
 {
-	//destory tiles
-	// for (int x = 0; x < map.size(); x++)
-	// {
-	// 	for(int y = 0; y < map.size(); y++)
-	// 	{  
-	// 		std::string name = patch::to_string(x) + "y" + patch::to_string(y);
-	// 		Ogre::SceneNode* node = mgr->getSceneNode("playerNode"); 
-	// 		destroyNode(node);
-	// 		node->removeAndDestroyAllChildren();
-	// 		node->getCreator()->destroySceneNode(node);
-	// 	}
-	// }
+	Tile *temp;
+	Ogre::Vector3 pos(centerOfTopleftTilePos.x, centerOfTopleftTilePos.y, centerOfTopleftTilePos.z);
+	for(int x = 0; x < v.size(); x++)
+	{
+		map.push_back(std::vector<Tile *>());
+		for(int y = 0; y < v.size(); y++)
+		{
+			std::cout << "v.size is  " << v.size() << std::endl;
+			std::cout << "parsing at " << x << ", " << y << std::endl;
+			// code for the tiles
+			temp = new Tile(mgr,pos, x, y, v[x][y]);
+			map[x].push_back(temp);
+			if(v[x][y] == Tile::typeForStartTile())
+			{
+				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
+			}
+			//code for enemy locations
+			if(e[x][y] != 'x')
+			{
+				//know it should be part of an sqaure movement enemy
+				if(e[x][y] >= 'a' && e[x][y] <= 'd')
+				{
+					char enemyType = e[x][y];
+					for(int i = x+1; i < e.size(); i++) //find the dist of square the enmemy walks
+					{
+						if(e[i][y] == enemyType)
+						{
+							std::cout << "found match for " << enemyType << " at " << x <<", " << y <<" and for i " << i <<std::endl;
+							//here we found the dist of side (i-x) and know the type of enemy
+							int dist = i-x;
+							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
+							cubesters.push_back(creature);
+							//remove the creature from the parser
+							e[x][y] = 'x';
+							e[x+dist][y] = 'x';
+							e[x][y+dist] = 'x';
+							e[x+dist][y+dist] = 'x';
+							break;
+						}
+					}
+				}
+			}
 
-	// //destroy cubesters
-	// for (int x = 0; x < cubesters.size(); x++)
-	// {
-	// 	Ogre::SceneNode* node = cubesters[x]->rootNode; 
-	// 	destroyNode(node);
-	// 	node->removeAndDestroyAllChildren();
-	// 	node->getCreator()->destroySceneNode(node);
-	// }
+
+			//increment position
+			pos.x = pos.x + AbstractTile::length(); // + length to the right in 2d
+		}
+		pos.z = pos.z + AbstractTile::length(); // + length downward in 2d
+		pos.x = centerOfTopleftTilePos.x; // reset the x 
+	}
+
+
+	//pass #2 for the ice cause William code is bad
+	for(int x = 0; x < map.size(); x++)
+	{
+		for(int y = 0; y < map.size(); y++)
+		{
+			if(v[x][y] == Tile::typeForIceTile())
+			{
+				Tile *up = NULL;
+				Tile *right = NULL;
+				Tile *down = NULL;
+				Tile *left = NULL;
+				//check above tile
+				if(x-1 >= 0)
+					up = map[x-1][y];
+				//check right tile
+				if(y+1 < map.size())
+					right = map[x][y+1];
+				//check down tile
+				if(x+1 < map.size())
+					down = map[x+1][y];
+				//check left tile
+				if(y-1 >= 0)
+					left = map[x][y-1];
+				map[x][y]->setNeighbors(up,right,down,left);
+				std::cout << "ice tile " << x << ", " << y << " up: " << up << " right: " << right << " down: " << down << " left : " << left << std::endl; 
+			}
+		}
+	}
 }

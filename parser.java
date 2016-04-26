@@ -18,7 +18,7 @@ public class parser
 				vectorName = "cubesters";
 				continue;
 			}
-				write2.println(vectorName + "->push_back(" + "\"" + line + "\"" + ");");
+				write2.println(vectorName + ".push_back(" + "\"" + line + "\"" + ");");
 		}
 		write.close();
 		write2.close();

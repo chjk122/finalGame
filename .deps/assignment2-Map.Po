@@ -939,7 +939,7 @@ assignment2-Map.o: Map.cpp /usr/include/stdc-predef.h Map.h GameObject.h \
  /usr/include/SDL/SDL_joystick.h /usr/include/SDL/SDL_quit.h \
  /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
  /usr/include/SDL/SDL_version.h /usr/include/SDL/SDL_mixer.h \
- /usr/include/SDL/SDL_types.h Cubester.h Tile.h
+ /usr/include/SDL/SDL_types.h Cubester.h Tile.h Level.h
 
 /usr/include/stdc-predef.h:
 
@@ -3038,3 +3038,5 @@ GameObject.h:
 Cubester.h:
 
 Tile.h:
+
+Level.h:

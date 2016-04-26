@@ -420,7 +420,9 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
         tile = new CureTile(sceneMgr, pos, xInd, yInd);
         material = "Item/Cure";
     }
-
+    // float iSecret = rand() % 10 + 1;
+    // if(iSecret < 5)
+    //     material = "Tile/Rakan";
     create(material);
     //if type == whatever
     //tile = new <INSERT TILE TYPE>

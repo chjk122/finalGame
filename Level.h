@@ -7,38 +7,111 @@ using namespace std;
 
 class Level
 {
-	static string getLevel1Name()
+private:
+	void setMaps(int levelCat, int levelN);
+	vector<string> tileMap;
+	vector<string> cubesterMap;
+	string name;
+public:
+	Level(int levelCat, int levelN);
+	~Level();
+	vector<string> getTileMap();
+	vector<string> getCubesterMap();
+	string getName();
+
+private:
+	static string getIntroName()
 	{
 		return "through the elements";
 	}
-	static vector<string> getLevel1Tiles()
+	static vector<string> getIntroL1T()
 	{
 		vector<string> tile;
-		tile->push_back("+++wwwlkxf");
-		tile->push_back("ixxwxxxxxv");
-		tile->push_back("ixxwxxxxx+");
-		tile->push_back("ixxwxxxxx+");
-		tile->push_back("ivvwlllxx+");
-		tile->push_back("++++++++pd");
-		tile->push_back("ivv++llxxp");
-		tile->push_back("ixx+++xxx+");
-		tile->push_back("ixxxx+xxx+");
-		tile->push_back("sxxc++++++");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		tile.push_back("xxxxxxxxxxxxxkiiiiiiiiiiiiiiiiiiiiiiiiix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiix");
+		tile.push_back("xixixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxix");
+		tile.push_back("xixixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdx");
+		tile.push_back("xsiixxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxfx");
+		tile.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		return tile;
 	}
-	static vector<string> getLevel1Cubesters()
+	static vector<string> getIntroL1C()
 	{
-		vector<string> tile;
-		cubesters->push_back("axaxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("axaxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		cubesters->push_back("xxxxxxxxxx");
-		return tile;
+		vector<string> cubesters;
+		cubesters.push_back("aaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("aaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		return cubesters;
 	}
 };

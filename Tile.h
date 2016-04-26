@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <stdlib.h>
 #include <OgreMeshManager.h>
 #include <btBulletDynamicsCommon.h>
 #include <OgreSubMesh.h>

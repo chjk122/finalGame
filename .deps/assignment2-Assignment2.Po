@@ -945,7 +945,7 @@ assignment2-Assignment2.o: Assignment2.cpp /usr/include/stdc-predef.h \
  /usr/include/SDL/SDL_joystick.h /usr/include/SDL/SDL_quit.h \
  /usr/include/SDL/SDL_loadso.h /usr/include/SDL/SDL_timer.h \
  /usr/include/SDL/SDL_version.h /usr/include/SDL/SDL_mixer.h \
- /usr/include/SDL/SDL_types.h Map.h Cubester.h Tile.h \
+ /usr/include/SDL/SDL_types.h Map.h Cubester.h Tile.h Level.h \
  /usr/include/ois/OISEvents.h /usr/include/ois/OISPrereqs.h \
  /usr/include/ois/OISConfig.h /usr/include/ois/OISInputManager.h \
  /usr/include/ois/OISKeyboard.h /usr/include/ois/OISObject.h \
@@ -3158,6 +3158,8 @@ Map.h:
 Cubester.h:
 
 Tile.h:
+
+Level.h:
 
 /usr/include/ois/OISEvents.h:
 
