@@ -46,6 +46,7 @@ public:
 	int level;
 	int playerX;
 	int playerY;
+	Ogre::Vector3 startPosition;
 	double health;
 	bool poison;
 	int burn;
@@ -57,7 +58,10 @@ public:
 	static double spikeDamage(){return 39;}
 	//movement information
 	static double moveSpeed() { return 200; } //raise to 150ish
+	void setBackPlayer();
 	Ogre::Vector3 endPos;
+	int startPlayerX;
+	int startPlayerY;
 	int direction;
 	bool inMotion;
 public:
@@ -84,6 +88,7 @@ public:
 	void breath();
 	void kill();
 	bool isAlive();
+	void respawn();
 
 };
 

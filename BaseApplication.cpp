@@ -420,6 +420,7 @@ bool scored = false;
 int points = 0;
 bool gameIsOver = false;
 bool gameStart = false;
+bool levelCreated = false;
 
 bool wisDown = false;
 bool disDown = false;
@@ -437,9 +438,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
-    if(player->level == 1)
+    if(player->level == 1 && !levelCreated)
     {
         createObjects(1);
+        levelCreated = true;
     }
 
     if(gameStart)

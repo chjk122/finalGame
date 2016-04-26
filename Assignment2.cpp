@@ -52,16 +52,16 @@ void Assignment2::createScene(void)
     /*****  CONSTUCTING THE ROOM PLANES *****/
     // Wall* ground = new Wall("ground", mSceneMgr, node, 0., 5000, 5000, Ogre::Vector3::UNIT_Y, -251);
     // ground->create();
-    Wall* roof = new Wall("roof", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Y, -250);
-    roof->create();
-    Wall* posZ = new Wall("posZ", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Z, -250);
-    posZ->create();
-    Wall* negZ = new Wall("negZ", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::UNIT_Z, -250);
-    negZ->create();
-    Wall* posX = new Wall("posX", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_X, -250);
-    posX->create();
-    Wall* negX = new Wall("negX", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::UNIT_X, -250);
-    negX->create();
+    // Wall* roof = new Wall("roof", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Y, -250);
+    // roof->create();
+    // Wall* posZ = new Wall("posZ", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_Z, -250);
+    // posZ->create();
+    // Wall* negZ = new Wall("negZ", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::UNIT_Z, -250);
+    // negZ->create();
+    // Wall* posX = new Wall("posX", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::NEGATIVE_UNIT_X, -250);
+    // posX->create();
+    // Wall* negX = new Wall("negX", mSceneMgr, node, 0.,500, 500, Ogre::Vector3::UNIT_X, -250);
+    // negX->create();
 
     // map->create();
  

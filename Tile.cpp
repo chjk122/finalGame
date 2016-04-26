@@ -10,7 +10,7 @@ namespace patch
     }
 }
 
-bool AbstractTile::getIsWalkable(Player *p)
+bool AbstractTile::getIsWalkable(Player* p)
 {
     return isWalkable;
 }
@@ -18,6 +18,14 @@ bool AbstractTile::getIsWalkable(Player *p)
 Ogre::Vector3 AbstractTile::getPosition()
 {
     return position;
+}
+
+void AbstractTile::setNeighbors(AbstractTile *u, AbstractTile *r, AbstractTile *d, AbstractTile *l)
+{
+    up = u;
+    right = r;
+    down = d;
+    left = l;
 }
 
 /*------------------------------------PathTile ------------------------------------------*/
@@ -100,14 +108,13 @@ SpikeTile::~SpikeTile()
 }
 void SpikeTile::event(Player* p)
 {
+     printf("SpikeTile\n");
     p->breath();
     p->damageTaken(Player::spikeDamage());
     if(p->health <=0)
     {
         p->kill();
-        p->changeMaterial("Cube/DeathSpike");
     }
-    printf("SpikeTile\n");
 }
 
 /*-----------------------------LavaTile----------------------------------*/
@@ -160,20 +167,22 @@ void IceTile::event(Player* p)
 {
     p->breath();
     Ogre::Vector3 pos = p->endPos;
-    if(p->direction == 0)
+    if(p->direction == 0 && up != NULL && up->getIsWalkable(p))
     {
         p->move(0, Ogre::Vector3(pos.x, pos.y , pos.z-50));
     }
-    else if(p->direction == 1)
-    {        
+    else if(p->direction == 1 && right != NULL && right->getIsWalkable(p))
+    { 
+         std::cout << "sliding to the right " << std::endl;
         p->move(1, Ogre::Vector3(pos.x+50, pos.y , pos.z));
     }
-    else if(p->direction == 2)
+    else if(p->direction == 2 && down != NULL && down->getIsWalkable(p))
     {
         p->move(2, Ogre::Vector3(pos.x, pos.y , pos.z+50));
     }
-    else if(p->direction == 3)
+    else if(p->direction == 3 && left != NULL && left->getIsWalkable(p))
     {
+        std::cout << "sliding to the left " << std::endl;
         p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z));
     }
     printf("IceTile\n");
@@ -266,7 +275,7 @@ void DoorTile::event(Player* p)
     printf("DoorTile\n");
 }
 
-bool DoorTile::getIsWalkable(Player* p)
+bool DoorTile::getIsWalkable(Player *p)
 {
     if(p->hasKey()) 
     {
@@ -439,4 +448,9 @@ Ogre::Vector3 Tile::getPosition()
 void Tile::event(Player* p)
 {
      tile->event(p);
+}
+
+void Tile::setNeighbors(Tile *u, Tile *r, Tile *d, Tile *l)
+{
+     tile->setNeighbors(u->tile, r->tile, d->tile, l->tile);
 }

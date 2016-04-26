@@ -22,13 +22,18 @@ protected:
 	int yIndex;
 	bool isWalkable;
 	Ogre::Entity* ent;
+	AbstractTile *up;
+	AbstractTile *right;
+	AbstractTile *left;
+	AbstractTile *down;
 public:
 	static double length() { return 50; }   //cosnt length for all tiles
-	virtual bool getIsWalkable(Player* p); 			//for children to all have
+	virtual bool getIsWalkable(Player *p);
 	virtual Ogre::Vector3 getPosition();
 	virtual void create(std::string material) = 0; 				//cant call
 	virtual ~AbstractTile() {} 				//does nothing
 	virtual void event(Player* p) = 0;
+	void setNeighbors(AbstractTile *u, AbstractTile *r, AbstractTile *d, AbstractTile *l);
 };
 
 // basic walkable tile 
@@ -137,7 +142,7 @@ public:
 	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~DoorTile();
 	virtual void event(Player* p);
-	virtual bool getIsWalkable(Player* p);
+	virtual bool getIsWalkable(Player *p);
 	
 };
 
@@ -192,6 +197,7 @@ public:
 	Ogre::Vector3 getPosition();
 
     void event(Player* p);
+    void setNeighbors(Tile *u, Tile *r, Tile *d, Tile *l);
 
 	static char typeForPathTile() { return '+'; }
 	static char typeForOuterTile() { return 'x'; }

@@ -49,6 +49,10 @@ Player::Player(Ogre::String n,
 Player::~Player()
 {
 }
+void printPos(Ogre::Vector3 pos, std::string name)
+{
+    std::cout << name << ": " <<  pos.x << ", " << pos.y << ", " << pos.z << std::endl;
+}
 
 void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
 {
@@ -64,6 +68,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
     entity->setMaterialName("Cube/Blend"); 
     rootNode->pitch(Ogre::Degree(p));
     rootNode->roll(Ogre::Degree(r));
+    startPosition = position;
 }
 
 bool Player::move(int dir, Ogre::Vector3 p)
@@ -149,6 +154,8 @@ void Player::setPlayerCord(int xI, int yI, int lengthTile, double xCord, double 
 {
     playerX = xI;
     playerY = yI;
+    startPlayerX = playerX;
+    startPlayerY = playerY;
     Ogre::Vector3 newPos(xCord + (yI * lengthTile), position.y + (length()/2), zCord+ (xI * lengthTile));
     position = newPos;
     this->create();
@@ -257,11 +264,33 @@ void Player::kill()
     {       
         mEntity->setMaterialName("Cube/DeathDrown");        
     }
+    respawn();
 }
 
 bool Player::isAlive()
 {
     return (health > 0 && oxygen > 0);
+}
+
+
+
+
+void Player::respawn(){
+    position = startPosition;
+    setBackPlayer();
+    rootNode->setPosition(position);
+}
+void Player::setBackPlayer(){
+    health = 100;
+    oxygen = 10;
+    poison = false;
+    burn = 0;
+    playerX = startPlayerX;
+    playerY = startPlayerY;
+    Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
+    mEntity->setMaterialName("Cube/Blend");
+    endPos = position;
+    inMotion = false;
 }
 
 Wall::Wall(Ogre::String n,

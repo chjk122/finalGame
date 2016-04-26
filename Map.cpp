@@ -67,6 +67,36 @@ mgr(sceneMgr), player(play)
 		pos.z = pos.z + AbstractTile::length(); // + length downward in 2d
 		pos.x = centerOfTopleftTilePos.x; // reset the x 
 	}
+
+
+	//pass #2 for the ice cause William code is bad
+	for(int x = 0; x < map.size(); x++)
+	{
+		for(int y = 0; y < map.size(); y++)
+		{
+			if(v[x][y] == Tile::typeForIceTile())
+			{
+				Tile *up = NULL;
+				Tile *right = NULL;
+				Tile *down = NULL;
+				Tile *left = NULL;
+				//check above tile
+				if(x-1 >= 0)
+					up = map[x-1][y];
+				//check right tile
+				if(y+1 < map.size())
+					right = map[x][y+1];
+				//check down tile
+				if(x+1 < map.size())
+					down = map[x+1][y];
+				//check left tile
+				if(y-1 >= 0)
+					left = map[x][y-1];
+				map[x][y]->setNeighbors(up,right,down,left);
+				std::cout << "ice tile " << x << ", " << y << " up: " << up << " right: " << right << " down: " << down << " left : " << left << std::endl; 
+			}
+		}
+	}
 }
 
 Map::~Map()
