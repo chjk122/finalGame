@@ -133,6 +133,18 @@ void Map::simulate(const Ogre::Real elapsedTime)
 		if(checkCollision(player->rootNode->getPosition(), cubesters[x]->getPosition()))
 			player->kill();
 	}
+
+	if(!player->isAlive())
+	{
+		player->respawn();
+		for(int x = 0; x < map.size(); x++)
+		{
+			for(int y = 0; y < map.size(); y++)
+			{
+				map[x][y]->reload();
+			}
+		}
+	}
 }
 
 void Map::destroyNode(Ogre::SceneNode* node)

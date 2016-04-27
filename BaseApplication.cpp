@@ -125,6 +125,18 @@ void BaseApplication::setupIntroLevelSelect(void)
 {
 
 }
+
+void BaseApplication::createGUI(std::string levelName)
+{
+    mLevelName = mTrayMgr->createLabel(OgreBites::TL_TOP, "levelName", levelName, 500);
+    mLevelName->show();
+    mPlayerHp = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "hpBar", "100/100", 200, 20);
+    mPlayerHp->show();
+
+     /************************************select menu Gui ****************************************************/
+    mTrayMgr->moveWidgetToTray(mPlayerHp, OgreBites::TL_TOP, 0);
+    mTrayMgr->moveWidgetToTray(mLevelName, OgreBites::TL_TOP, 0);
+}
 //---------------------------------------------------------------------------
 
 void BaseApplication::createObjects(int a)
@@ -447,6 +459,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     if(gameStart)
     {
+        mPlayerHp->setProgress((player->health)/100.0);
+        mPlayerHp->setCaption("player.health/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
         Ogre::Vector3 position = tem->getPosition();
         mCamera->setPosition(position.x , 300, position.z+100);
@@ -680,7 +694,8 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         //setupDifficultyMenu();        
         gameStart= true;        
         mTrayMgr->hideCursor(); 
-        createObjects(0);        
+        createObjects(0);      
+        createGUI("Rakan suxs XD");  
     }       
     else if(button->getName().compare("intro") == 0 )       
     {       

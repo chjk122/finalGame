@@ -34,6 +34,7 @@ public:
 	virtual void create(std::string material) = 0; 				//cant call
 	virtual ~AbstractTile() {} 				//does nothing
 	virtual void event(Player* p) = 0;
+	virtual void reload();
 	void setNeighbors(AbstractTile *u, AbstractTile *r, AbstractTile *d, AbstractTile *l);
 };
 
@@ -143,6 +144,7 @@ public:
 	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~DoorTile();
 	virtual void event(Player* p);
+	virtual void reload();
 	virtual bool getIsWalkable(Player *p);
 	
 };
@@ -153,6 +155,7 @@ class KeyTile : public PathTile
 public:
 	KeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~KeyTile();
+	virtual void reload();
 	virtual void event(Player* p);
 	
 };
@@ -198,6 +201,7 @@ public:
 	Ogre::Vector3 getPosition();
 
     void event(Player* p);
+    void reload();
     void setNeighbors(Tile *u, Tile *r, Tile *d, Tile *l);
 
 	static char typeForPathTile() { return '+'; }

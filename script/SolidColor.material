@@ -418,6 +418,30 @@ material Cube/Dragon
        }
     }
  }
+
+ material Cube/Evil
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture fire.jpg
+        }
+        texture_unit
+        {
+             texture death.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture black.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
 material Cube/Poison
 {
     technique
@@ -1110,7 +1134,7 @@ material Cube/Blend
         }
         texture_unit
         {
-             texture fire.jpg
+             texture coolestimage.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }

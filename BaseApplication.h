@@ -113,6 +113,7 @@ protected:
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
     virtual void setupMainMenu(void);
+    virtual void createGUI(std::string name);
     virtual void setupDifficultyMenu(void);
     virtual void setupIntroLevelSelect(void);
 
@@ -135,6 +136,9 @@ protected:
     OgreBites::Button*          mButton2;
     OgreBites::Button*          mButton3;
     OgreBites::Button*          mButtonBack;
+
+    OgreBites::Label*           mLevelName;
+    OgreBites::ProgressBar*     mPlayerHp;
     
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;

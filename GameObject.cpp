@@ -264,7 +264,6 @@ void Player::kill()
     {       
         mEntity->setMaterialName("Cube/DeathDrown");        
     }
-    respawn();
 }
 
 bool Player::isAlive()
@@ -285,6 +284,7 @@ void Player::setBackPlayer(){
     oxygen = 10;
     poison = false;
     burn = 0;
+    key = 0;
     playerX = startPlayerX;
     playerY = startPlayerY;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));

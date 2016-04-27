@@ -20,6 +20,10 @@ Ogre::Vector3 AbstractTile::getPosition()
     return position;
 }
 
+void AbstractTile::reload()
+{
+}
+
 void AbstractTile::setNeighbors(AbstractTile *u, AbstractTile *r, AbstractTile *d, AbstractTile *l)
 {
     up = u;
@@ -269,6 +273,11 @@ DoorTile::~DoorTile()
     
 }
 
+void DoorTile::reload()
+{
+    ent->setMaterialName("Tile/DoorLocked");
+}
+
 void DoorTile::event(Player* p)
 {
     p->breath();
@@ -296,6 +305,12 @@ KeyTile::~KeyTile()
 {
     
 }
+
+void KeyTile::reload()
+{
+    ent->setMaterialName("Tile/Key");
+}
+
 
 void KeyTile::event(Player* p)
 {
@@ -435,6 +450,11 @@ Tile::~Tile()
 void Tile::create(std::string material)
 {
     tile->create(material);
+}
+
+void Tile::reload()
+{
+    tile->reload();
 }
 
 bool Tile::getIsWalkable(Player *p)
