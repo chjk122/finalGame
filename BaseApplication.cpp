@@ -235,7 +235,7 @@ void BaseApplication::createObjects(int a)
         e.push_back("xxxxxxxxxxxx");
     }
 
-    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), v, e);
+    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), 1, 1);
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -438,6 +438,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
+
     if(player->level == 1 && !levelCreated)
     {
         createObjects(1);
@@ -450,12 +451,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         Ogre::Vector3 position = tem->getPosition();
         mCamera->setPosition(position.x , 300, position.z+100);
         if(wisDown)
-        {
-            bool result = false;
-            result = gameMap->move(0);
-            if(result)
-                std::cout << " moving up: true"  << std::endl;
-        }
+            gameMap->move(0);
         else if(disDown)
             gameMap->move(1);
         else if(sisDown)

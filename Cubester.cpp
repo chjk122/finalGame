@@ -12,7 +12,7 @@ namespace patch
 
 Ogre::Vector3 AbstractCubester::getPosition()
 {
-    return position;
+    return rootNode->getPosition();
 }
 void AbstractCubester::create(std::string material)
 {

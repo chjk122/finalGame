@@ -21,7 +21,6 @@ Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTople
 mgr(sceneMgr), player(play)
 {
 	Level l(catNum, levNum);
-	std::cout << "l.getTileMap().size is  " << l.getTileMap().size() << std::endl;
 	parseMaps(centerOfTopleftTilePos, l.getTileMap(), l.getCubesterMap());
 }
 
@@ -112,6 +111,13 @@ bool Map::canMove(int tileX, int tileY, int direction)
 	}
 }
 
+bool checkCollision(Ogre::Vector3 p, Ogre::Vector3 c)
+{
+	double distX = abs(p.x - c.x);
+	double distY = abs(p.z - c.z);
+	return (distX < 48 && distY < 48); //50 is a bit harsh on the collision
+}
+
 void Map::simulate(const Ogre::Real elapsedTime)
 {
 	bool eventFire = player->simulate(elapsedTime);
@@ -124,8 +130,9 @@ void Map::simulate(const Ogre::Real elapsedTime)
 	for(int x = 0; x < cubesters.size(); x++)
 	{
 		cubesters[x]->simulate(elapsedTime);
+		if(checkCollision(player->rootNode->getPosition(), cubesters[x]->getPosition()))
+			player->kill();
 	}
-	//loop through enemy/player and call thier simulate method
 }
 
 void Map::destroyNode(Ogre::SceneNode* node)
@@ -158,8 +165,6 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		map.push_back(std::vector<Tile *>());
 		for(int y = 0; y < v.size(); y++)
 		{
-			std::cout << "v.size is  " << v.size() << std::endl;
-			std::cout << "parsing at " << x << ", " << y << std::endl;
 			// code for the tiles
 			temp = new Tile(mgr,pos, x, y, v[x][y]);
 			map[x].push_back(temp);
@@ -178,7 +183,6 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 					{
 						if(e[i][y] == enemyType)
 						{
-							std::cout << "found match for " << enemyType << " at " << x <<", " << y <<" and for i " << i <<std::endl;
 							//here we found the dist of side (i-x) and know the type of enemy
 							int dist = i-x;
 							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
@@ -227,7 +231,6 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 				if(y-1 >= 0)
 					left = map[x][y-1];
 				map[x][y]->setNeighbors(up,right,down,left);
-				std::cout << "ice tile " << x << ", " << y << " up: " << up << " right: " << right << " down: " << down << " left : " << left << std::endl; 
 			}
 		}
 	}

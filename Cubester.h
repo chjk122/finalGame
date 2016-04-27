@@ -15,7 +15,7 @@ class AbstractCubester
 {
 protected:
 	//movement information
-	static double moveSpeed() { return 200; } //raise to 150ish
+	static double moveSpeed() { return 150; } //raise to 150ish
 	Ogre::Vector3 endPos;
 	int direction;
 	int pathLength;

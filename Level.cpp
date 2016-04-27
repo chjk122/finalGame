@@ -28,9 +28,9 @@ void Level::setMaps(int levelCat, int levelN)
 	{	
 		if(levelN == 1)
 		{
-			tileMap = getIntroL1T();
+			tileMap     = getIntroL1T();
 			cubesterMap = getIntroL1C();
-			name = getIntroName();
+			name        = getIntroL1N();
 		}
 	}
 }
