@@ -32,5 +32,26 @@ void Level::setMaps(int levelCat, int levelN)
 			cubesterMap = getIntroL1C();
 			name        = getIntroL1N();
 		}
+		else if(levelN == 2)
+		{
+			tileMap     = getIntroL2T();
+			cubesterMap = getIntroL2C();
+			name        = getIntroL2N();
+		}
+		else if(levelN == 3)
+		{
+			tileMap     = getIntroL3T();
+			cubesterMap = getIntroL3C();
+			name        = getIntroL3N();
+		}
+	}
+	else if(levelCat == 3)
+	{
+		if(levelN == 1)
+		{
+			tileMap = getHardL1T();
+			cubesterMap = getHardL1C();
+			name = getIntroL1N();
+		}
 	}
 }

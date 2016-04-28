@@ -43,7 +43,6 @@ class Player : public GameObject
 {
 public:
 	Ogre::Vector3 position;
-	int level;
 	int playerX;
 	int playerY;
 	Ogre::Vector3 startPosition;
@@ -64,6 +63,7 @@ public:
 	int startPlayerY;
 	int direction;
 	bool inMotion;
+	bool levelFinished;
 public:
 	Player(Ogre::String n,
 	Ogre::SceneManager* mgr,

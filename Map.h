@@ -16,6 +16,7 @@ protected:
 	std::vector< Cubester *> cubesters;
 	Player *player;
 	Ogre::SceneManager* mgr;
+	std::string name;
 	//items
 
 
@@ -33,6 +34,7 @@ public:
 	void destoryAllSceneNodes();
 	void parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		 	   std::vector< std::string > v, std::vector< std::string > e);
+	std::string getName();
 
 private:
 	bool canMove(int tileX, int tileY, int direction);

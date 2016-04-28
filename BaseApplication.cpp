@@ -21,6 +21,16 @@ http://www.ogre3d.org/wiki/
 #include <macUtils.h>
 #endif
 
+namespace patch
+{
+    template < typename T > std::string to_string( const T& n )
+    {
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 //---------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
     : mRoot(0),
@@ -37,7 +47,10 @@ BaseApplication::BaseApplication(void)
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
-    mOverlaySystem(0)
+    mOverlaySystem(0),
+    mDifficulty(1),
+    mLevel(1),
+    mGameStart(false)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -116,14 +129,16 @@ void BaseApplication::setupMainMenu(void)
 
 void BaseApplication::setupDifficultyMenu(void)
 {
-    mMenuLabel->setCaption("Select Difficulty");
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 220);;
     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 220);
     mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "back", "Back to Main Menu", 220);
 }
 
 void BaseApplication::setupIntroLevelSelect(void)
 {
-
+    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 1", "Level 1", 220);
+    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 2", "Level 2", 220);
+    mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 3", "Level 3", 220);
 }
 
 void BaseApplication::createGUI(std::string levelName)
@@ -139,115 +154,21 @@ void BaseApplication::createGUI(std::string levelName)
 }
 //---------------------------------------------------------------------------
 
-void BaseApplication::createObjects(int a)
+void BaseApplication::createObjects()
 {
     Ogre::SceneNode* node;
     Ogre::SceneNode* playerNode;
-    if(a != 0)
-    {
-        delete gameMap;
-    }
     //name doesnt mater rakans code is boosted
     player = new Player("playerNode", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
-    player->level = a;
-    std::vector<std::string> v;
-    std::vector<std::string> e;
-    if(a ==1)
-    {
-        v.push_back("xxxxxxx");  //y, q, e, z
-        v.push_back("xwwwwwx");
-        v.push_back("xwxwxwx");
-        v.push_back("xwxwxwx");
-        v.push_back("xlxwxvx");
-        v.push_back("xlxwxdx");
-        v.push_back("xsxkxfx");
+ 
+    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), mDifficulty, mLevel);
+   
 
-        e.push_back("abxxabx"); 
-        e.push_back("cdxxcdx");
-        e.push_back("xxxxxxx");
-        e.push_back("xxxxxxx");
-        e.push_back("abxxabx");
-        e.push_back("cdxxcdx");
-        e.push_back("xxxxxxx");
+}
 
-    }
-    else if(a==0)
-    {
-
-        v.push_back("xxxxxxxxxxxx");
-        v.push_back("x+++wwwvkxfx");
-        v.push_back("xixxwxxxxx+x");
-        v.push_back("xixxwxxxxx+x");
-        v.push_back("xixx+xxxxx+x");
-        v.push_back("xivv+llllx+x");
-        v.push_back("x++++++++pdx");
-        v.push_back("xivv++llxxpx");
-        v.push_back("xixx+++xxx+x");
-        v.push_back("xixxxx+xxx+x");
-        v.push_back("xsxc+++++++x");
-        v.push_back("xxxxxxxxxxxx");
-
-        e.push_back("abxxababxxab"); 
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab");
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab"); 
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab");
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-
-    }
-    else 
-    {
-        v.push_back("xxxxxxxxxxxx");
-        v.push_back("x+++wwwvkxfx");
-        v.push_back("xixxwxxxxx+x");
-        v.push_back("xixxwxxxxx+x");
-        v.push_back("xixx+xxxxx+x");
-        v.push_back("xivv+llllx+x");
-        v.push_back("x++++++++pdx");
-        v.push_back("xivv++llxxpx");
-        v.push_back("xixx+++xxx+x");
-        v.push_back("xixxxx+xxx+x");
-        v.push_back("xsxc+++++++x");
-        v.push_back("xxxxxxxxxxxx");
-
-    //enemy key (y,u,a,b,c,d,l,r,h,i,j,k)
-    // y (starts top goes down)
-        //other version is u starts down goes top
-    //a (starts top left goes top right bottom right bottom left)
-        //b top right bottom right bottom left top left
-        //c bottom right bottom left top left top right
-        //d bottom left top left goes top right bottom
-    //l starts left goes right
-        //r starts right goes left
-    //h goes up to next h and telports back to first h
-        //i goes right to next i and telports back to first i
-        //j goes down to next j and telports back to first j
-        //k goes left to next k and telports back to first k
-        e.push_back("abxxababxxab"); 
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab");
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab"); 
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("xxxxxxxxxxxx");
-        e.push_back("abxxababxxab");
-        e.push_back("cdxxcdcdxxcd");
-        e.push_back("xxxxxxxxxxxx");
-    }
-
-    gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), 1, 1);
+void BaseApplication::deleteMap()
+{
+    delete gameMap;
 }
 //---------------------------------------------------------------------------
 void BaseApplication::createFrameListener(void)
@@ -428,12 +349,39 @@ bool BaseApplication::setup(void)
     return true;
 };
 //---------------------------------------------------------------------------
+void BaseApplication::calcNextLevel()
+{
+    mLevel++;
+    if(mDifficulty == 1 && mLevel > Level::numIntroLevels()) //num intro levels
+    {
+        mLevel = 1;
+        mDifficulty++;
+    }
+    if(mDifficulty == 2 && mLevel > Level::numMediumLevels()) //num intro levels
+    {
+        mLevel = 1;
+        mDifficulty++;
+    }
+    if(mDifficulty == 3 && mLevel > Level::numHardLevels()) //num intro levels
+    {
+        mLevel = 1;
+        mDifficulty++;
+    }
+    if(mDifficulty == 4 && mLevel > Level::numExtremeLevels()) //num intro levels
+    {
+        mLevel = 1;
+        mDifficulty++;
+    }
+    if(mDifficulty > Level::numDifficulties())
+    {
+        //ran out of levels sad face
+        // open main menu for level select
+        mLevel = 1;
+        mDifficulty = 1;
+    }
+}   
 bool scored = false;
 int points = 0;
-bool gameIsOver = false;
-bool gameStart = false;
-bool levelCreated = false;
-
 bool wisDown = false;
 bool disDown = false;
 bool sisDown = false;
@@ -451,19 +399,20 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
-    if(player->level == 1 && !levelCreated)
+    if(mGameStart)
     {
-        createObjects(1);
-        levelCreated = true;
-    }
-
-    if(gameStart)
-    {
+        if(player->levelFinished)
+        {
+            calcNextLevel();
+            deleteMap();
+            createObjects();
+            mLevelName->setCaption(gameMap->getName());
+        }
         mPlayerHp->setProgress((player->health)/100.0);
-        mPlayerHp->setCaption("player.health/100");
+        mPlayerHp->setCaption(patch::to_string(player->health)+"/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
         Ogre::Vector3 position = tem->getPosition();
-        mCamera->setPosition(position.x , 300, position.z+100);
+        mCamera->setPosition(position.x , 300, position.z+200);
         if(wisDown)
             gameMap->move(0);
         else if(disDown)
@@ -690,22 +639,39 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     {       
         mTrayMgr->destroyWidget("start");       
         mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");      
-        //setupDifficultyMenu();        
-        gameStart= true;        
-        mTrayMgr->hideCursor(); 
-        createObjects(0);      
-        createGUI("Rakan suxs XD");  
+        mTrayMgr->destroyWidget("credit");     
+        setupDifficultyMenu();        
+        return;
     }       
     else if(button->getName().compare("intro") == 0 )       
     {       
-        mTrayMgr->destroyWidget("intro");       
-        mTrayMgr->destroyWidget("back");        
-        //mTrayMgr->destroyWidget("menuLabel");     
-        //createObjects();      
-        //gameStart = true;     
-        mTrayMgr->hideCursor();     
+        mTrayMgr->destroyWidget("intro"); 
+        mTrayMgr->destroyWidget("back");  
+        mTrayMgr->destroyWidget("menuLabel");
+        setupIntroLevelSelect();        
+        return;  
     }
+    
+    
+        for(int i = 1; i <= Level::numIntroLevels(); i++)
+        {
+            std::string name = "intro "+ patch::to_string(i);
+            if(button->getName().compare(name) == 0 )
+            {
+                mTrayMgr->destroyWidget("intro 1"); 
+                mTrayMgr->destroyWidget("intro 2");
+                mTrayMgr->destroyWidget("intro 3");  
+                mLevel = i; 
+                createObjects();              
+                mGameStart= true;        
+                mTrayMgr->hideCursor();      
+                createGUI(gameMap->getName()); 
+                return;   
+            }
+        }
+    
+
+   
 }
 //---------------------------------------------------------------------------
 // Adjust mouse clipping area

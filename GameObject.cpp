@@ -43,7 +43,7 @@ Player::Player(Ogre::String n,
     burn = 0;
     oxygen = 10;
     poison = false;
-    level =0;
+    levelFinished = false;
 }
 
 Player::~Player()

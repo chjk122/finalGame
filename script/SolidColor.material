@@ -84,16 +84,16 @@ material Cube/Dragon
         ambient .2 .2 .2
           texture_unit
           {
-            texture finish.jpg
+            texture black.png
           }
           texture_unit
           {
-             texture blackoutline.png             
+             texture finishmask.png             
              colour_op alpha_blend
           }
           texture_unit
           {
-             texture black.png
+             texture path.jpg
              colour_op_ex blend_current_alpha src_texture src_current
           }
        }
@@ -926,7 +926,7 @@ material Cube/Bubble9
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -949,7 +949,7 @@ material Cube/Bubble8
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -972,7 +972,7 @@ material Cube/Bubble7
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -995,7 +995,7 @@ material Cube/Bubble6
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1018,7 +1018,7 @@ material Cube/Bubble5
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1041,7 +1041,7 @@ material Cube/Bubble4
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1064,7 +1064,7 @@ material Cube/Bubble3
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1087,7 +1087,7 @@ material Cube/Bubble2
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1110,7 +1110,7 @@ material Cube/Bubble1
         }
         texture_unit
         {
-             texture water.png 
+             texture water.jpg
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1194,7 +1194,7 @@ material Cube/DeathDrown
       {
         texture_unit
         {
-          texture water.png
+          texture water.jpg
         }
         texture_unit
         {

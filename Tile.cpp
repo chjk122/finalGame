@@ -92,10 +92,7 @@ FinishTile::~FinishTile()
 
 void FinishTile::event(Player* p)
 {
-    p->breath();
-    p->removeBurn();
-    p->poison = false;
-    p->level +=1;
+    p->levelFinished = true;
     printf("Finish\n");
 }
 

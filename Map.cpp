@@ -15,12 +15,14 @@ Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTople
 mgr(sceneMgr), player(play)
 {
 	parseMaps(centerOfTopleftTilePos, v, e);
+	name = "chris";
 }
 
 Map::Map(Player *play, Ogre::SceneManager* sceneMgr, Ogre::Vector3 centerOfTopleftTilePos, int catNum, int levNum):
 mgr(sceneMgr), player(play)
 {
 	Level l(catNum, levNum);
+	name = l.getName();
 	parseMaps(centerOfTopleftTilePos, l.getTileMap(), l.getCubesterMap());
 }
 
@@ -109,6 +111,11 @@ bool Map::canMove(int tileX, int tileY, int direction)
 	{
 		return false;
 	}
+}
+
+std::string Map::getName()
+{
+	return name;
 }
 
 bool checkCollision(Ogre::Vector3 p, Ogre::Vector3 c)
@@ -218,8 +225,6 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		pos.x = centerOfTopleftTilePos.x; // reset the x 
 	}
 
-
-	//pass #2 for the ice cause William code is bad
 	for(int x = 0; x < map.size(); x++)
 	{
 		for(int y = 0; y < map.size(); y++)

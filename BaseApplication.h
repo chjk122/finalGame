@@ -91,7 +91,7 @@ protected:
     virtual void chooseSceneManager(void);
     virtual void createCamera(void);
 
-    virtual void createObjects(int a);
+    virtual void createObjects();
     virtual void createFrameListener(void);
     virtual void createScene(void) = 0; // Override me!
     virtual void destroyScene(void);
@@ -100,6 +100,7 @@ protected:
     virtual void createResourceListener(void);
     virtual void loadResources(void);
     virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
+    virtual void deleteMap();
 
     virtual bool keyPressed(const OIS::KeyEvent &arg);
     virtual bool keyReleased(const OIS::KeyEvent &arg);
@@ -107,6 +108,7 @@ protected:
     virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
     virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
     virtual void buttonHit(OgreBites::Button* button);
+    virtual void calcNextLevel();
 
     // Adjust mouse clipping area
     virtual void windowResized(Ogre::RenderWindow* rw);
@@ -155,6 +157,10 @@ protected:
     Map*                        gameMap;
 
     Ogre::Real                  mGameState;
+    int                         mDifficulty;
+    int                         mLevel;
+    bool                        mGameStart;
+
 
     // Added for Mac compatibility
     Ogre::String                 m_ResourcePath;
