@@ -1,0 +1,13 @@
+//enemy key (y,u,a,b,c,d,l,r,h,i,j,k)
+    // y (starts top goes down)
+        //other version is u starts down goes top
+    //a (starts top left goes top right bottom right bottom left)
+        //b top right bottom right bottom left top left
+        //c bottom right bottom left top left top right
+        //d bottom left top left goes top right bottom
+    //l starts left goes right
+        //r starts right goes left
+    //h goes up to next h and telports back to first h
+        //i goes right to next i and telports back to first i
+        //j goes down to next j and telports back to first j
+        //k goes left to next k and telports back to first k
