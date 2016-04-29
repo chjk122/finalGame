@@ -46,6 +46,7 @@ public:
 };
 
 // basic walkable tile 
+//*-------------------------------------Square Cubester-----------------------------*//
 class CubesterTLSquare : public AbstractCubester
 {
 public:
@@ -77,6 +78,71 @@ public:
 	virtual ~CubesterBLSquare();
 	virtual int getAction();
 };
+//*-------------------------------------Line Cubester-----------------------------*//
+class CubesterTBLine : public AbstractCubester
+{
+public:
+	CubesterTBLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterTBLine();
+	virtual int getAction();
+};
+
+class CubesterBTLine : public AbstractCubester
+{
+public:
+	CubesterBTLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterBTLine();
+	virtual int getAction();
+};
+
+class CubesterLRLine : public AbstractCubester
+{
+public:
+	CubesterLRLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterLRLine();
+	virtual int getAction();
+};
+
+class CubesterRLLine : public AbstractCubester
+{
+public:
+	CubesterRLLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterRLLine();
+	virtual int getAction();
+};
+
+//*-------------------------------------Teleport Cubester-----------------------------*//
+class CubesterTTP : public AbstractCubester
+{
+public:
+	CubesterTTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterTTP();
+	virtual int getAction();
+};
+
+class CubesterBTP : public AbstractCubester
+{
+public:
+	CubesterBTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterBTP();
+	virtual int getAction();
+};
+
+class CubesterRTP : public AbstractCubester
+{
+public:
+	CubesterRTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterRTP();
+	virtual int getAction();
+};
+
+class CubesterLTP : public AbstractCubester
+{
+public:
+	CubesterLTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterLTP();
+	virtual int getAction();
+};
 
 // wrapper class
 class Cubester
@@ -99,5 +165,13 @@ public:
 	static char typeForCubesterTRSquare() { return 'b'; }
 	static char typeForCubesterBRSquare() { return 'c'; }
 	static char typeForCubesterBLSquare() { return 'd'; }
+	static char typeForCubesterTBLine() { return 'y'; }
+	static char typeForCubesterBTLine() { return 'u'; }
+	static char typeForCubesterLRLine() { return 'l'; }
+	static char typeForCubesterRLLine() { return 'r'; }
+	static char typeForCubesterTTP() { return 'h'; }
+	static char typeForCubesterRTP() { return 'i'; }
+	static char typeForCubesterBTP() { return 'j'; }
+	static char typeForCubesterLTP() { return 'k'; }
 
 };

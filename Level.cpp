@@ -44,6 +44,12 @@ void Level::setMaps(int levelCat, int levelN)
 			cubesterMap = getIntroL3C();
 			name        = getIntroL3N();
 		}
+		else if(levelN == 4)
+		{
+			tileMap     = getIntroL4T();
+			cubesterMap = getIntroL4C();
+			name        = getIntroL4N();
+		}
 	}
 	else if(levelCat == 3)
 	{

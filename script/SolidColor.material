@@ -84,7 +84,7 @@ material Cube/Dragon
         ambient .2 .2 .2
           texture_unit
           {
-            texture black.png
+            texture teleport.jpg
           }
           texture_unit
           {
@@ -93,7 +93,7 @@ material Cube/Dragon
           }
           texture_unit
           {
-             texture path.jpg
+             texture golden.png
              colour_op_ex blend_current_alpha src_texture src_current
           }
        }

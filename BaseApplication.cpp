@@ -50,7 +50,8 @@ BaseApplication::BaseApplication(void)
     mOverlaySystem(0),
     mDifficulty(1),
     mLevel(1),
-    mGameStart(false)
+    mGameStart(false),
+    mMusic(true)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -122,24 +123,42 @@ void BaseApplication::createCamera(void)
 //*-----------------------------------menu setup ------------------------------*//
 void BaseApplication::setupMainMenu(void)
 {
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Best Game Ever", 220);
+    mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 220);
     mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 220);
     mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 220);
+}
+
+void BaseApplication::setupSoundMenu(void)
+{
+    mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "Sound ON", 220);
+    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "Sound OFF", 220);
 }
 
 void BaseApplication::setupDifficultyMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 220);;
     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 220);
-    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "back", "Back to Main Menu", 220);
+    mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 220);
+    mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 220);
+    mButton4 = mTrayMgr->createButton(OgreBites::TL_CENTER, "extrem", "Extrem level", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 220);
+
 }
 
 void BaseApplication::setupIntroLevelSelect(void)
 {
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 220);;
     mButton1 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 1", "Level 1", 220);
     mButton2 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 2", "Level 2", 220);
     mButton3 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 3", "Level 3", 220);
+    mButton4 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 4", "Level 4", 220);
+    mButton5 = mTrayMgr->createButton(OgreBites::TL_CENTER, "intro 5", "Level 5", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty", "Back to Select Difficulty", 220);
 }
+
+
 
 void BaseApplication::createGUI(std::string levelName)
 {
@@ -341,9 +360,8 @@ bool BaseApplication::setup(void)
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     music = Mix_LoadMUS("game_music.mp3");
     Mix_PlayMusic(music,-1);
-    Mix_Volume(-1, 40);
 
-     mTrayMgr->showCursor();            
+    mTrayMgr->showCursor();            
     setupMainMenu();
 
     return true;
@@ -398,6 +416,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
+    if(!mMusic)
+    {
+        Mix_VolumeMusic(0);
+    }
+    else
+    {
+        Mix_VolumeMusic(45);
+    }
 
     if(mGameStart)
     {
@@ -637,39 +663,93 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
 {
     if(button->getName().compare("start") == 0 )        
     {       
+        mTrayMgr->destroyWidget("menuLabel");
         mTrayMgr->destroyWidget("start");       
         mTrayMgr->destroyWidget("sound");       
         mTrayMgr->destroyWidget("credit");     
         setupDifficultyMenu();        
         return;
     }       
+    else if(button->getName().compare("sound") == 0 )
+    {
+        mTrayMgr->destroyWidget("menuLabel");
+        mTrayMgr->destroyWidget("start");       
+        mTrayMgr->destroyWidget("sound");       
+        mTrayMgr->destroyWidget("credit");    
+        setupSoundMenu();
+        return;
+    }
+    else if(button->getName().compare("on") == 0 )
+    {
+        mTrayMgr->destroyWidget("on");       
+        mTrayMgr->destroyWidget("off");  
+        mMusic = true;        
+        setupMainMenu();
+        return;
+    }
+    else if(button->getName().compare("off") == 0 )
+    {
+        mTrayMgr->destroyWidget("on");       
+        mTrayMgr->destroyWidget("off");   
+        mMusic = false;       
+        setupMainMenu();
+        return;
+    }
     else if(button->getName().compare("intro") == 0 )       
     {       
         mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("back");  
+        mTrayMgr->destroyWidget("medium"); 
+        mTrayMgr->destroyWidget("hard"); 
+        mTrayMgr->destroyWidget("extrem"); 
+        mTrayMgr->destroyWidget("back to main menu");  
         mTrayMgr->destroyWidget("menuLabel");
         setupIntroLevelSelect();        
         return;  
     }
-    
-    
-        for(int i = 1; i <= Level::numIntroLevels(); i++)
+    else if(button->getName().compare("back to main menu") == 0 )
+    {
+        mTrayMgr->destroyWidget("intro"); 
+        mTrayMgr->destroyWidget("medium"); 
+        mTrayMgr->destroyWidget("hard"); 
+        mTrayMgr->destroyWidget("extrem"); 
+        mTrayMgr->destroyWidget("back to main menu");  
+        mTrayMgr->destroyWidget("menuLabel");
+        setupMainMenu(); 
+        return;
+    }
+    else if(button->getName().compare("back to select difficulty") == 0 )
+    {
+        mTrayMgr->destroyWidget("menuLabel");
+        mTrayMgr->destroyWidget("intro 1"); 
+        mTrayMgr->destroyWidget("intro 2");
+        mTrayMgr->destroyWidget("intro 3"); 
+        mTrayMgr->destroyWidget("intro 4");
+        mTrayMgr->destroyWidget("intro 5");  
+        mTrayMgr->destroyWidget("back to select difficulty");
+        setupDifficultyMenu();   
+        return;
+    }  
+    for(int i = 1; i <= Level::numIntroLevels(); i++)
+    {
+        std::string name = "intro "+ patch::to_string(i);
+        if(button->getName().compare(name) == 0 )
         {
-            std::string name = "intro "+ patch::to_string(i);
-            if(button->getName().compare(name) == 0 )
-            {
-                mTrayMgr->destroyWidget("intro 1"); 
-                mTrayMgr->destroyWidget("intro 2");
-                mTrayMgr->destroyWidget("intro 3");  
-                mLevel = i; 
-                createObjects();              
-                mGameStart= true;        
-                mTrayMgr->hideCursor();      
-                createGUI(gameMap->getName()); 
-                return;   
-            }
+            mTrayMgr->destroyWidget("menuLabel");
+            mTrayMgr->destroyWidget("intro 1"); 
+            mTrayMgr->destroyWidget("intro 2");
+            mTrayMgr->destroyWidget("intro 3"); 
+            mTrayMgr->destroyWidget("intro 4");
+            mTrayMgr->destroyWidget("intro 5");  
+            mTrayMgr->destroyWidget("back to select difficulty");
+            mLevel = i; 
+            createObjects();              
+            mGameStart= true;        
+            mTrayMgr->hideCursor();      
+            createGUI(gameMap->getName()); 
+            return;   
         }
-    
+    }
+
 
    
 }

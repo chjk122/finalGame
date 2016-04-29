@@ -118,6 +118,7 @@ protected:
     virtual void createGUI(std::string name);
     virtual void setupDifficultyMenu(void);
     virtual void setupIntroLevelSelect(void);
+    virtual void setupSoundMenu(void);
 
     Ogre::Root*                 mRoot;
     Ogre::Camera*               mCamera;
@@ -137,6 +138,13 @@ protected:
     OgreBites::Button*          mButton1;
     OgreBites::Button*          mButton2;
     OgreBites::Button*          mButton3;
+    OgreBites::Button*          mButton4;
+    OgreBites::Button*          mButton5;
+    OgreBites::Button*          mButton6;
+    OgreBites::Button*          mButton7;
+    OgreBites::Button*          mButton8;
+    OgreBites::Button*          mButton9;
+    OgreBites::Button*          mButton10;
     OgreBites::Button*          mButtonBack;
 
     OgreBites::Label*           mLevelName;
@@ -144,6 +152,7 @@ protected:
     
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
+    bool                        mMusic;
 
     //OIS Input devices
 
