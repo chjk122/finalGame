@@ -19,7 +19,7 @@ public:
 	vector<string> getCubesterMap();
 	string getName();
 
-    static int numIntroLevels() { return 4;}
+    static int numIntroLevels() { return 5;}
     static int numMediumLevels() { return 0;}
     static int numHardLevels() { return 1;}
     static int numExtremeLevels() { return 0;}
@@ -170,16 +170,16 @@ private:
     {
         vector<string> cubesters;
         cubesters.push_back("xxxxxxxxxxxx"); 
-        cubesters.push_back("xbxxxbbxxxbx");
+        cubesters.push_back("xbxxxbmxxxmx");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xbxxxbbxxxbx");
-        cubesters.push_back("xcxxxcdxxxdx");
+        cubesters.push_back("xbxxxbmxxxmx");
+        cubesters.push_back("xcxxxcpxxxpx");
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xcxxxcdxxxdx");
+        cubesters.push_back("xcxxxcpxxxpx");
         cubesters.push_back("xxxxxxxxxxxx");
         return cubesters;
     }
@@ -194,15 +194,15 @@ private:
         vector<string> tile;
         tile.push_back("xxxxxxxxxxxx");
         tile.push_back("xs+++++++++x");
-        tile.push_back("xxxxx++x+x+x");
-        tile.push_back("x++x++++x++x");
-        tile.push_back("x+x+x++x+x+x");
-        tile.push_back("x++++++++++x");
         tile.push_back("x++++++++++x");
         tile.push_back("x+x+x++x+x+x");
-        tile.push_back("x++x++++x++x");
+        tile.push_back("x++++++++++x");
         tile.push_back("x+x+x++x+x+x");
-        tile.push_back("x+++++++++fx");
+        tile.push_back("x++++++++++x");
+        tile.push_back("x+x+x++x+x+x");
+        tile.push_back("x+kx++++x++x");
+        tile.push_back("x+x+x++x+xdx");
+        tile.push_back("x++++++++xfx");
         tile.push_back("xxxxxxxxxxxx");
         return tile;
     }
@@ -211,16 +211,16 @@ private:
     {
         vector<string> cubesters;
         cubesters.push_back("xxxxxxxxxxxx"); 
-        cubesters.push_back("xbxxxbbxxxbx");
+        cubesters.push_back("xxxxxyuxxxxx");
+        cubesters.push_back("xrxxxxxxxxrx");
         cubesters.push_back("xxxxxxxxxxxx");
+        cubesters.push_back("xxkxxxxxxkxx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xbxxxbbxxxbx");
-        cubesters.push_back("xcxxxcdxxxdx");
+        cubesters.push_back("xjlxxxxxxxlx");
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xcxxxcdxxxdx");
+        cubesters.push_back("xxxxxyuxxxxx");
+        cubesters.push_back("xjixxxxxixxx");
         cubesters.push_back("xxxxxxxxxxxx");
         return cubesters;
     }
@@ -255,4 +255,36 @@ private:
         cubesters.push_back("xxxxxxx");
 		return cubesters;
 	} 
+
+    static string getMedium1N()
+    {
+        return "hard level 1";
+    }
+
+    static vector<string> getMediumL1T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxx");  //y, q, e, z
+        tile.push_back("xwwwwwx");
+        tile.push_back("xwxwxwx");
+        tile.push_back("xwxwxwx");
+        tile.push_back("xlxwxvx");
+        tile.push_back("xlxwxdx");
+        tile.push_back("xsxkxfx");
+        return tile;
+    }
+
+    static vector<string> getMediumL1C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("abxxabx"); 
+        cubesters.push_back("cdxxcdx");
+        cubesters.push_back("xxxxxxx");
+        cubesters.push_back("xxxxxxx");
+        cubesters.push_back("abxxabx");
+        cubesters.push_back("cdxxcdx");
+        cubesters.push_back("xxxxxxx");
+        return cubesters;
+    } 
+
 };
