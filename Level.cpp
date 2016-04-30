@@ -50,14 +50,29 @@ void Level::setMaps(int levelCat, int levelN)
 			cubesterMap = getIntroL4C();
 			name        = getIntroL4N();
 		}
+		else if(levelN == 5)
+		{
+			tileMap     = getIntroL5T();
+			cubesterMap = getIntroL5C();
+			name        = getIntroL5N();
+		}
+	}
+	else if(levelCat == 2)
+	{
+		if(levelN == 1)
+		{
+			tileMap     = getMediumL1T();
+			cubesterMap = getMediumL1C();
+			name        = getMediumL1N();
+		}
 	}
 	else if(levelCat == 3)
 	{
 		if(levelN == 1)
 		{
-			tileMap = getHardL1T();
+			tileMap     = getHardL1T();
 			cubesterMap = getHardL1C();
-			name = getIntroL1N();
+			name        = getHardL1N();
 		}
 	}
 }

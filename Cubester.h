@@ -23,11 +23,10 @@ protected:
 	std::string name;
 	Ogre::SceneManager* mgr;
 	Ogre::SceneNode* rootNode;
-	int xIndex;
-	int yIndex;
 	Ogre::Entity* ent;
 	bool inMotion;
 	int actionIndex;
+	Ogre::Vector3 startPosition;
 public:
 	static double length() { return 50; } 
 	virtual Ogre::Vector3 getPosition();
@@ -36,9 +35,8 @@ public:
 	virtual Ogre::SceneNode * getNode();
 	virtual std::string getName();
 	virtual void simulate(const Ogre::Real elapsedTime);
+	virtual void reload();
 	virtual int getAction();
-	virtual int getX();
-	virtual int getY();
 	virtual int goUp();
 	virtual int goRight();
 	virtual int goDown();
@@ -76,6 +74,38 @@ class CubesterBLSquare : public AbstractCubester
 public:
 	CubesterBLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
 	virtual ~CubesterBLSquare();
+	virtual int getAction();
+};
+//*-------------------------------------CounterClockwise Square Cubester-----------------------------*//
+class CubesterCCTLSquare : public AbstractCubester
+{
+public:
+	CubesterCCTLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterCCTLSquare();
+	virtual int getAction();
+};
+
+class CubesterCCTRSquare : public AbstractCubester
+{
+public:
+	CubesterCCTRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterCCTRSquare();
+	virtual int getAction();
+};
+
+class CubesterCCBRSquare : public AbstractCubester
+{
+public:
+	CubesterCCBRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterCCBRSquare();
+	virtual int getAction();
+};
+
+class CubesterCCBLSquare : public AbstractCubester
+{
+public:
+	CubesterCCBLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length);
+	virtual ~CubesterCCBLSquare();
 	virtual int getAction();
 };
 //*-------------------------------------Line Cubester-----------------------------*//
@@ -158,6 +188,7 @@ public:
 	void simulate(const Ogre::Real elapsedTime);
 	Ogre::SceneNode * getNode();
 	std::string getName();
+	void reload();
 	int getX();
 	int getY();
 
@@ -165,6 +196,10 @@ public:
 	static char typeForCubesterTRSquare() { return 'b'; }
 	static char typeForCubesterBRSquare() { return 'c'; }
 	static char typeForCubesterBLSquare() { return 'd'; }
+	static char typeForCubesterCCTLSquare() { return 'm'; }
+	static char typeForCubesterCCTRSquare() { return 'n'; }
+	static char typeForCubesterCCBRSquare() { return 'o'; }
+	static char typeForCubesterCCBLSquare() { return 'p'; }
 	static char typeForCubesterTBLine() { return 'y'; }
 	static char typeForCubesterBTLine() { return 'u'; }
 	static char typeForCubesterLRLine() { return 'l'; }

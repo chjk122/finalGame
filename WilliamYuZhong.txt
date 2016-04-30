@@ -11,3 +11,5 @@
         //i goes right to next i and telports back to first i
         //j goes down to next j and telports back to first j
         //k goes left to next k and telports back to first k
+
+    mnop --  counter clockwise

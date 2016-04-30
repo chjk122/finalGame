@@ -61,7 +61,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
      "cube.mesh", 
      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
     Ogre::Vector3 newPos(position.x, position.y, position.z);
-    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("playerNode", newPos);
+    rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, newPos);
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);

@@ -170,16 +170,16 @@ private:
     {
         vector<string> cubesters;
         cubesters.push_back("xxxxxxxxxxxx"); 
-        cubesters.push_back("xbxxxbmxxxmx");
+        cubesters.push_back("xbxxxboxxxox");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xbxxxbmxxxmx");
-        cubesters.push_back("xcxxxcpxxxpx");
+        cubesters.push_back("xbxxxboxxxox");
+        cubesters.push_back("xpxxxpaxxxax");
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xcxxxcpxxxpx");
+        cubesters.push_back("xpxxxpaxxxax");
         cubesters.push_back("xxxxxxxxxxxx");
         return cubesters;
     }
@@ -225,9 +225,40 @@ private:
         return cubesters;
     }
 
-	static string getHard1N()
+    static string getMediumL1N()
+    {
+        return "Medium level 1";
+    }
+
+    static vector<string> getMediumL1T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxx");  //y, q, e, z
+        tile.push_back("x++l++x");
+        tile.push_back("x+x+x+x");
+        tile.push_back("x+x+x+x");
+        tile.push_back("xlx+x+x");
+        tile.push_back("xlx+xdx");
+        tile.push_back("xsxkxfx");
+        return tile;
+    }
+
+    static vector<string> getMediumL1C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxyxuxx"); 
+        cubesters.push_back("xxxxxxx");
+        cubesters.push_back("xxxxxxx");
+        cubesters.push_back("rxxxxxr");
+        cubesters.push_back("xxxxxxx");
+        cubesters.push_back("lxxxxxl");
+        cubesters.push_back("xxyxuxx");
+        return cubesters;
+    } 
+
+	static string getHardL1N()
 	{
-		return "hard level 1";
+		return "Hard level 1";
 	}
 
 	static vector<string> getHardL1T()
@@ -255,36 +286,5 @@ private:
         cubesters.push_back("xxxxxxx");
 		return cubesters;
 	} 
-
-    static string getMedium1N()
-    {
-        return "hard level 1";
-    }
-
-    static vector<string> getMediumL1T()
-    {
-        vector<string> tile;
-        tile.push_back("xxxxxxx");  //y, q, e, z
-        tile.push_back("xwwwwwx");
-        tile.push_back("xwxwxwx");
-        tile.push_back("xwxwxwx");
-        tile.push_back("xlxwxvx");
-        tile.push_back("xlxwxdx");
-        tile.push_back("xsxkxfx");
-        return tile;
-    }
-
-    static vector<string> getMediumL1C()
-    {
-        vector<string> cubesters;
-        cubesters.push_back("abxxabx"); 
-        cubesters.push_back("cdxxcdx");
-        cubesters.push_back("xxxxxxx");
-        cubesters.push_back("xxxxxxx");
-        cubesters.push_back("abxxabx");
-        cubesters.push_back("cdxxcdx");
-        cubesters.push_back("xxxxxxx");
-        return cubesters;
-    } 
 
 };
