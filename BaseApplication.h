@@ -118,6 +118,9 @@ protected:
     virtual void createGUI(std::string name);
     virtual void setupDifficultyMenu(void);
     virtual void setupIntroLevelSelect(void);
+    virtual void setupHardLevelSelect(void);
+    virtual void setupMediumLevelSelect(void);
+    virtual void setupExtremeLevelSelect(void);
     virtual void setupSoundMenu(void);
 
     Ogre::Root*                 mRoot;
