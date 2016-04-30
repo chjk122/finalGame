@@ -68,7 +68,6 @@ void Level::setMaps(int levelCat, int levelN)
 	}
 	else if(levelCat == 3)
 	{
-		std::cout<<"hello world--------------"<<std::endl;
 		if(levelN == 1)
 		{
 			tileMap     = getHardL1T();
@@ -80,6 +79,15 @@ void Level::setMaps(int levelCat, int levelN)
 			tileMap     = getHardL2T();
 			cubesterMap = getHardL2C();
 			name        = getHardL2N();
+		}
+	}
+	else if(levelCat == 4)
+	{
+		if(levelN == 1)
+		{
+			tileMap     = getExtremeL1T();
+			cubesterMap = getExtremeL1C();
+			name        = getExtremeL1N();
 		}
 	}
 }

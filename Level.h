@@ -334,4 +334,45 @@ private:
         return cubesters;
     }
 
+    static string getExtremeL1N()
+    {
+        return "What Did I do to Deserve This?";
+    }
+
+    static vector<string> getExtremeL1T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxx");
+        tile.push_back("xs+++++++++x");
+        tile.push_back("x++++++++++x");
+        tile.push_back("xtx+x++x+x+x");
+        tile.push_back("x+t++++++t+x");
+        tile.push_back("x+x+x++x+x+x");
+        tile.push_back("x++++++++++x");
+        tile.push_back("x+x+x++x+x+x");
+        tile.push_back("x+kx++++x++x");
+        tile.push_back("x+x+x++x+xdx");
+        tile.push_back("xtt+++++txfx");
+        tile.push_back("xxxxxxxxxxxx");
+        return tile;
+    }
+
+    static vector<string> getExtremeL1C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxyuxxxxx");
+        cubesters.push_back("xrxxxxxxxxrx");
+        cubesters.push_back("xjxxxxxxxxxx");
+        cubesters.push_back("xxkxxxxxxkxx");
+        cubesters.push_back("xxxxxxxxxxxx");
+        cubesters.push_back("xxlxxxxxxxlx");
+        cubesters.push_back("xxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxx");
+        cubesters.push_back("xxxxxyuxxxxx");
+        cubesters.push_back("xjixxxxxixxx");
+        cubesters.push_back("xxxxxxxxxxxx");
+        return cubesters;
+    }
+
 };

@@ -138,16 +138,7 @@ protected:
     OgreBites::SdkCameraMan*    mCameraMan;     	// Basic camera controller
     OgreBites::ParamsPanel*     mDetailsPanel;   	// Sample details panel
     OgreBites::Label*           mMenuLabel;
-    OgreBites::Button*          mButton1;
-    OgreBites::Button*          mButton2;
-    OgreBites::Button*          mButton3;
-    OgreBites::Button*          mButton4;
-    OgreBites::Button*          mButton5;
-    OgreBites::Button*          mButton6;
-    OgreBites::Button*          mButton7;
-    OgreBites::Button*          mButton8;
-    OgreBites::Button*          mButton9;
-    OgreBites::Button*          mButton10;
+    // std::vector<OgreBites::Button *>       mButtonLevels;
     OgreBites::Button*          mButtonBack;
 
     OgreBites::Label*           mLevelName;

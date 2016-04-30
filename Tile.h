@@ -141,6 +141,7 @@ public:
 class DoorTile : public PathTile
 {
 public:
+	bool unlocked;
 	DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~DoorTile();
 	virtual void event(Player* p);
@@ -153,6 +154,7 @@ public:
 class KeyTile : public PathTile
 {
 public:
+	bool takenKey;
 	KeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
 	virtual ~KeyTile();
 	virtual void reload();

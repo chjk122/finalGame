@@ -39,7 +39,7 @@ Player::Player(Ogre::String n,
     inMotion = false;
 	inertia = btVector3(0,0,0);
     health = 100;
-    key = false;
+    key = 0;
     burn = 0;
     oxygen = 10;
     poison = false;
@@ -170,7 +170,17 @@ void Player::changeMaterial(std::string s)
 
 void Player::gotKey()
 {
-    key = true;
+    key++;
+}
+
+bool Player::usedKey()
+{
+    if(key > 0)
+    {
+        key--;
+        return true;
+    }
+    return false;
 }
 
 bool Player::hasKey()

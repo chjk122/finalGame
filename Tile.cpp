@@ -264,6 +264,7 @@ DoorTile::DoorTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, in
 PathTile(sceneMgr, pos, xInd, yInd)
 {
      isWalkable = false;
+     unlocked = false;
 }
 DoorTile::~DoorTile()
 {
@@ -273,6 +274,7 @@ DoorTile::~DoorTile()
 void DoorTile::reload()
 {
     ent->setMaterialName("Tile/DoorLocked");
+    unlocked = false;
 }
 
 void DoorTile::event(Player* p)
@@ -285,6 +287,8 @@ bool DoorTile::getIsWalkable(Player *p)
 {
     if(p->hasKey()) 
     {
+        unlocked = true;
+        p->usedKey();
         ent->setMaterialName("Tile/DoorUnlocked");
         return true;
     }
@@ -296,7 +300,7 @@ bool DoorTile::getIsWalkable(Player *p)
 KeyTile::KeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
 PathTile(sceneMgr, pos, xInd, yInd)
 {
-
+    takenKey = false;
 }
 KeyTile::~KeyTile()
 {
@@ -306,6 +310,7 @@ KeyTile::~KeyTile()
 void KeyTile::reload()
 {
     ent->setMaterialName("Tile/Key");
+    takenKey = true;
 }
 
 
@@ -313,7 +318,11 @@ void KeyTile::event(Player* p)
 {
     ent->setMaterialName("Tile/Path");
     p->breath();
-    p->gotKey();
+    if(!takenKey)
+    {
+        p->gotKey();
+        takenKey = true;
+    }
     printf("KeyTile\n");
 }
 

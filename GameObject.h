@@ -50,7 +50,7 @@ public:
 	bool poison;
 	int burn;
 	int oxygen;
-	bool key;
+	int key;
 	static double length() { return 50; }
 	static double burnDamage(){return 5;}
 	static double poisonDamage(){return 2;}
@@ -76,6 +76,7 @@ public:
 	bool simulate(const Ogre::Real elapsedTime);
 	bool canMove();
 	void gotKey();
+	bool usedKey();
 	bool hasKey();
 	int getPlayerX();
 	int getPlayerY();
