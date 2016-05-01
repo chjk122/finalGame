@@ -92,7 +92,9 @@ bool Map::move(int direction)
 
 	if(canMove(nextX, nextY, direction))
 	{
-		return player->move(direction, map[nextX][nextY]->getPosition());
+		Ogre::Vector3 addPlayerLength = map[nextX][nextY]->getPosition();
+		addPlayerLength.y += Player::length()/2;
+		return player->move(direction, addPlayerLength);
 	}
 	else
 		return false;

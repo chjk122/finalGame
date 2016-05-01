@@ -334,12 +334,53 @@ private:
         return cubesters;
     }
 
-    static string getExtremeL1N()
+    static string getExtremeL4N()
+    {
+        return "Starting to Get Spicy";
+    }
+
+    static vector<string> getExtremeL4T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxx");
+        tile.push_back("xfds+++++++x");
+        tile.push_back("xxxxxxxxxx+x");
+        tile.push_back("++++++x++++x");
+        tile.push_back("++++++x++++x");
+        tile.push_back("+++xx+x++++x");
+        tile.push_back("+++x++x++++x");
+        tile.push_back("++x++xx++++x");
+        tile.push_back("+++x++x++++x");
+        tile.push_back("x+++x+x++++x");
+        tile.push_back("xk++x++++++x");
+        tile.push_back("xxxxxxxxxxxx");
+        return tile;
+    }
+
+    static vector<string> getExtremeL4C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxaAaAmMmM");
+        cubesters.push_back("x++++++++++x");
+        cubesters.push_back("xxxxaAaAmMmM");
+        cubesters.push_back("axxyaxly+++l");
+        cubesters.push_back("bx+xbxxYu++x");
+        cubesters.push_back("mxxxmxr+Uy+r");
+        cubesters.push_back("nx+xnxx++Yux");
+        cubesters.push_back("ax+xaxly++Ul");
+        cubesters.push_back("bx+xbxxYu++x");
+        cubesters.push_back("mxxxmxlxUy+l");
+        cubesters.push_back("nxxxnx+++Yux");
+        cubesters.push_back("xxxyxxxxxxUx");
+        return cubesters;
+    }
+
+    static string getExtremeL5N()
     {
         return "What Did I do to Deserve This?";
     }
 
-    static vector<string> getExtremeL1T()
+    static vector<string> getExtremeL5T()
     {
         vector<string> tile;
         tile.push_back("xxxxxxxxxxxxxxxx");
@@ -355,13 +396,13 @@ private:
         tile.push_back("x+kx+xxxxxxx+x+x");
         tile.push_back("x++xt++++tt+tx+x");
         tile.push_back("x++x+xxxxxxxxx+x");
-        tile.push_back("x++++xf++++++s+x");
+        tile.push_back("x++++xfddd+++++x");
         tile.push_back("xxxxxxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxxxxxx");
         return tile;
     }
 
-    static vector<string> getExtremeL1C()
+    static vector<string> getExtremeL5C()
     {
         vector<string> cubesters;
         cubesters.push_back("aAaAxxxxxxxxbxbx");
@@ -371,9 +412,9 @@ private:
         cubesters.push_back("xxxxxxxxxxxxxaxa");
         cubesters.push_back("bBbBxxxxixxxixxx");
         cubesters.push_back("cCcCxxxxxxjxjaxa");
-        cubesters.push_back("xxxxxxxxsxxxxaxa");
+        cubesters.push_back("xxxxxxxxsxxxxmxm");
         cubesters.push_back("cCcCxxhxxxxxxxxx");
-        cubesters.push_back("dDdDkxxxxkxxxaxa");
+        cubesters.push_back("dDdDkxxxxkxxxmxm");
         cubesters.push_back("xxxxxxxxxxxxxaxa");
         cubesters.push_back("dDdDkxxxxkjxjxxx");
         cubesters.push_back("x++x+xxOxOxxxaxa");

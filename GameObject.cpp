@@ -77,7 +77,6 @@ bool Player::move(int dir, Ogre::Vector3 p)
     if(canMove())
     {
         direction = dir;
-        p.y += length()/2;
         endPos = p;
         inMotion = true;
         return true;

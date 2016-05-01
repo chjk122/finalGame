@@ -1,33 +1,25 @@
-x	t	t	x	x	x	x	x	x	x	x	x	x	x	x	x
-x	+	k	x	+	+	+	+	+	+	+	+	+	+	+	x
-x	+	+	x	+	x	x	x	x	x	x	x	x	x	+	x
-x	+	+	x	+	x	t	+	t	+	+	+	t	x	+	x
-x	+	+	x	+	x	+	x	x	x	x	x	+	x	+	x
-x	k	+	x	+	x	+	x	t	+	+	x	t	x	+	x
-x	+	+	x	+	x	+	x	+	x	t	x	t	x	+	x
-x	+	+	x	+	x	+	x	s	x	+	x	+	x	+	x
-x	+	+	x	+	x	t	x	x	x	+	x	+	x	+	x
-x	+	+	x	t	x	+	+	+	t	+	x	+	x	+	x
-x	+	k	x	+	x	x	x	x	x	x	x	+	x	+	x
-x	+	+	x	t	+	+	+	+	t	t	+	t	x	+	x
-x	+	+	x	+	x	x	x	x	x	x	x	x	x	+	x
-x	+	+	+	+	x	f	d	d	d	+	+	+	+	+	x
-x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
-x	t	t	x	x	x	x	x	x	x	x	x	x	x	x	x
-															
-a	A	a	A	x	x	x	x	x	x	x	x	b	x	b	x
-x	y	u	x	a	a	x	x	x	x	x	x	x	x	x	x
-a	A	a	A	a	a	x	x	x	x	x	x	b	x	b	x
-b	B	b	B	x	x	h	x	i	x	x	x	i	x	x	x
-x	x	x	x	x	x	x	x	x	x	x	x	x	a	x	a
-b	B	b	B	x	x	x	x	i	x	x	x	i	x	x	x
-c	C	c	C	x	x	x	x	x	x	j	x	j	a	x	a
-x	x	x	x	x	x	x	x	s	x	x	x	x	a	x	a
-c	C	c	C	x	x	h	x	x	x	x	x	x	x	x	x
-d	D	d	D	k	x	x	x	x	k	x	x	x	a	x	a
-x	x	x	x	x	x	x	x	x	x	x	x	x	a	x	a
-d	D	d	D	k	x	x	x	x	k	j	x	j	x	x	x
-x	+	+	x	+	x	x	x	x	x	x	x	x	a	x	a
-x	+	+	+	+	x	x	n	m	n	m	x	x	x	x	x
-x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
-x	y	u	x	x	x	x	n	m	n	m	x	x	x	x	x
+x	x	x	x	x	x	x	x	x	x	x	x
+x	f	d	s	+	+	+	+	+	+	+	x
+x	x	x	x	x	x	x	x	x	x	+	x
+x	x	+	+	+	+	x	+	+	+	+	x
+x	+	+	x	x	+	x	+	+	+	+	x
+x	+	x	x	x	+	x	+	+	+	+	x
+x	+	+	x	+	+	x	+	+	+	+	x
+x	x	+	x	+	x	x	+	+	+	+	x
+x	+	+	x	+	+	x	+	+	+	+	x
+x	+	x	x	x	+	x	+	+	+	+	x
+x	k	x	x	x	+	+	+	+	+	+	x
+x	x	x	x	x	x	x	x	x	x	x	x
+											
+x	x	x	x	a	A	a	A	m	M	m	M
+x	+	+	+	+	+	+	+	+	+	+	x
+x	x	x	x	a	A	a	A	m	M	m	M
+a	A	+	+	a	A	l	y	+	+	+	l
+b	B	+	x	b	B	x	Y	u	+	+	x
+m	M	x	x	m	M	r	+	U	y	+	r
+n	N	+	x	n	N	x	+	+	Y	u	x
+a	A	+	x	a	A	l	y	+	+	U	l
+b	B	+	x	b	B	x	Y	u	+	+	x
+m	M	x	x	m	M	r	x	U	y	+	r
+n	N	x	x	n	N	+	+	+	Y	u	x
+x	x	x	x	x	x	x	x	x	x	U	x
