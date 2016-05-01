@@ -20,9 +20,9 @@ public:
 	string getName();
 
     static int numIntroLevels() { return 5;}
-    static int numMediumLevels() { return 1;}
-    static int numHardLevels() { return 2;}
-    static int numExtremeLevels() { return 0;}
+    static int numMediumLevels() { return 0;}
+    static int numHardLevels() { return 0;}
+    static int numExtremeLevels() { return 1;}
     static int numDifficulties() { return 4;}
 
 
@@ -342,36 +342,44 @@ private:
     static vector<string> getExtremeL1T()
     {
         vector<string> tile;
-        tile.push_back("xxxxxxxxxxxx");
-        tile.push_back("xs+++++++++x");
-        tile.push_back("x++++++++++x");
-        tile.push_back("xtx+x++x+x+x");
-        tile.push_back("x+t++++++t+x");
-        tile.push_back("x+x+x++x+x+x");
-        tile.push_back("x++++++++++x");
-        tile.push_back("x+x+x++x+x+x");
-        tile.push_back("x+kx++++x++x");
-        tile.push_back("x+x+x++x+xdx");
-        tile.push_back("xtt+++++txfx");
-        tile.push_back("xxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxxx");
+        tile.push_back("x+kx+++++++++++x");
+        tile.push_back("x++x+xxxxxxxxx+x");
+        tile.push_back("x++x+xt+t+++tx+x");
+        tile.push_back("x++x+x+xxxxx+x+x");
+        tile.push_back("xk+x+x+xt++xtx+x");
+        tile.push_back("x++x+x+x+xtxtx+x");
+        tile.push_back("x++x+x+xxx+x+x+x");
+        tile.push_back("x++x+xtxxx+x+x+x");
+        tile.push_back("x++xtx+++t+x+x+x");
+        tile.push_back("x+kx+xxxxxxx+x+x");
+        tile.push_back("x++xt++++tt+tx+x");
+        tile.push_back("x++x+xxxxxxxxx+x");
+        tile.push_back("x++++xf++++++s+x");
+        tile.push_back("xxxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxxx");
         return tile;
     }
 
     static vector<string> getExtremeL1C()
     {
         vector<string> cubesters;
-        cubesters.push_back("xxxxxxxxxxxx"); 
-        cubesters.push_back("xxxxxyuxxxxx");
-        cubesters.push_back("xrxxxxxxxxrx");
-        cubesters.push_back("xjxxxxxxxxxx");
-        cubesters.push_back("xxkxxxxxxkxx");
-        cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xxlxxxxxxxlx");
-        cubesters.push_back("xxxxxxxxxxxx"); 
-        cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xxxxxyuxxxxx");
-        cubesters.push_back("xjixxxxxixxx");
-        cubesters.push_back("xxxxxxxxxxxx");
+        cubesters.push_back("aAaAxxxxxxxxbxbx");
+        cubesters.push_back("xxxxaaxxxxxxxxxx");
+        cubesters.push_back("aAaAaaxxxxxxbxbx");
+        cubesters.push_back("bBbBxxhxixxxixxx");
+        cubesters.push_back("xxxxxxxxxxxxxaxa");
+        cubesters.push_back("bBbBxxxxixxxixxx");
+        cubesters.push_back("cCcCxxxxxxjxjaxa");
+        cubesters.push_back("xxxxxxxxsxxxxaxa");
+        cubesters.push_back("cCcCxxhxxxxxxxxx");
+        cubesters.push_back("dDdDkxxxxkxxxaxa");
+        cubesters.push_back("xxxxxxxxxxxxxaxa");
+        cubesters.push_back("dDdDkxxxxkjxjxxx");
+        cubesters.push_back("x++x+xxOxOxxxaxa");
+        cubesters.push_back("x++++xxMmMmxxxxx");
+        cubesters.push_back("xxxxxxxOxOxxxxxx");
+        cubesters.push_back("xxxxxxxMmMmxxxxx");
         return cubesters;
     }
 

@@ -122,7 +122,7 @@ bool checkCollision(Ogre::Vector3 p, Ogre::Vector3 c)
 {
 	double distX = abs(p.x - c.x);
 	double distY = abs(p.z - c.z);
-	return (distX < 48 && distY < 48); //50 is a bit harsh on the collision
+	return (distX < 46 && distY < 46); //50 is a bit harsh on the collision
 }
 
 void Map::simulate(const Ogre::Real elapsedTime)
@@ -196,11 +196,12 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
 			}
 			//code for enemy locations
-			if(e[x][y] != 'x')
+			if(e[x][y] != 'x' && e[x][y] != '+')
 			{
 				char enemyType = e[x][y];
+				char lowerCaseEnemyType = tolower(enemyType);
 				//know it should be part of a clockwise square movement enemy
-				if(e[x][y] >= 'a' && e[x][y] <= 'd')
+				if(lowerCaseEnemyType >= 'a' && lowerCaseEnemyType <= 'd')
 				{
 					for(int j = y+1; j < e.size(); j++) //find the dist of square the enmemy walks
 					{
@@ -208,7 +209,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 						{
 							//here we found the dist of side (i-x) and know the type of enemy
 							int dist = j-y;
-							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
+							Cubester *creature = new Cubester(mgr, pos, x, y, dist, lowerCaseEnemyType);
 							cubesters.push_back(creature);
 							//remove the creature from the parser
 							e[x][y] = 'x';
@@ -220,7 +221,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 					}
 				}
 				// know it should be part of a counter clockwise square movement enemy
-				else if(e[x][y] >= 'm' && e[x][y] <= 'p')
+				else if(lowerCaseEnemyType >= 'm' && lowerCaseEnemyType <= 'p')
 				{
 					for(int j = y+1; j < e.size(); j++) //find the dist of square the enmemy walks
 					{
@@ -228,7 +229,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 						{
 							//here we found the dist of side (i-x) and know the type of enemy
 							int dist = j-y;
-							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
+							Cubester *creature = new Cubester(mgr, pos, x, y, dist, lowerCaseEnemyType);
 							cubesters.push_back(creature);
 							//remove the creature from the parser
 							e[x][y] = 'x';
@@ -241,7 +242,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 				}
 
 				//know it should be part of a horizontal enemy
-				else if(e[x][y] == 'l' || e[x][y] == 'r' || e[x][y] == 'i' || e[x][y] == 'k')
+				else if(lowerCaseEnemyType == 'l' || lowerCaseEnemyType == 'r' || lowerCaseEnemyType == 'i' || lowerCaseEnemyType == 'k')
 				{
 					for(int j = y+1; j < e.size(); j++) //find the dist of square the enmemy walks
 					{
@@ -249,7 +250,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 						{
 							//here we found the dist of side (i-x) and know the type of enemy
 							int dist = j-y;
-							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
+							Cubester *creature = new Cubester(mgr, pos, x, y, dist, lowerCaseEnemyType);
 							cubesters.push_back(creature);
 							//remove the creature from the parser
 							e[x][y] = 'x';
@@ -260,7 +261,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 				}
 
 				//know it should be part of a vertical enemy
-				else if(e[x][y] == 'y' || e[x][y] == 'u' || e[x][y] == 'h' || e[x][y] == 'j')
+				else if(lowerCaseEnemyType == 'y' || lowerCaseEnemyType == 'u' || lowerCaseEnemyType == 'h' || lowerCaseEnemyType == 'j')
 				{
 					for(int i = x+1; i < e.size(); i++) //find the dist of square the enmemy walks
 					{
@@ -268,7 +269,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 						{
 							//here we found the dist of side (i-x) and know the type of enemy
 							int dist = i-x;
-							Cubester *creature = new Cubester(mgr, pos, x, y, dist, enemyType);
+							Cubester *creature = new Cubester(mgr, pos, x, y, dist, lowerCaseEnemyType);
 							cubesters.push_back(creature);
 							//remove the creature from the parser
 							e[x][y] = 'x';

@@ -143,7 +143,7 @@ void BaseApplication::setupDifficultyMenu(void)
     mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 220);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 220);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extrem level", 220);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extreme level", 220);
     mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 220);
 
 }

@@ -22,6 +22,7 @@ void AbstractCubester::create(std::string material)
     name = patch::to_string((int)(position.x)) + "enemy" + patch::to_string((int)(position.z));
     Ogre::Vector3 newPos(position.x, position.y + length()/2, position.z);
     position = newPos;
+    endPos = newPos;
     rootNode = mgr->getRootSceneNode()->createChildSceneNode(name, position);
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(ent);
@@ -43,6 +44,7 @@ void AbstractCubester::simulate(const Ogre::Real elapsedTime)
         rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z - moveSpeed() * elapsedTime));
         if(rootNode->getPosition().z < endPos.z)
         {
+            rootNode->setPosition(endPos);
             // playerX -= 1;
             inMotion = false;
             return;
@@ -53,6 +55,7 @@ void AbstractCubester::simulate(const Ogre::Real elapsedTime)
         rootNode->setPosition(Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
         if(rootNode->getPosition().x > endPos.x)
         {
+            rootNode->setPosition(endPos);
             // playerY += 1;
             inMotion = false;
             return;
@@ -63,6 +66,7 @@ void AbstractCubester::simulate(const Ogre::Real elapsedTime)
         rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z + moveSpeed() * elapsedTime));
         if(rootNode->getPosition().z > endPos.z)
         {
+            rootNode->setPosition(endPos);
             // playerX += 1;
             inMotion = false;
             return;
@@ -73,6 +77,7 @@ void AbstractCubester::simulate(const Ogre::Real elapsedTime)
         rootNode->setPosition(Ogre::Vector3(nowPos.x - moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
         if(rootNode->getPosition().x < endPos.x)
         {
+            rootNode->setPosition(endPos);
             // playerY -= 1;
             inMotion = false;
             return;

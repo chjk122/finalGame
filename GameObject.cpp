@@ -61,6 +61,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
      "cube.mesh", 
      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME));
     Ogre::Vector3 newPos(position.x, position.y, position.z);
+    endPos = newPos;
     rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode(name, newPos);
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
@@ -76,6 +77,7 @@ bool Player::move(int dir, Ogre::Vector3 p)
     if(canMove())
     {
         direction = dir;
+        p.y += length()/2;
         endPos = p;
         inMotion = true;
         return true;
@@ -97,6 +99,7 @@ bool Player::simulate(const Ogre::Real elapsedTime)
             rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z - moveSpeed() * elapsedTime));
             if(rootNode->getPosition().z < endPos.z)
             {
+                rootNode->setPosition(endPos);
                 playerX -= 1;
                 inMotion = false;
                 return true;
@@ -107,6 +110,7 @@ bool Player::simulate(const Ogre::Real elapsedTime)
             rootNode->setPosition(Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
             if(rootNode->getPosition().x > endPos.x)
             {
+                rootNode->setPosition(endPos);
                 playerY += 1;
                 inMotion = false;
                 return true;
@@ -117,6 +121,7 @@ bool Player::simulate(const Ogre::Real elapsedTime)
             rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z + moveSpeed() * elapsedTime));
             if(rootNode->getPosition().z > endPos.z)
             {
+                rootNode->setPosition(endPos);
                 playerX += 1;
                 inMotion = false;
                 return true;
@@ -127,6 +132,7 @@ bool Player::simulate(const Ogre::Real elapsedTime)
             rootNode->setPosition(Ogre::Vector3(nowPos.x - moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
             if(rootNode->getPosition().x < endPos.x)
             {
+                rootNode->setPosition(endPos);
                 playerY -= 1;
                 inMotion = false;
                 return true;
@@ -158,6 +164,7 @@ void Player::setPlayerCord(int xI, int yI, int lengthTile, double xCord, double 
     startPlayerY = playerY;
     Ogre::Vector3 newPos(xCord + (yI * lengthTile), position.y + (length()/2), zCord+ (xI * lengthTile));
     position = newPos;
+    endPos = position;
     this->create();
     rootNode->setPosition(newPos);
 }
@@ -170,22 +177,19 @@ void Player::changeMaterial(std::string s)
 
 void Player::gotKey()
 {
+    if(key <= 0)
+        key = 0;
     key++;
 }
 
 bool Player::usedKey()
 {
-    if(key > 0)
-    {
-        key--;
-        return true;
-    }
-    return false;
+    key--;
 }
 
 bool Player::hasKey()
 {
-    return key;
+    return (key >0);
 }
 void Player::updateStatus()
 {

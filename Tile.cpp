@@ -65,7 +65,6 @@ void PathTile::create(std::string material)
 void PathTile::event(Player* p)
 {
     p->breath();
-    printf("%i yindex %i\n", xIndex, yIndex );
 }
 
 /*-----------------------------StartTile----------------------------------*/
@@ -93,7 +92,6 @@ FinishTile::~FinishTile()
 void FinishTile::event(Player* p)
 {
     p->levelFinished = true;
-    printf("Finish\n");
 }
 
 /*-----------------------------SpikeTile----------------------------------*/
@@ -109,7 +107,6 @@ SpikeTile::~SpikeTile()
 }
 void SpikeTile::event(Player* p)
 {
-     printf("SpikeTile\n");
     p->breath();
     p->damageTaken(Player::spikeDamage());
     if(p->health <=0)
@@ -133,7 +130,6 @@ void LavaTile::event(Player* p)
 {
     p->breath();
     p->burn = 5;
-    printf("Lava\n");
 }
 
 /*-----------------------------PoisonTile----------------------------------*/
@@ -186,7 +182,6 @@ void IceTile::event(Player* p)
         std::cout << "sliding to the left " << std::endl;
         p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z));
     }
-    printf("IceTile\n");
 }
 
 /*-----------------------------WaterTile----------------------------------*/
@@ -204,7 +199,6 @@ void WaterTile::event(Player* p)
 {
     p->oxygenLost(1);
     p->removeBurn();
-    printf("WaterTile\n");
 }
 
 /*-----------------------------TeleportTile----------------------------------*/
@@ -221,7 +215,6 @@ TeleportTile::~TeleportTile()
 void TeleportTile::event(Player* p)
 {
     p->breath();
-    printf("TeleportTile\n");
 }
 
 /*-----------------------------SlowTile----------------------------------*/
@@ -238,7 +231,6 @@ SlowTile::~SlowTile()
 void SlowTile::event(Player* p)
 {
     p->breath();
-    printf("SlowTile\n");
 }
 
 /*-----------------------------CureTile----------------------------------*/
@@ -256,7 +248,6 @@ void CureTile::event(Player* p)
 {
     p->breath();
     p->poison = false;
-    printf("Poison removed\n");
 }
 
 /*-----------------------------DoorTile----------------------------------*/
@@ -280,12 +271,14 @@ void DoorTile::reload()
 void DoorTile::event(Player* p)
 {
     p->breath();
-    printf("DoorTile\n");
 }
 
 bool DoorTile::getIsWalkable(Player *p)
 {
-    if(p->hasKey()) 
+    std::cout << "numKeys is " << p->key << std::endl;
+    if(unlocked)
+        return true;
+    else if(p->hasKey()) 
     {
         unlocked = true;
         p->usedKey();
@@ -310,7 +303,7 @@ KeyTile::~KeyTile()
 void KeyTile::reload()
 {
     ent->setMaterialName("Tile/Key");
-    takenKey = true;
+    takenKey = false;
 }
 
 
@@ -318,12 +311,13 @@ void KeyTile::event(Player* p)
 {
     ent->setMaterialName("Tile/Path");
     p->breath();
+    std::cout << "KEY TILE numKeys is " << p->key << std::endl;
     if(!takenKey)
     {
         p->gotKey();
         takenKey = true;
     }
-    printf("KeyTile\n");
+    std::cout << "numKeys is now " << p->key << std::endl;
 }
 
 /*-----------------------------RakanTile----------------------------------*/
@@ -341,7 +335,6 @@ void RakanTile::event(Player* p)
 {
     p->breath();
     p->changeMaterial("Tile/Rakan");
-    printf("RakanTile\n");
 }
 
 
@@ -360,7 +353,6 @@ OuterTile::~OuterTile()
 
 void OuterTile::event(Player* p)
 {
-    printf("OuterTile\n");
 }
 
 Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t)

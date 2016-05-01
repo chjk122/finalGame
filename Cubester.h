@@ -15,7 +15,7 @@ class AbstractCubester
 {
 protected:
 	//movement information
-	static double moveSpeed() { return 150; } //raise to 150ish
+	static double moveSpeed() { return 135; } //raise to 150ish
 	Ogre::Vector3 endPos;
 	int direction;
 	int pathLength;
@@ -204,9 +204,9 @@ public:
 	static char typeForCubesterBTLine() { return 'u'; }
 	static char typeForCubesterLRLine() { return 'l'; }
 	static char typeForCubesterRLLine() { return 'r'; }
-	static char typeForCubesterTTP() { return 'h'; }
-	static char typeForCubesterRTP() { return 'i'; }
-	static char typeForCubesterBTP() { return 'j'; }
-	static char typeForCubesterLTP() { return 'k'; }
+	static char typeForCubesterBTP() { return 'h'; } //starts bot goes up
+	static char typeForCubesterLTP() { return 'i'; } //starts leftside goes down
+	static char typeForCubesterTTP() { return 'j'; } //starts top goes down
+	static char typeForCubesterRTP() { return 'k'; } //starts rightside goes left
 
 };
