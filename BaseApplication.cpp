@@ -465,7 +465,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             mLevelName->setCaption(gameMap->getName());
         }
         mPlayerHp->setProgress((player->health)/100.0);
-        mPlayerHp->setCaption(patch::to_string("current HP is " + player->health)+"/100");
+        mPlayerHp->setCaption("current HP is " + patch::to_string(player->health) + "/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
         Ogre::Vector3 position = tem->getPosition();
         mCamera->setPosition(position.x , 300, position.z+200);
