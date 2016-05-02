@@ -198,7 +198,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 				player->setPlayerCord(x,y, AbstractTile::length(), centerOfTopleftTilePos.z, centerOfTopleftTilePos.x);
 			}
 			//code for enemy locations
-			if(e[x][y] != 'x' && e[x][y] != '+')
+			if(e[x][y] != 'x' && e[x][y] != '+' && e[x][y] != '*')
 			{
 				char enemyType = e[x][y];
 				char lowerCaseEnemyType = tolower(enemyType);

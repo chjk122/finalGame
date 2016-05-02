@@ -56,7 +56,7 @@ public:
 	static double poisonDamage(){return 2;}
 	static double spikeDamage(){return 39;}
 	//movement information
-	static double moveSpeed() { return 170; } //raise to 150ish
+	static double moveSpeed() { return 200; } //raise to 150ish
 	void setBackPlayer();
 	Ogre::Vector3 endPos;
 	int startPlayerX;

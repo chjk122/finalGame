@@ -67,6 +67,18 @@ void PathTile::event(Player* p)
     p->breath();
 }
 
+/*------------------------------------BloodPathTile ------------------------------------------*/
+BloodPathTile::BloodPathTile(Ogre::SceneManager* sceneMgr, 
+                   Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+BloodPathTile::~BloodPathTile()
+{
+
+}
+
 /*-----------------------------StartTile----------------------------------*/
 StartTile::StartTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
 PathTile(sceneMgr, pos, xInd, yInd)
@@ -311,13 +323,39 @@ void KeyTile::event(Player* p)
 {
     ent->setMaterialName("Tile/Path");
     p->breath();
-    std::cout << "KEY TILE numKeys is " << p->key << std::endl;
     if(!takenKey)
     {
         p->gotKey();
         takenKey = true;
     }
-    std::cout << "numKeys is now " << p->key << std::endl;
+}
+
+/*-----------------------------BloodKeyTile----------------------------------*/
+BloodKeyTile::BloodKeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+KeyTile(sceneMgr, pos, xInd, yInd)
+{
+}
+BloodKeyTile::~BloodKeyTile()
+{
+    
+}
+
+void BloodKeyTile::reload()
+{
+    ent->setMaterialName("Tile/BloodKey");
+    takenKey = false;
+}
+
+
+void BloodKeyTile::event(Player* p)
+{
+    ent->setMaterialName("Tile/BloodPath");
+    p->breath();
+    if(!takenKey)
+    {
+        p->gotKey();
+        takenKey = true;
+    }
 }
 
 /*-----------------------------RakanTile----------------------------------*/
@@ -368,6 +406,11 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
         tile = new PathTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Path";
     }
+    else if(t == typeForBloodPathTile())
+    {
+        tile = new BloodPathTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/BloodPath";
+    }
     else if(t == typeForFinishTile())
     {
         tile = new FinishTile(sceneMgr, pos, xInd, yInd);
@@ -417,6 +460,11 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
     {
         tile = new KeyTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Key";
+    }
+    else if(t == typeForBloodKeyTile())
+    {
+        tile = new BloodKeyTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/BloodKey";
     }
     else if(t == typeForRakanTile())
     {

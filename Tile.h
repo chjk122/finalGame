@@ -49,6 +49,13 @@ public:
 
 };
 
+class BloodPathTile : public PathTile
+{
+public:
+	BloodPathTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~BloodPathTile();
+};
+
 // start tile
 class StartTile : public PathTile
 {
@@ -162,6 +169,15 @@ public:
 	
 };
 
+class BloodKeyTile : public KeyTile
+{
+public:
+	BloodKeyTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~BloodKeyTile();
+	virtual void reload();
+	virtual void event(Player* p);
+};
+
 class RakanTile : public PathTile
 {
 public:
@@ -207,6 +223,7 @@ public:
     void setNeighbors(Tile *u, Tile *r, Tile *d, Tile *l);
 
 	static char typeForPathTile() { return '+'; }
+	static char typeForBloodPathTile() { return '*'; }
 	static char typeForOuterTile() { return 'x'; }
 	static char typeForStartTile() { return 's'; }
 	static char typeForFinishTile() { return 'f'; }
@@ -218,6 +235,7 @@ public:
 	static char typeForSlowTile() { return 'o'; }
 	static char typeForDoorTile() {return 'd';}
 	static char typeForKeyTile() {return 'k';}
+	static char typeForBloodKeyTile() {return 'K';}
 	static char typeForRakanTile() { return 'r'; }
 	static char typeForSpikeTile() { return 'v'; }
 	static char typeForCureTile() {return 'c';}

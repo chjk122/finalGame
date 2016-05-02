@@ -27,7 +27,7 @@ void AbstractCubester::create(std::string material)
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(ent);
     // rootNode->setScale(.6, .6, .6);
-    ent->setMaterialName("Cube/Evil"); 
+    ent->setMaterialName("Cubester/Normal"); 
     startPosition = position;
 }
 

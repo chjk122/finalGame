@@ -95,47 +95,55 @@ bool Player::simulate(const Ogre::Real elapsedTime)
         Ogre::Vector3 nowPos = rootNode->getPosition();
         if(direction == 0)
         {
-            rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z - moveSpeed() * elapsedTime));
-            if(rootNode->getPosition().z < endPos.z)
+            Ogre::Vector3 nextPos = Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z - moveSpeed() * elapsedTime);
+            if(nextPos.z < endPos.z)
             {
                 rootNode->setPosition(endPos);
                 playerX -= 1;
                 inMotion = false;
                 return true;
             }
+            else
+                rootNode->setPosition(nextPos);
         }
         else if(direction == 1)
         {
-            rootNode->setPosition(Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
-            if(rootNode->getPosition().x > endPos.x)
+            Ogre::Vector3 nextPos = Ogre::Vector3(nowPos.x + moveSpeed() * elapsedTime, nowPos.y, nowPos.z);
+            if(nextPos.x > endPos.x)
             {
                 rootNode->setPosition(endPos);
                 playerY += 1;
                 inMotion = false;
                 return true;
             }
+            else
+                rootNode->setPosition(nextPos);
         }
         else if(direction == 2)
         {
-            rootNode->setPosition(Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z + moveSpeed() * elapsedTime));
-            if(rootNode->getPosition().z > endPos.z)
+            Ogre::Vector3 nextPos = Ogre::Vector3(nowPos.x, nowPos.y, nowPos.z + moveSpeed() * elapsedTime);
+            if(nextPos.z > endPos.z)
             {
                 rootNode->setPosition(endPos);
                 playerX += 1;
                 inMotion = false;
                 return true;
             }
+            else
+                rootNode->setPosition(nextPos);
         }
         else if(direction == 3)
         {
-            rootNode->setPosition(Ogre::Vector3(nowPos.x - moveSpeed() * elapsedTime, nowPos.y, nowPos.z));
-            if(rootNode->getPosition().x < endPos.x)
+            Ogre::Vector3 nextPos = Ogre::Vector3(nowPos.x - moveSpeed() * elapsedTime, nowPos.y, nowPos.z);
+            if(nextPos.x < endPos.x)
             {
                 rootNode->setPosition(endPos);
                 playerY -= 1;
                 inMotion = false;
                 return true;
             }
+            else
+                rootNode->setPosition(nextPos);
         }
     }
     return false;

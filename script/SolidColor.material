@@ -75,6 +75,31 @@ material Cube/Dragon
     }
  }
 
+ material Tile/BloodPath
+ {
+    technique
+    {
+       pass
+       {
+        ambient .2 .2 .2
+          texture_unit
+          {
+            texture bloodPath.png
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+
  material Tile/Finish
  {
     technique
@@ -404,6 +429,31 @@ material Cube/Dragon
     }
  }
 
+  material Tile/BloodKey
+ {
+    technique
+    {
+       pass
+       {
+       ambient .2 .2 .2
+          texture_unit
+          {
+            texture bloodKey.png
+          }
+          texture_unit
+          {
+             texture blackoutline.png             
+             colour_op alpha_blend
+          }
+          texture_unit
+          {
+             texture black.png
+             colour_op_ex blend_current_alpha src_texture src_current
+          }
+       }
+    }
+ }
+
  material Tile/Rakan
  {
     technique
@@ -419,7 +469,7 @@ material Cube/Dragon
     }
  }
 
- material Cube/Evil
+ material Cubester/Normal
 {
     technique
     {
@@ -436,7 +486,7 @@ material Cube/Dragon
         }
         texture_unit
         {
-             texture black.png 
+             texture whiteOutline.png 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1125,7 +1175,7 @@ material Cube/Blend
       {
         texture_unit
         {
-          texture black.png
+          texture whiteOutline.png
         }
         texture_unit
         {
@@ -1157,7 +1207,7 @@ material Cube/DeathFire
         }
         texture_unit
         {
-             texture black.png
+             texture whiteOutline.png
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
