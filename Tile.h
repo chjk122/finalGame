@@ -205,6 +205,13 @@ public:
 	virtual void event(Player* p);
 };
 
+class LetterTile : public PathTile
+{
+public:
+	LetterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~LetterTile();
+};
+
 // wrapper class
 class Tile
 {
@@ -235,10 +242,13 @@ public:
 	static char typeForSlowTile() { return 'o'; }
 	static char typeForDoorTile() {return 'd';}
 	static char typeForKeyTile() {return 'k';}
-	static char typeForBloodKeyTile() {return 'K';}
+	static char typeForBloodKeyTile() {return 'b';}
 	static char typeForRakanTile() { return 'r'; }
 	static char typeForSpikeTile() { return 'v'; }
 	static char typeForCureTile() {return 'c';}
+
+	static char typeForATile() {return 'A';}
+	static char typeForZTile() {return 'Z';}
 
 };
 

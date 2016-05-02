@@ -203,8 +203,8 @@ void Player::updateStatus()
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
     if(!isAlive())
     {
-        // std::string newMaterial = "Tile/Rakan";
-        //  mEntity->setMaterialName(newMaterial);
+        // std::string newMaterial = "Tile/Rakan"; 55555554321
+        //  mEntity->setMaterialName(newMaterial); 54321054321
     }
     else if(poison && burn >0)
     {

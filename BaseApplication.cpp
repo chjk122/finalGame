@@ -51,6 +51,7 @@ BaseApplication::BaseApplication(void)
     mDifficulty(1),
     mLevel(1),
     mGameStart(false),
+    mInMenu(false),
     mMusic(true)//,
     // mButtonLevels()
 {
@@ -112,9 +113,7 @@ void BaseApplication::createCamera(void)
     // // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
-    // Position it at 500 in Z direction
     mCamera->setPosition(Ogre::Vector3(0,0,80));
-    // Look back along -Z
     mCamera->lookAt(Ogre::Vector3(0,0,-300));
     mCamera->setNearClipDistance(5);
 
@@ -124,82 +123,109 @@ void BaseApplication::createCamera(void)
 //*-----------------------------------menu setup ------------------------------*//
 void BaseApplication::setupMainMenu(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Best Game Ever", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "\"Game's Name\"", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 220);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "quit", "Quit Game", 250);
+    mTrayMgr->showCursor();  
+}
+
+void BaseApplication::setupLevelMenu(void)
+{
+    removeGUI();
+    mInMenu = true;
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "pauseLabel", "Paused", 250);
+    mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "resume level", "Resume the Fun", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "quit level", "Back to Main Menu", 250);
+    mTrayMgr->showCursor();
+}
+void BaseApplication::removeLevelMenu(void)
+{
+    mInMenu = false;
+    mTrayMgr->destroyWidget("pauseLabel");
+    mTrayMgr->destroyWidget("quit level");
+    mTrayMgr->destroyWidget("resume level");
+    mTrayMgr->hideCursor();
 }
 
 void BaseApplication::setupSoundMenu(void)
 {
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "Sound ON", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "Sound OFF", 220);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "Sound ON", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "Sound OFF", 250);
 }
 
 void BaseApplication::setupDifficultyMenu(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 220);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extreme level", 220);
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extreme level", 250);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 250);
 
 }
 
 void BaseApplication::setupIntroLevelSelect(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
     for(int x = 1; x <= Level::numIntroLevels(); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "intro " + patch::to_string(x), "Level " + patch::to_string(x), 220);
+        mTrayMgr->createButton(OgreBites::TL_CENTER, "intro " + patch::to_string(x), Level::getName(1,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from intro", "Back to Select Difficulty", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from intro", "Back to Select Difficulty", 250);
 }
 
 void BaseApplication::setupMediumLevelSelect(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
     for(int x = 1; x <= Level::numMediumLevels(); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "medium " + patch::to_string(x), "Level " + patch::to_string(x), 220);
+        mTrayMgr->createButton(OgreBites::TL_CENTER, "medium " + patch::to_string(x), Level::getName(2,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from medium", "Back to Select Difficulty", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from medium", "Back to Select Difficulty", 250);
 }
 
 void BaseApplication::setupHardLevelSelect(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
     for(int x = 1; x <= Level::numHardLevels(); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "hard " + patch::to_string(x), "Level " + patch::to_string(x), 220);
+        mTrayMgr->createButton(OgreBites::TL_CENTER, "hard " + patch::to_string(x), Level::getName(3,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from hard", "Back to Select Difficulty", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from hard", "Back to Select Difficulty", 250);
 }
 
 void BaseApplication::setupExtremeLevelSelect(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 220);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
     for(int x = 1; x <= Level::numExtremeLevels(); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme " + patch::to_string(x), "Level " + patch::to_string(x), 220);
+        mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme " + patch::to_string(x), Level::getName(4,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from extreme", "Back to Select Difficulty", 220);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from extreme", "Back to Select Difficulty", 250);
 }
 
 
 
-void BaseApplication::createGUI(std::string levelName)
+void BaseApplication::setupGUI(std::string levelName)
 {
     mLevelName = mTrayMgr->createLabel(OgreBites::TL_TOP, "levelName", levelName, 500);
     mLevelName->show();
     mPlayerHp = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "hpBar", "100/100", 200, 20);
     mPlayerHp->show();
 
-     /************************************select menu Gui ****************************************************/
+    /************************************select menu Gui ****************************************************/
     mTrayMgr->moveWidgetToTray(mPlayerHp, OgreBites::TL_TOP, 0);
     mTrayMgr->moveWidgetToTray(mLevelName, OgreBites::TL_TOP, 0);
+}
+
+void BaseApplication::removeGUI()
+{
+    mTrayMgr->destroyWidget("levelName");
+    mTrayMgr->destroyWidget("hpBar");
 }
 //---------------------------------------------------------------------------
 
@@ -212,7 +238,6 @@ void BaseApplication::createObjects()
  
     gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), mDifficulty, mLevel);
    
-
 }
 
 void BaseApplication::deleteMap()
@@ -249,7 +274,7 @@ void BaseApplication::createFrameListener(void)
     mInputContext.mMouse = mMouse;
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
     mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-    mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+    // mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     mTrayMgr->hideCursor();
 
     // Create a params panel for displaying sample details
@@ -390,8 +415,7 @@ bool BaseApplication::setup(void)
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     music = Mix_LoadMUS("game_music.mp3");
     Mix_PlayMusic(music,-1);
-
-    mTrayMgr->showCursor();            
+          
     setupMainMenu();
 
     return true;
@@ -420,6 +444,12 @@ void BaseApplication::calcNextLevel()
         mLevel = 1;
         mDifficulty++;
     }
+    if(mDifficulty == 5 && mLevel > Level::numCreditLevels()) //num intro levels
+    {
+        mLevel = 1;
+        mDifficulty++;
+        // do whatever the **** we want
+    }
     if(mDifficulty > Level::numDifficulties())
     {
         //ran out of levels sad face
@@ -436,9 +466,10 @@ bool sisDown = false;
 bool aisDown = false;
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-    double progressStepValue = evt.timeSinceLastFrame*.8;
     if(mWindow->isClosed())
         return false;
+
+    //run save code then shut down
 
     if(mShutDown)
         return false;
@@ -455,7 +486,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         Mix_VolumeMusic(45);
     }
 
-    if(mGameStart)
+    if(mGameStart && !mInMenu)
     {
         if(player->levelFinished)
         {
@@ -559,7 +590,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     }
     else if(arg.key == OIS::KC_SPACE)
     {
-
+        mShutDown = true;
     }
     else if(arg.key == OIS::KC_RETURN)
     {
@@ -599,7 +630,17 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     }
     else if (arg.key == OIS::KC_ESCAPE)
     {
-        mShutDown = true;
+        if(!mGameStart)
+            ;
+        else if(!mInMenu)
+        {
+            setupLevelMenu();
+        }
+        else if(mInMenu)
+        {
+            removeLevelMenu();
+            setupGUI(gameMap->getName());
+        }
     }
     else if(arg.key == OIS::KC_W || arg.key == OIS::KC_UP )
     {
@@ -617,13 +658,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         aisDown = true;
     }
-    //         arg.key == OIS::KC_UP ||
-    //         arg.key == OIS::KC_DOWN ||
-    //         arg.key == OIS::KC_RIGHT ||
-    //         arg.key == OIS::KC_LEFT)
-    // {
 
-    // }
     else if(arg.key == OIS::KC_P)
     {
         if(playingMusic){
@@ -696,7 +731,8 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         mTrayMgr->destroyWidget("menuLabel");
         mTrayMgr->destroyWidget("start");       
         mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");     
+        mTrayMgr->destroyWidget("credit");
+        mTrayMgr->destroyWidget("quit");  
         setupDifficultyMenu();        
         return;
     }       
@@ -705,9 +741,31 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         mTrayMgr->destroyWidget("menuLabel");
         mTrayMgr->destroyWidget("start");       
         mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");    
+        mTrayMgr->destroyWidget("credit");
+        mTrayMgr->destroyWidget("quit");   
         setupSoundMenu();
         return;
+    }
+    else if(button->getName().compare("credit") == 0)
+    {
+        mTrayMgr->destroyWidget("menuLabel");
+        mTrayMgr->destroyWidget("start");       
+        mTrayMgr->destroyWidget("sound");       
+        mTrayMgr->destroyWidget("credit");
+        mTrayMgr->destroyWidget("quit");
+
+        mDifficulty =5;
+        mLevel = 1; 
+        createObjects();              
+        mGameStart= true;        
+        mTrayMgr->hideCursor();      
+        setupGUI(gameMap->getName()); 
+        return;   
+
+    }
+    else if(button->getName().compare("quit") == 0)
+    {
+        mShutDown = true;
     }
     else if(button->getName().compare("on") == 0 )
     {
@@ -838,9 +896,9 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             mDifficulty =1;
             mLevel = i; 
             createObjects();              
-            mGameStart= true;        
+            mGameStart = true;        
             mTrayMgr->hideCursor();      
-            createGUI(gameMap->getName()); 
+            setupGUI(gameMap->getName()); 
             return;   
         }
     }
@@ -860,7 +918,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             createObjects();              
             mGameStart= true;        
             mTrayMgr->hideCursor();      
-            createGUI(gameMap->getName()); 
+            setupGUI(gameMap->getName()); 
             return;   
         }
     }
@@ -880,7 +938,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             createObjects();              
             mGameStart= true;        
             mTrayMgr->hideCursor();      
-            createGUI(gameMap->getName()); 
+            setupGUI(gameMap->getName()); 
             return;   
         }
     }
@@ -900,9 +958,25 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             createObjects();              
             mGameStart= true;        
             mTrayMgr->hideCursor();      
-            createGUI(gameMap->getName()); 
+            setupGUI(gameMap->getName()); 
             return; 
         }
+    }
+
+
+    if(button->getName().compare("quit level") == 0 )
+    {
+        removeLevelMenu();
+        deleteMap();
+        mGameStart = false;
+        setupMainMenu();
+        return;
+    }
+    else if(button->getName().compare("resume level") == 0 )
+    {
+        removeLevelMenu();
+        setupGUI(gameMap->getName());
+        return;
     }
 
 

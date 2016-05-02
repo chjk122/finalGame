@@ -393,6 +393,18 @@ void OuterTile::event(Player* p)
 {
 }
 
+/*-----------------------------LetterTile----------------------------------*/
+LetterTile::LetterTile(Ogre::SceneManager* sceneMgr, 
+                   Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+LetterTile::~LetterTile()
+{
+
+}
+
 Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t)
 {
     std::string material = "Tile/Path";
@@ -480,6 +492,11 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
     {
         tile = new CureTile(sceneMgr, pos, xInd, yInd);
         material = "Item/Cure";
+    }
+    else if(t >= typeForATile() && t <= typeForZTile())
+    {
+        tile = new LetterTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/" + t;
     }
     // float iSecret = rand() % 10 + 1;
     // if(iSecret < 5)

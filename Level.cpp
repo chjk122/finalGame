@@ -131,17 +131,39 @@ void Level::setMaps(int levelCat, int levelN)
 	}
 	else if(levelCat == 4)
 	{
-		if(levelN == 2)
+		if(levelN == 1)
+		{
+			tileMap     = getExtremeL1T();
+			cubesterMap = getExtremeL1C();
+			name        = getExtremeL1N();
+		}
+		else if(levelN == 2)
 		{
 			tileMap     = getExtremeL4T();
 			cubesterMap = getExtremeL4C();
 			name        = getExtremeL4N();
 		}
-		if(levelN == 1)
+		else if(levelN == 3)
 		{
 			tileMap     = getExtremeL5T();
 			cubesterMap = getExtremeL5C();
 			name        = getExtremeL5N();
 		}
+		else if(levelN == 4)
+		{
+			tileMap     = getExtremeL6T();
+			cubesterMap = getExtremeL6C();
+			name        = getExtremeL6N();
+		}
+	}
+	else if(levelCat == 5)
+	{
+		if(levelN == 1)
+		{
+			tileMap     = getCreditL1T();
+			cubesterMap = getCreditL1C();
+			name        = getCreditL1N();
+		}
 	}
 }
+

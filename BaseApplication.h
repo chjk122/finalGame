@@ -115,7 +115,10 @@ protected:
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
     virtual void setupMainMenu(void);
-    virtual void createGUI(std::string name);
+    virtual void setupLevelMenu(void);
+    virtual void removeLevelMenu(void);
+    virtual void setupGUI(std::string name);
+    virtual void removeGUI(void);
     virtual void setupDifficultyMenu(void);
     virtual void setupIntroLevelSelect(void);
     virtual void setupHardLevelSelect(void);
@@ -163,6 +166,7 @@ protected:
     int                         mDifficulty;
     int                         mLevel;
     bool                        mGameStart;
+    bool                        mInMenu;
 
 
     // Added for Mac compatibility
