@@ -556,17 +556,17 @@ private:
     {
         vector<string> tile;
         tile.push_back("xxxxtxtxtxxxx");
-        tile.push_back("xxxxxtktxtxxx");
-        tile.push_back("xxxx+++++xxxx");
-        tile.push_back("xxxx+++++xxxx");
-        tile.push_back("tx+++++++++tx");
-        tile.push_back("xt+++++++++xt");
-        tile.push_back("xs++++++++ddf");
-        tile.push_back("xt+++++++++xt");
-        tile.push_back("tx+++++++++tx");
-        tile.push_back("xxxx+++++xxxx");
-        tile.push_back("xxxx+++++xxxx");
-        tile.push_back("xxxxxtktxtxxx");
+        tile.push_back("xxxxxtKtxtxxx");
+        tile.push_back("xxxx*****xxxx");
+        tile.push_back("xxxx*****xxxx");
+        tile.push_back("tx*********tx");
+        tile.push_back("xt*********xt");
+        tile.push_back("xs++******ddf");
+        tile.push_back("xt*********xt");
+        tile.push_back("tx*********tx");
+        tile.push_back("xxxx*****xxxx");
+        tile.push_back("xxxx*****xxxx");
+        tile.push_back("xxxxxtKtxtxxx");
         tile.push_back("xxxxtxtxtxxxx");
         return tile;
     }
@@ -601,12 +601,12 @@ private:
         tile.push_back("xxxxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxxxx");
-        tile.push_back("xs+xxxxxxxxxfx");
-        tile.push_back("xx++xxxxxxx++x");
-        tile.push_back("xxx++xxxxx++xx");
-        tile.push_back("xxxx++xxx++xxx");
-        tile.push_back("xxxxx++x++xxxx");
-        tile.push_back("xxxxxx+++xxxxx");
+        tile.push_back("xs*xxxxxxxxxfx");
+        tile.push_back("xx**xxxxxxx**x");
+        tile.push_back("xxx**xxxxx**xx");
+        tile.push_back("xxxx**xxx+*xxx");
+        tile.push_back("xxxxx**x**xxxx");
+        tile.push_back("xxxxxx***xxxxx");
         tile.push_back("xxxxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxxxx");
@@ -644,19 +644,19 @@ private:
     {
         vector<string> tile;
         tile.push_back("xxxxxxxxxxxxxxx");  
-        tile.push_back("xfxxxxxii+++++x");
-        tile.push_back("xdxk+++ii++ll+x");
-        tile.push_back("xdxxxxxii++ll+x");
-        tile.push_back("xd++++++++++++x");
+        tile.push_back("xfxxxxxii****+x");
+        tile.push_back("xdxk+++ii**ll+x");
+        tile.push_back("xdxxxxxii**ll+x");
+        tile.push_back("xd************x");
         tile.push_back("x+xxxxxixxxxxxx");
         tile.push_back("xixxxxxixxxxxxx");
-        tile.push_back("xixkt++++++++tx");
+        tile.push_back("xixkt*********tx");
         tile.push_back("xixxxxxxxxxxxxx");
-        tile.push_back("xillllllll++++x");
-        tile.push_back("xillllllll++++x");
-        tile.push_back("xillllllll++++x");
-        tile.push_back("xillllllll++++x");
-        tile.push_back("xst++++++++txkx");
+        tile.push_back("xillllllll****x");
+        tile.push_back("xillllllll**+*x");
+        tile.push_back("xillllllll**+*x");
+        tile.push_back("xillllllll****x");
+        tile.push_back("xst********txkx");
         tile.push_back("xxxxxxxxxxxxxxx");
     
         return tile;
