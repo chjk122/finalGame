@@ -20,9 +20,9 @@ public:
 	string getName();
 
     static int numIntroLevels() { return 5;}
-    static int numMediumLevels() { return 0;}
-    static int numHardLevels() { return 0;}
-    static int numExtremeLevels() { return 1;}
+    static int numMediumLevels() { return 2;}
+    static int numHardLevels() { return 3;}
+    static int numExtremeLevels() { return 2;}
     static int numDifficulties() { return 4;}
 
 
@@ -195,14 +195,14 @@ private:
         tile.push_back("xxxxxxxxxxxx");
         tile.push_back("xs+++++++++x");
         tile.push_back("xt++++++++tx");
-        tile.push_back("xtx+x++x+x+x");
+        tile.push_back("x+x+x++x+x+x");
         tile.push_back("x++x++++x++x");
         tile.push_back("x+x+x++x+x+x");
         tile.push_back("x++++k+++++x");
         tile.push_back("x+x+x++x+x+x");
         tile.push_back("x++x++++x++x");
         tile.push_back("x+x+x++x+xdx");
-        tile.push_back("xtt+++++txfx");
+        tile.push_back("x+t+++++txfx");
         tile.push_back("xxxxxxxxxxxx");
         return tile;
     }
@@ -213,14 +213,14 @@ private:
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxyuxxxxx");
         cubesters.push_back("xkxxxxxxxxkx");
-        cubesters.push_back("xjxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxlxxxxxxxlx");
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxyuxxxxx");
-        cubesters.push_back("xjixxxxxixxx");
+        cubesters.push_back("xxixxxxxixxx");
         cubesters.push_back("xxxxxxxxxxxx");
         return cubesters;
     }
@@ -233,7 +233,7 @@ private:
     static vector<string> getMediumL1T()
     {
         vector<string> tile;
-        tile.push_back("xxxxxxxxxx");  //y, q, e, z
+        tile.push_back("xxxxxxxxxx");  
         tile.push_back("x+i+i+xlcx");
         tile.push_back("x+x+x+x+xx");
         tile.push_back("x+x+x+++xx");
@@ -256,12 +256,60 @@ private:
         cubesters.push_back("xxxxxxxxxx");
         cubesters.push_back("xuxyxuxxxx");
         cubesters.push_back("xxxxxxxxxx");
-        cubesters.push_back("xxxrxxxxrx");
+        cubesters.push_back("xxxlxxxxlx");
         cubesters.push_back("xxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxx");
         return cubesters;
     } 
 
+    static string getMediumL2N()
+    {
+        return "Medium level 2";
+    }
+
+    static vector<string> getMediumL2T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxxxxx");  
+        tile.push_back("xfxlwwwww++++sx");
+        tile.push_back("xdxxwxxxxxxxxxx");
+        tile.push_back("x+xtwwwwwww++tx");
+        tile.push_back("x+xxxvxvxvxxxtx");
+        tile.push_back("x++xxxxxxxtxx+x");
+        tile.push_back("xx+++xxt+++xx+x");
+        tile.push_back("xkx++xx+xx+xp+x");
+        tile.push_back("x+x++xp+xc+xx+x");
+        tile.push_back("x+x++xx+xx+xx+x");
+        tile.push_back("x+x++xv+xl+xp+x");
+        tile.push_back("x+x++xx+xx+xx+x");
+        tile.push_back("x+ci+xx+xx+xx+x");
+        tile.push_back("xxx++++txxt++tx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        return tile;
+    }
+
+    static vector<string> getMediumL2C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxixxxxxxxxxix"); 
+        cubesters.push_back("xxxxxxxxxxxxxjx"); 
+        cubesters.push_back("xxxxxxxxxxhxxxx"); 
+        cubesters.push_back("xxxxuxxjxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxyxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxuxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxyxxxjxxhxxjx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        return cubesters;
+    } 
+
+   
 	static string getHardL1N()
 	{
 		return "Hard Level 1";
@@ -322,17 +370,114 @@ private:
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxyuxxxxx");
         cubesters.push_back("xrxxxxxxxxrx");
-        cubesters.push_back("xjxxxxxxxxxx");
-        cubesters.push_back("xxkxxxxxxkxx");
+        cubesters.push_back("xhxxxxxxxxxx");
+        cubesters.push_back("xxixxxxxxixx");
         cubesters.push_back("xxxxxxxxxxxx");
-        cubesters.push_back("xxlxxxxxxxlx");
+        cubesters.push_back("xxrxxxxxxxrx");
         cubesters.push_back("xxxxxxxxxxxx"); 
         cubesters.push_back("xxxxxxxxxxxx");
         cubesters.push_back("xxxxxyuxxxxx");
-        cubesters.push_back("xjixxxxxixxx");
+        cubesters.push_back("xhkxxxxxkxxx");
         cubesters.push_back("xxxxxxxxxxxx");
         return cubesters;
     }
+
+    static string getHardL3N()
+    {
+        return "Hard level 3";
+    }
+
+    static vector<string> getHardL3T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxxxxx");  
+        tile.push_back("xfxxxxxii+++++x");
+        tile.push_back("xdxk+++ii++ll+x");
+        tile.push_back("xdxxxxxii++ll+x");
+        tile.push_back("xd++++++++++++x");
+        tile.push_back("x+xxxxxixxxxxxx");
+        tile.push_back("xixxxxxixxxxxxx");
+        tile.push_back("xixkt++++++++tx");
+        tile.push_back("xixxxxxxxxxxxxx");
+        tile.push_back("xillllllll++++x");
+        tile.push_back("xillllllll++++x");
+        tile.push_back("xillllllll++++x");
+        tile.push_back("xillllllll++++x");
+        tile.push_back("xst++++++++txkx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+    
+        return tile;
+    }
+
+    static vector<string> getHardL3C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxaxcaxcxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxlxxxxaxcaxclx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxkxxxxxxxxkx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xrxxxxxrxabaxbx"); 
+        cubesters.push_back("xlxxlxxxxxxxxxx"); 
+        cubesters.push_back("xrxxxxxxraxaxxx"); 
+        cubesters.push_back("xlxxxxxxxlbxxbx"); 
+        cubesters.push_back("xxixxxxxxxxixxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        return cubesters;
+    } 
+
+    static string getHardL4N()
+    {
+        return "Hard level 4";
+    }
+
+    static vector<string> getHardL4T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxxxxx");  
+        tile.push_back("xxxxxxxxxxxxpsx");
+        tile.push_back("xxxxxxxxxxxxxpx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+        tile.push_back("xfxxxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxxxxx");
+    
+        return tile;
+    }
+
+    static vector<string> getHardL4C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        cubesters.push_back("xxxxxxxxxxxxxxx"); 
+        return cubesters;
+    } 
 
     static string getExtremeL4N()
     {
@@ -423,5 +568,58 @@ private:
         cubesters.push_back("xxxxxxxMmMmxxxxx");
         return cubesters;
     }
+
+    // static string getHardL4N()
+    // {
+    //     return "Hard level 4";
+    // }
+
+    // static vector<string> getHardL4T()
+    // {
+    //     vector<string> tile;
+    //     tile.push_back("xxxxxxxxxxxxxxx");  
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    //     tile.push_back("xxxxxxxxxxxxxxx");
+    
+    //     return tile;
+    // }
+
+    // static vector<string> getHardL3C()
+    // {
+    //     vector<string> cubesters;
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     cubesters.push_back("xxxxxxxxxxxxxxx"); 
+    //     return cubesters;
+    // } 
+
+
+
+
 
 };
