@@ -151,7 +151,7 @@ private:
 
     static string getIntroL4N()
     {
-        return "Meet the Sqaure Cubester";
+        return "Meet the Square Cubester";
     }
 
     static vector<string> getIntroL4T()

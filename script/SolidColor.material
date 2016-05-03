@@ -504,12 +504,12 @@ material Cubester/Square
         }
         texture_unit
         {
-             texture death2.png            
+             texture deathSquare.png            
              colour_op alpha_blend
         }
         texture_unit
         {
-             texture whiteOutline.png 
+             texture whiteOutline.png
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1317,7 +1317,7 @@ material Cube/DeathSpike
         }
         texture_unit
         {
-             texture death2.png            
+             texture deathLine.png            
              colour_op alpha_blend
         }
         texture_unit
@@ -3195,7 +3195,7 @@ material Tile/longHorn
         }
         texture_unit
         {
-             texture whiteOutline.png 
+             texture mineObsidian.png 
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
