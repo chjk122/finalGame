@@ -964,6 +964,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     }
 
 
+
     if(button->getName().compare("quit level") == 0 )
     {
         removeLevelMenu();

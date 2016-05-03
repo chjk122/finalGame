@@ -27,6 +27,7 @@ protected:
 	AbstractTile *right;
 	AbstractTile *left;
 	AbstractTile *down;
+	int mode;
 public:
 	static double length() { return 50; }   //cosnt length for all tiles
 	virtual bool getIsWalkable(Player *p);
@@ -114,6 +115,41 @@ public:
 	
 };
 
+class DDownTile : public PathTile
+{
+public:
+	DDownTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~DDownTile();
+	virtual void event(Player* p);
+	
+};
+
+class DUpTile : public PathTile
+{
+public:
+	DUpTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~DUpTile();
+	virtual void event(Player* p);
+	
+};
+
+class DLeftTile : public PathTile
+{
+public:
+	DLeftTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~DLeftTile();
+	virtual void event(Player* p);
+	
+};
+
+class DRightTile : public PathTile
+{
+public:
+	DRightTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~DRightTile();
+	virtual void event(Player* p);
+	
+};
 //Water tile
 class WaterTile : public PathTile
 {
@@ -187,6 +223,15 @@ public:
 	
 };
 
+class SpaceTile : public PathTile
+{
+public:
+	SpaceTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd);
+	virtual ~SpaceTile();
+	virtual void event(Player* p);
+	
+};
+
 class CureTile : public PathTile
 {
 public:
@@ -218,7 +263,7 @@ class Tile
 protected:
 	AbstractTile *tile;
 public:
-	Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t);
+	Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t, int mode);
 	~Tile();
 	void create(std::string material);
 	double    length() { return AbstractTile::length(); }
@@ -246,6 +291,13 @@ public:
 	static char typeForRakanTile() { return 'r'; }
 	static char typeForSpikeTile() { return 'v'; }
 	static char typeForCureTile() {return 'c';}
+	static char typeForSpaceTile() {return ' ';}
+	//key for directional tiel 
+	//y for up, h for down, g for left and j for right
+	static char typeForDUpTile() {return 'y';}
+	static char typeForDDownTile() {return 'h';}
+	static char typeForDLeftTile() {return 'g';}
+	static char typeForDRightTile() {return 'j';}
 
 	static char typeForATile() {return 'A';}
 	static char typeForZTile() {return 'Z';}

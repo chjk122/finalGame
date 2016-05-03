@@ -469,7 +469,7 @@ material Cube/Dragon
     }
  }
 
- material Cubester/Normal
+material Cubester/Normal
 {
     technique
     {
@@ -482,6 +482,52 @@ material Cube/Dragon
         texture_unit
         {
              texture death.png             
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture whiteOutline.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cubester/Square
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture fire.jpg
+        }
+        texture_unit
+        {
+             texture death2.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture whiteOutline.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Cubester/Teleport
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture fire.jpg
+        }
+        texture_unit
+        {
+             texture spooky.png            
              colour_op alpha_blend
         }
         texture_unit
@@ -1281,5 +1327,1878 @@ material Cube/DeathSpike
         }
       }
     }
+}
+
+material Tile/mineLava/A
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture A.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineLava/B
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture B.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineLava/C
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture C.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineLava/D
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture D.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/E
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture E.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/F
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture F.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/G
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture G.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/H
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture H.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/I
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture I.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/J
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture J.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/K
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture K.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/L
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture L.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/M
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture M.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/N
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture N.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/O
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture O.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/P
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture P.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/Q
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Q.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/R
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture R.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/S
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture S.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/T
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture T.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/U
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture U.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/V
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture V.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/W
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture W.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/X
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture X.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/Y
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Y.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineLava/Z
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Z.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineLava.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineWater/A
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture A.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineWater/B
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture B.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineWater/C
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture C.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineWater/D
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture D.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/E
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture E.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/F
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture F.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/G
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture G.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/H
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture H.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/I
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture I.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/J
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture J.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/K
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture K.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/L
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture L.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/M
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture M.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/N
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture N.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/O
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture O.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/P
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture P.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/Q
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Q.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/R
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture R.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/S
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture S.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/T
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture T.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/U
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture U.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/V
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture V.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/W
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture W.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/X
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture X.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/Y
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Y.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineWater/Z
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Z.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineWater.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineDirt/A
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture A.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineDirt/B
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture B.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineDirt/C
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture C.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineDirt/D
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture D.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/E
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture E.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/F
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture F.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/G
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture G.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/H
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture H.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/I
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture I.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/J
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture J.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/K
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture K.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/L
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture L.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/M
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture M.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/N
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture N.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/O
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture O.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/P
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture P.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/Q
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Q.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/R
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture R.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Tile/mineDirt/S
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture S.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/T
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture T.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/U
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture U.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/V
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture V.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/W
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture W.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/X
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture X.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/Y
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Y.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt/Z
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        texture_unit
+        {
+             texture Z.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture mineDirt.jpg
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+material Tile/mineDirt
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineDirt.jpg
+        }
+        
+      }
+    }
+}
+material Tile/mineGrass
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineGrass.jpg
+        }
+        
+      }
+    }
+}
+material Tile/mineIce
+{
+   technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture mineIce.png
+        }
+        
+      }
+    }
+}
+
+material Tile/longHorn
+{
+  technique
+  {
+      pass
+      {
+        texture_unit
+        {
+          texture mineLava.jpg
+        }
+        texture_unit
+        {
+             texture longhorn2.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture whiteOutline.png 
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+  }
 }
 

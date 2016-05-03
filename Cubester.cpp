@@ -27,7 +27,7 @@ void AbstractCubester::create(std::string material)
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(ent);
     // rootNode->setScale(.6, .6, .6);
-    ent->setMaterialName("Cubester/Normal"); 
+    ent->setMaterialName(material); 
     startPosition = position;
 }
 
@@ -437,38 +437,46 @@ int CubesterLTP::getAction()
 
 Cubester::Cubester(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length,  char t)
 {
-    std::string material = "Tile/Rakan";
+    std::string material = "Cubester/Normal";
     if(t == typeForCubesterTLSquare())
     {
         cubester = new CubesterTLSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterTRSquare())
     {
         cubester = new CubesterTRSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterBRSquare())
     {
         cubester = new CubesterBRSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterBLSquare())
     {
         cubester = new CubesterBLSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterCCTLSquare())
     {
         cubester = new CubesterCCTLSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterCCTRSquare())
     {
         cubester = new CubesterCCTRSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterCCBRSquare())
     {
         cubester = new CubesterCCBRSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterCCBLSquare())
     {
         cubester = new CubesterCCBLSquare(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Square";
     }
     else if(t == typeForCubesterTBLine())
     {
@@ -489,18 +497,22 @@ Cubester::Cubester(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, in
     else if(t == typeForCubesterTTP())
     {
         cubester = new CubesterTTP(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Teleport";
     }
     else if(t == typeForCubesterBTP())
     {
         cubester = new CubesterBTP(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Teleport";
     }
     else if(t == typeForCubesterRTP())
     {
         cubester = new CubesterRTP(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Teleport";
     }
     else if(t == typeForCubesterLTP())
     {
         cubester = new CubesterLTP(sceneMgr, pos, xInd, yInd, length);
+        material = "Cubester/Teleport";
     }
     create(material);
 }

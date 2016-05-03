@@ -180,18 +180,41 @@ void Map::destroyNode(Ogre::SceneNode* node)
 	}
 }
 
+//Modes for the map
+// 0 == default
+// 1 == rakan 40% of the tiles (random)
+// 2 == lol
+// 3 == skyrim
+// 4 == mario
+// 5 == zelda
+// 6 == (secret)
+// 7 == mine fire
+// 8 == mine water
+// 9 == mine dirt
+// !@#$%^&*() unused could be 10-19
 void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		 	   std::vector< std::string > v, std::vector< std::string > e)
 {
 	Tile *temp;
 	Ogre::Vector3 pos(centerOfTopleftTilePos.x, centerOfTopleftTilePos.y, centerOfTopleftTilePos.z);
+	int mode = 0;
 	for(int x = 0; x < v.size(); x++)
 	{
 		map.push_back(std::vector<Tile *>());
 		for(int y = 0; y < v.size(); y++)
 		{
 			// code for the tiles
-			temp = new Tile(mgr,pos, x, y, v[x][y]);
+			std::cout << v[x][y];
+			if(isdigit(v[x][y]) /* || symbol stuff here and change the -48 */)
+			{
+				mode = ((int)v[x][y]) - '0'; //put character down to int
+				v[x][y] = 'x';
+				temp = new Tile(mgr,pos, x, y, v[x][y], mode);
+			}
+			else
+			{
+				temp = new Tile(mgr,pos, x, y, v[x][y], mode);
+			}
 			map[x].push_back(temp);
 			if(v[x][y] == Tile::typeForStartTile())
 			{
@@ -286,6 +309,7 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 			//increment position
 			pos.x += AbstractTile::length(); // + length to the right in 2d
 		}
+		std::cout << std::endl;
 		pos.z += AbstractTile::length(); // + length downward in 2d
 		pos.x = centerOfTopleftTilePos.x; // reset the x 
 	}

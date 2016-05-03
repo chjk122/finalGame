@@ -195,6 +195,73 @@ void IceTile::event(Player* p)
         p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z));
     }
 }
+//*------------------------------------Directional TIles--------------------------------------*//
+/*-----------------------------DUpTile----------------------------------*/
+DUpTile::DUpTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+DUpTile::~DUpTile()
+{
+
+}
+void DUpTile::event(Player* p)
+{
+    p->breath();
+    Ogre::Vector3 pos = p->endPos;
+    p->move(0, Ogre::Vector3(pos.x, pos.y , pos.z-50)); 
+}
+/*-----------------------------DDownTile----------------------------------*/
+DDownTile::DDownTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+DDownTile::~DDownTile()
+{
+
+}
+void DDownTile::event(Player* p)
+{
+    p->breath();
+    Ogre::Vector3 pos = p->endPos;
+    p->move(2, Ogre::Vector3(pos.x, pos.y , pos.z+50)); 
+}
+
+/*-----------------------------DLeftTile----------------------------------*/
+DLeftTile::DLeftTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+DLeftTile::~DLeftTile()
+{
+
+}
+void DLeftTile::event(Player* p)
+{
+    p->breath();
+    Ogre::Vector3 pos = p->endPos;
+    p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z)); 
+}
+
+/*-----------------------------DRightTile----------------------------------*/
+DRightTile::DRightTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+DRightTile::~DRightTile()
+{
+
+}
+void DRightTile::event(Player* p)
+{
+    p->breath();
+    Ogre::Vector3 pos = p->endPos;
+    p->move(1, Ogre::Vector3(pos.x+50, pos.y , pos.z)); 
+}
 
 /*-----------------------------WaterTile----------------------------------*/
 WaterTile::WaterTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
@@ -375,6 +442,23 @@ void RakanTile::event(Player* p)
     p->changeMaterial("Tile/Rakan");
 }
 
+/*----------------------------Grass Tile-------------------------------------*/
+SpaceTile::SpaceTile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd):
+PathTile(sceneMgr, pos, xInd, yInd)
+{
+
+}
+
+SpaceTile::~SpaceTile()
+{
+
+}
+void SpaceTile::event(Player* p)
+{
+    p->breath();
+    p->changeMaterial("Tile/mineGrass");
+}
+
 
 /*-----------------------------OuterTile----------------------------------*/
 OuterTile::OuterTile(Ogre::SceneManager* sceneMgr, 
@@ -405,13 +489,20 @@ LetterTile::~LetterTile()
 
 }
 
-Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t)
+Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, char t, int mode)
 {
     std::string material = "Tile/Path";
     if(t == typeForOuterTile())
     {
         tile = new OuterTile(sceneMgr, pos, xInd, yInd);
-        material = "Tile/Outer";
+        if(mode == 0)
+        {
+            material = "Tile/Outer";
+        }
+        else if(mode >= 7 && mode <= 9)
+        {
+            material = "Tile/mineDirt";
+        }
     }
     else if(t == typeForPathTile())
     {
@@ -438,27 +529,54 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
         tile = new LavaTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Lava";
     }
-     else if(t == typeForIceTile())
+    else if(t == typeForIceTile())
     {
         tile = new IceTile(sceneMgr, pos, xInd, yInd);
-        material = "Tile/Ice";
+        if(mode == 0)
+        {
+            material = "Tile/Ice";
+        }
+        else if(mode >= 7 && mode <= 9)
+        {
+            material = "Tile/mineIce";
+        }
     }
-     else if(t == typeForSlowTile())
+    else if(t == typeForDUpTile())
+    {
+        tile = new DUpTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/longHorn";
+    }
+    else if(t == typeForDDownTile())
+    {
+        tile = new DDownTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/longHorn";
+    }
+    else if(t == typeForDLeftTile())
+    {
+        tile = new DLeftTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/longHorn";
+    }
+    else if(t == typeForDRightTile())
+    {
+        tile = new DRightTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/longHorn";
+    }
+    else if(t == typeForSlowTile())
     {
         tile = new SlowTile(sceneMgr, pos, xInd, yInd);
-        material = "Tile/Slow";
+        material = "Tile/Jinx";
     }
-     else if(t == typeForWaterTile())
+    else if(t == typeForWaterTile())
     {
         tile = new WaterTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Water";
     }
-     else if(t == typeForPoisonTile())
+    else if(t == typeForPoisonTile())
     {
         tile = new PoisonTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Poison";
     }
-     else if(t == typeForTeleportTile())
+    else if(t == typeForTeleportTile())
     {
         tile = new TeleportTile(sceneMgr, pos, xInd, yInd);
         material = "Tile/Teleport";
@@ -493,10 +611,33 @@ Tile::Tile(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, 
         tile = new CureTile(sceneMgr, pos, xInd, yInd);
         material = "Item/Cure";
     }
+    else if(t == typeForSpaceTile())
+    {
+        tile = new SpaceTile(sceneMgr, pos, xInd, yInd);
+        material = "Tile/mineGrass";
+    }
     else if(t >= typeForATile() && t <= typeForZTile())
     {
         tile = new LetterTile(sceneMgr, pos, xInd, yInd);
-        material = "Tile/" + t;
+        if(mode == 7)
+        {
+            material = "Tile/mineLava/"  + patch::to_string(t);
+        }
+        else if(mode == 8)
+        {
+            material = "Tile/mineWater/"  + patch::to_string(t);
+        }
+        else if(mode == 9)
+        {
+            material = "Tile/mineDirt/"  + patch::to_string(t);
+        }
+
+        
+        // if(mode == 1,2,3)
+        // Lava
+        // water
+        // dirt
+
     }
     // float iSecret = rand() % 10 + 1;
     // if(iSecret < 5)
