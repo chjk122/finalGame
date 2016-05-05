@@ -10,6 +10,10 @@ namespace patch
     }
 }
 
+double AbstractCubester::moveSpeed()
+{
+    return 135;
+}
 Ogre::Vector3 AbstractCubester::getPosition()
 {
     return rootNode->getPosition();
@@ -109,6 +113,7 @@ int AbstractCubester::getAction()
     return 0;
 }
 
+
 int AbstractCubester::goUp()
 {
     actionIndex++;
@@ -137,6 +142,18 @@ int AbstractCubester::goLeft()
     return 3;
 }
 
+int AbstractCubester::move(int dir)
+{
+    if(dir == 0 ) // 0 to pathLength go right
+        return goUp();
+    else if(dir == 1)
+        return goRight();
+    else if(dir == 2)
+        return goDown();
+    else if(dir == 3)
+        return goLeft();
+}
+
 /*-----------------------------CubesterTLSquare----------------------------------*/
 CubesterTLSquare::CubesterTLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int length)
 {
@@ -147,14 +164,15 @@ CubesterTLSquare::~CubesterTLSquare(){}
 
 int CubesterTLSquare::getAction()
 {
-    int caseNum = (actionIndex/pathLength) % 4;
-    if(caseNum == 0 ) // 0 to pathLength go right
+    int dir = (actionIndex/pathLength) % 4;
+
+    if(dir == 0 ) // 0 to pathLength go right
         return goRight();
-    else if(caseNum == 1)
+    else if(dir == 1)
         return goDown();
-    else if(caseNum == 2)
+    else if(dir == 2)
         return goLeft();
-    else if(caseNum == 3)
+    else if(dir == 3)
         return goUp();
 }
 

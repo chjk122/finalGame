@@ -48,7 +48,7 @@ BaseApplication::BaseApplication(void)
     mMouse(0),
     mKeyboard(0),
     mOverlaySystem(0),
-    mDifficulty(1),
+    mDifficulty(0),
     mLevel(1),
     mGameStart(false),
     mInMenu(false),
@@ -123,7 +123,7 @@ void BaseApplication::createCamera(void)
 //*-----------------------------------menu setup ------------------------------*//
 void BaseApplication::setupMainMenu(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "\"Game's Name\"", 250);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Cubester's Path", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 250);
@@ -424,6 +424,11 @@ bool BaseApplication::setup(void)
 void BaseApplication::calcNextLevel()
 {
     mLevel++;
+    if(mDifficulty == 0)
+    {
+        mDifficulty++;
+        mLevel = 1;
+    }
     if(mDifficulty == 1 && mLevel > Level::numIntroLevels()) //num intro levels
     {
         mLevel = 1;
@@ -458,12 +463,14 @@ void BaseApplication::calcNextLevel()
         mDifficulty = 1;
     }
 }   
+
 bool scored = false;
 int points = 0;
 bool wisDown = false;
 bool disDown = false;
 bool sisDown = false;
 bool aisDown = false;
+bool levelLoaded = false;
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
     if(mWindow->isClosed())
@@ -510,6 +517,23 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             gameMap->move(3);
         gameMap->simulate(evt.timeSinceLastFrame);
         // mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
+    }
+    else if (!mGameStart) //should be the loadinglevel
+    {
+        if(!levelLoaded)
+        {
+            mDifficulty = 0;
+            mLevel = 0;
+            createObjects();       
+            levelLoaded = true;   
+            Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
+            Ogre::Vector3 position = tem->getPosition();
+            mCamera->setPosition(position.x , 300, position.z+300);        
+        }
+        else
+        {
+            gameMap->simulate(evt.timeSinceLastFrame);
+        }
     }
 
     mTrayMgr->frameRenderingQueued(evt);
@@ -753,7 +777,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         mTrayMgr->destroyWidget("sound");       
         mTrayMgr->destroyWidget("credit");
         mTrayMgr->destroyWidget("quit");
-
+        deleteMap();
         mDifficulty =5;
         mLevel = 1; 
         createObjects();              
@@ -893,6 +917,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
                 mTrayMgr->destroyWidget("intro " + patch::to_string(x));
             } 
             mTrayMgr->destroyWidget("back to select difficulty from intro");
+            deleteMap();
             mDifficulty =1;
             mLevel = i; 
             createObjects();              
@@ -913,6 +938,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
                 mTrayMgr->destroyWidget("medium " + patch::to_string(x));
             } 
             mTrayMgr->destroyWidget("back to select difficulty from medium");
+            deleteMap();
             mDifficulty =2;
             mLevel = i; 
             createObjects();              
@@ -933,6 +959,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
                 mTrayMgr->destroyWidget("hard " + patch::to_string(x));
             } 
             mTrayMgr->destroyWidget("back to select difficulty from hard");
+            deleteMap();
             mDifficulty =3;
             mLevel = i; 
             createObjects();              
@@ -953,6 +980,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
                 mTrayMgr->destroyWidget("extreme " + patch::to_string(x));
             } 
             mTrayMgr->destroyWidget("back to select difficulty from extreme");
+            deleteMap();
             mDifficulty =4;
             mLevel = i; 
             createObjects();              
@@ -971,6 +999,7 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         deleteMap();
         mGameStart = false;
         setupMainMenu();
+        levelLoaded = false;
         return;
     }
     else if(button->getName().compare("resume level") == 0 )

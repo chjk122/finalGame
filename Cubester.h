@@ -15,7 +15,7 @@ class AbstractCubester
 {
 protected:
 	//movement information
-	static double moveSpeed() { return 135; } //raise to 150ish
+	virtual double moveSpeed(); //raise to 150ish
 	Ogre::Vector3 endPos;
 	int direction;
 	int pathLength;
@@ -41,6 +41,7 @@ public:
 	virtual int goRight();
 	virtual int goDown();
 	virtual int goLeft();
+	virtual int move(int dir);
 };
 
 // basic walkable tile 

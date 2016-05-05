@@ -23,6 +23,17 @@ string Level::getName()
 
 void Level::setMaps(int levelCat, int levelN)
 {
+	// loading screen
+	if(levelCat == 0)
+	{
+		if(levelN == 0)
+		{
+			tileMap     = getLoadingLevelT();
+			cubesterMap = getLoadingLevelC();
+			name = "";
+
+		}
+	}
 	//intro levels
 	if(levelCat == 1)
 	{	

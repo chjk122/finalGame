@@ -31,11 +31,40 @@ public:
     static int numCreditLevels() { return 2;}
     static int numDifficulties() { return 5;}
 
+    static vector<string> getLoadingLevelT()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxx");
+        tile.push_back("xwlpvplwx");  //y, q, e, z
+        tile.push_back("xwiisiiwx");
+        tile.push_back("xt*****tx");
+        tile.push_back("xbd+++kdx");
+        tile.push_back("xpcrfrcpx");
+        tile.push_back("x*++x++*x");
+        tile.push_back("x*x+++x*x");
+        tile.push_back("xxxxxxxxx");
+        return tile;
+    }
+
+    static vector<string> getLoadingLevelC()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("aaxxxxxdd");
+        cubesters.push_back("aaxxxxxdd");  //y, q, e, z
+        cubesters.push_back("xrxrxlxlx");
+        cubesters.push_back("xixxxxxix");
+        cubesters.push_back("mmxxxxxpp");
+        cubesters.push_back("mmxxxxxpp");
+        cubesters.push_back("xy++x++ux");
+        cubesters.push_back("x+x+++x+x");
+        cubesters.push_back("xyxxxxxux");
+        return cubesters;
+    }
 
 private:
     static string getIntroL1N()
     {
-        return "Learn how to walk";
+        return "Learn How to walk";
     }
     static vector<string> getIntroL1T()
     {
@@ -64,7 +93,7 @@ private:
 
     static string getIntroL2N()
     {
-        return "what doesnt kill you makes you stronger";
+        return "What Almost Kills You";
     }
 
     static vector<string> getIntroL2T()
@@ -300,7 +329,7 @@ private:
 
     static string getMediumL2N()
     {
-        return "The Secret Path";
+        return "The Crossroad";
     }
 
     static vector<string> getMediumL2T()
@@ -934,7 +963,7 @@ private:
         tile.push_back("x TEXTURE BLENDING x");
         tile.push_back("x    GUI  SETUP    x");
         tile.push_back("x iiiiiiiiiiiiiiii x");
-        tile.push_back("9 RAKAN XX NO SHOWfx");
+        tile.push_back("9 RAKAN           fx");
 
     
         return tile;
@@ -1004,7 +1033,7 @@ private:
         tile.push_back("xxxxxxxxxxx    TILE  CODE   ixxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxhiiiiiiiiiiiiiiiigxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxi  LEVEL DESIGN   xxxxxxxxxxx");
-        tile.push_back("xxxxxxxxxxxjiiiiiiiiiiiiiiiihixxxxxxxxxx");
+        tile.push_back("xxxxxxxxxxxjiiiiiiiiiiiiiiiihxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxx TEXTURE BLENDINGixxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxhiiiiiiiiiiiiiiiigxxxxxxxxxxx");
         tile.push_back("xxxxxxxxxxxi   GUI  SETUP    xxxxxxxxxxx");
