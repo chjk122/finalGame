@@ -413,7 +413,7 @@ bool BaseApplication::setup(void)
 
     SDL_Init(SDL_INIT_EVERYTHING);
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
-    music = Mix_LoadMUS("game_music.mp3");
+    music = Mix_LoadMUS("Music/0/bgm.mp3");
     Mix_PlayMusic(music,-1);
           
     setupMainMenu();
@@ -486,11 +486,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
     if(!mMusic)
     {
-        Mix_VolumeMusic(0);
+        Mix_PauseMusic();
     }
     else
     {
-        Mix_VolumeMusic(45);
+        Mix_ResumeMusic();
     }
 
     if(mGameStart && !mInMenu)

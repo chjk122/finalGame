@@ -175,13 +175,13 @@ void Level::setMaps(int levelCat, int levelN)
 	}
 	else if(levelCat == 5)
 	{
+		// if(levelN == 1)
+		// {
+		// 	tileMap     = getCreditL1T();
+		// 	cubesterMap = getCreditL1C();
+		// 	name        = getCreditL1N();
+		// }
 		if(levelN == 1)
-		{
-			tileMap     = getCreditL1T();
-			cubesterMap = getCreditL1C();
-			name        = getCreditL1N();
-		}
-		else if(levelN == 2)
 		{
 			tileMap     = getCreditL2T();
 			cubesterMap = getCreditL2C();

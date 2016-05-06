@@ -28,6 +28,7 @@ protected:
 	AbstractTile *left;
 	AbstractTile *down;
 	int mode;
+	Mix_Music* damageSound;
 public:
 	static double length() { return 50; }   //cosnt length for all tiles
 	virtual bool getIsWalkable(Player *p);

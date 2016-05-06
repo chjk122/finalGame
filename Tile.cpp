@@ -103,6 +103,9 @@ FinishTile::~FinishTile()
 
 void FinishTile::event(Player* p)
 {
+    Mix_Chunk* chunk;
+    chunk = Mix_LoadWAV("Music/0/win.wav");
+    Mix_PlayChannel( -1, chunk, 0 );
     p->levelFinished = true;
 }
 
@@ -121,6 +124,9 @@ void SpikeTile::event(Player* p)
 {
     p->breath();
     p->damageTaken(Player::spikeDamage());
+    Mix_Chunk* chunk;
+    chunk = Mix_LoadWAV("Ball_Single_Kick_Sound_Effect.wav");
+    Mix_PlayChannel( -1, chunk, 0 );
     if(p->health <=0)
     {
         p->kill();

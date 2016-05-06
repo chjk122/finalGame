@@ -66,7 +66,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);
-    entity->setMaterialName("Cube/Blend"); 
+    entity->setMaterialName("Cube/Jinx"); 
     rootNode->pitch(Ogre::Degree(p));
     rootNode->roll(Ogre::Degree(r));
     startPosition = position;
@@ -200,6 +200,8 @@ bool Player::hasKey()
 }
 void Player::updateStatus()
 {
+    Mix_Chunk* chunk;
+    Mix_Chunk* chunk2;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
     if(!isAlive())
     {
@@ -208,34 +210,49 @@ void Player::updateStatus()
     }
     else if(poison && burn >0)
     {
-         std::string newMaterial = "Cube/PBurn" + patch::to_string(burn);
-         mEntity->setMaterialName(newMaterial);
-         damageTaken(burnDamage()+poisonDamage());
+        chunk = Mix_LoadWAV("Music/0/poison.wav");
+        chunk2 = Mix_LoadWAV("Music/0/burn.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
+        Mix_PlayChannel( -1, chunk2, 0 );
+        std::string newMaterial = "Cube/PBurn" + patch::to_string(burn);
+        mEntity->setMaterialName(newMaterial);
+        damageTaken(burnDamage()+poisonDamage());
     }
     else if(poison && oxygen<10)
     {
+        chunk = Mix_LoadWAV("Music/0/poison.wav");
+        chunk2 = Mix_LoadWAV("Music/0/water.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
+        Mix_PlayChannel( -1, chunk2, 0 );
         std::string newMaterial = "Cube/PBubble" + patch::to_string(oxygen);
-         mEntity->setMaterialName(newMaterial);
-         damageTaken(poisonDamage());
+        mEntity->setMaterialName(newMaterial);
+        damageTaken(poisonDamage());
     }
     else if(burn > 0)
     {
-         std::string newMaterial = "Cube/Burn" + patch::to_string(burn);
-         mEntity->setMaterialName(newMaterial);
-         damageTaken(burnDamage());
+        chunk = Mix_LoadWAV("Music/0/burn.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
+        std::cout << "player killed" << std::endl;
+        std::string newMaterial = "Cube/Burn" + patch::to_string(burn);
+        mEntity->setMaterialName(newMaterial);
+        damageTaken(burnDamage());
     }
     else if (poison)
     {
+        chunk = Mix_LoadWAV("Music/0/poison.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
         mEntity->setMaterialName("Cube/Poison");
         damageTaken(poisonDamage());
     }
     else if(oxygen < 10 && oxygen >= 1)
     {
-         std::string newMaterial = "Cube/Bubble" + patch::to_string(oxygen);
-         mEntity->setMaterialName(newMaterial);
+        chunk = Mix_LoadWAV("Music/0/water.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
+        std::string newMaterial = "Cube/Bubble" + patch::to_string(oxygen);
+        mEntity->setMaterialName(newMaterial);
     }
     else
-                mEntity->setMaterialName("Cube/Blend");
+            mEntity->setMaterialName("Cube/Jinx");
      burn -= 1;
 }
 
@@ -270,6 +287,9 @@ void Player::breath()
 
 void Player::kill()
 {
+    Mix_Chunk* chunk;
+    chunk = Mix_LoadWAV("Music/0/death.wav");
+    Mix_PlayChannel( -1, chunk, 0 );
     std::cout << "player killed" << std::endl;
     health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));

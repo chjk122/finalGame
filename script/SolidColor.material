@@ -3202,3 +3202,24 @@ material Tile/longHorn
   }
 }
 
+material Cube/Jinx
+{
+    technique
+    {
+    ambient 0.2 0.2 0.2
+      pass
+      {
+        texture_unit
+        {
+          texture whiteOutline.png
+        }
+        texture_unit
+        {
+             texture Jinx.png            
+             colour_op alpha_blend
+        }
+       
+      }
+    }
+}
+
