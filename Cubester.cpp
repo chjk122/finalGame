@@ -35,12 +35,13 @@ void AbstractCubester::create(std::string material)
     startPosition = position;
 }
 
-void AbstractCubester::simulate(const Ogre::Real elapsedTime)
+void AbstractCubester::simulate(const Ogre::Real elapsedTime, Ogre::Vector3 playerPos)
 {
     if(!inMotion)
     {
-        direction = getAction();
-        inMotion = true;
+        direction = getAction(playerPos);
+        if(direction != -1)
+            inMotion = true;
     }
     Ogre::Vector3 nowPos = rootNode->getPosition();
     if(direction == 0)
@@ -108,7 +109,7 @@ std::string AbstractCubester::getName()
     return name;
 }
 
-int AbstractCubester::getAction()
+int AbstractCubester::getAction(Ogre::Vector3 playerPos)
 {
     return 0;
 }
@@ -162,7 +163,7 @@ CubesterTLSquare::CubesterTLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 p
 }
 CubesterTLSquare::~CubesterTLSquare(){}
 
-int CubesterTLSquare::getAction()
+int CubesterTLSquare::getAction(Ogre::Vector3 playerPos)
 {
     int dir = (actionIndex/pathLength) % 4;
 
@@ -184,7 +185,7 @@ CubesterTRSquare::CubesterTRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 p
 }
 CubesterTRSquare::~CubesterTRSquare(){}
 
-int CubesterTRSquare::getAction()
+int CubesterTRSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -205,7 +206,7 @@ CubesterBRSquare::CubesterBRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 p
 }
 CubesterBRSquare::~CubesterBRSquare(){}
 
-int CubesterBRSquare::getAction()
+int CubesterBRSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -226,7 +227,7 @@ CubesterBLSquare::CubesterBLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vector3 p
 }
 CubesterBLSquare::~CubesterBLSquare(){}
 
-int CubesterBLSquare::getAction()
+int CubesterBLSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -248,7 +249,7 @@ CubesterCCTLSquare::CubesterCCTLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vecto
 }
 CubesterCCTLSquare::~CubesterCCTLSquare(){}
 
-int CubesterCCTLSquare::getAction()
+int CubesterCCTLSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -268,7 +269,7 @@ CubesterCCTRSquare::CubesterCCTRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vecto
 }
 CubesterCCTRSquare::~CubesterCCTRSquare(){}
 
-int CubesterCCTRSquare::getAction()
+int CubesterCCTRSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -288,7 +289,7 @@ CubesterCCBRSquare::CubesterCCBRSquare(Ogre::SceneManager* sceneMgr, Ogre::Vecto
 }
 CubesterCCBRSquare::~CubesterCCBRSquare(){}
 
-int CubesterCCBRSquare::getAction()
+int CubesterCCBRSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -308,7 +309,7 @@ CubesterCCBLSquare::CubesterCCBLSquare(Ogre::SceneManager* sceneMgr, Ogre::Vecto
 }
 CubesterCCBLSquare::~CubesterCCBLSquare(){}
 
-int CubesterCCBLSquare::getAction()
+int CubesterCCBLSquare::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 4;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -329,7 +330,7 @@ CubesterTBLine::CubesterTBLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, 
 }
 CubesterTBLine::~CubesterTBLine(){}
 
-int CubesterTBLine::getAction()
+int CubesterTBLine::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -345,7 +346,7 @@ CubesterBTLine::CubesterBTLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, 
 }
 CubesterBTLine::~CubesterBTLine(){}
 
-int CubesterBTLine::getAction()
+int CubesterBTLine::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -361,7 +362,7 @@ CubesterLRLine::CubesterLRLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, 
 }
 CubesterLRLine::~CubesterLRLine(){}
 
-int CubesterLRLine::getAction()
+int CubesterLRLine::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -377,7 +378,7 @@ CubesterRLLine::CubesterRLLine(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, 
 }
 CubesterRLLine::~CubesterRLLine(){}
 
-int CubesterRLLine::getAction()
+int CubesterRLLine::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -394,7 +395,7 @@ CubesterTTP::CubesterTTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xI
 }
 CubesterTTP::~CubesterTTP(){}
 
-int CubesterTTP::getAction()
+int CubesterTTP::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -410,7 +411,7 @@ CubesterBTP::CubesterBTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xI
 }
 CubesterBTP::~CubesterBTP(){}
 
-int CubesterBTP::getAction()
+int CubesterBTP::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -426,7 +427,7 @@ CubesterRTP::CubesterRTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xI
 }
 CubesterRTP::~CubesterRTP(){}
 
-int CubesterRTP::getAction()
+int CubesterRTP::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -442,7 +443,7 @@ CubesterLTP::CubesterLTP(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xI
 }
 CubesterLTP::~CubesterLTP(){}
 
-int CubesterLTP::getAction()
+int CubesterLTP::getAction(Ogre::Vector3 playerPos)
 {
     int caseNum = (actionIndex/pathLength) % 2;
     if(caseNum == 0 ) // 0 to pathLength go right
@@ -450,6 +451,76 @@ int CubesterLTP::getAction()
     else
         reload();
 }
+
+
+CubesterChase::CubesterChase(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, int yInd, int distance)
+{
+    startPosition = pos; 
+    mgr = sceneMgr;
+    position = pos;
+    endPos = position;
+    pathLength = distance; 
+
+}
+CubesterChase::~CubesterChase(){}
+
+int CubesterChase::getAction(Ogre::Vector3 playerPos){
+    position = rootNode->getPosition();
+
+    int distanceFromPlayer = Ogre::Math::Sqrt(Ogre::Math::Pow((startPosition.x - playerPos.x),2) + Ogre::Math::Pow((startPosition.z - playerPos.z),2));
+
+    if(distanceFromPlayer <= pathLength){
+        return moveTowardsPos(playerPos);
+    }
+    else if(position != startPosition){
+        return moveTowardsPos(startPosition);
+    }
+    else{
+        return -1;
+    }
+
+}
+
+int CubesterChase::moveTowardsPos(Ogre::Vector3 pos){
+
+    bool sameZ = Ogre::Math::Abs(pos.z - position.z) > 3;
+    bool sameX = Ogre::Math::Abs(pos.x - position.x) > 3;
+
+    if (pos.x < position.x ){
+        if(pos.z > position.z && !sameZ){
+            return((int)rand()%2 ? move(2) : move(3)); 
+
+        }
+        else if (pos.z < position.z ){
+            return((int)rand()%2 ? move(0) : move(3)); 
+
+        }
+        else{
+            return(move(3));
+        }
+    }
+    else if (pos.x > position.x ){
+        if(pos.z > position.z ){
+            return((int)rand()%2 ? move(2) : move(1)); 
+
+        }
+        else if (pos.z < position.z ){
+            return((int)rand()%2 ? move(0) : move(1)); 
+
+        }
+        else{
+            return(move(1));
+        }
+    }
+    else if(pos.z > position.z ){
+        return(move(2)); 
+
+        }
+    else if (pos.z < position.z ){
+        return(move(0)); 
+        }
+}
+
 
 
 
@@ -532,6 +603,11 @@ Cubester::Cubester(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, int xInd, in
         cubester = new CubesterLTP(sceneMgr, pos, xInd, yInd, length);
         material = "Cubester/Teleport";
     }
+    else if(t == typeForCubesterChase())
+    {
+        cubester = new CubesterChase(sceneMgr, pos, xInd, yInd, length*50);
+        material = "Cubester/Teleport";
+    }
     create(material);
 }
 Cubester::~Cubester()
@@ -558,9 +634,9 @@ std::string Cubester::getName()
 {
     return cubester->getName();
 }
-void Cubester::simulate(const Ogre::Real elapsedTime)
+void Cubester::simulate(const Ogre::Real elapsedTime, Ogre::Vector3 playerPos)
 {
-    cubester->simulate(elapsedTime);
+    cubester->simulate(elapsedTime, playerPos);
 }
 
 Ogre::Vector3 Cubester::getPosition()

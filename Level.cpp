@@ -106,6 +106,12 @@ void Level::setMaps(int levelCat, int levelN)
 			cubesterMap = getMediumL5C();
 			name        = getMediumL5N();
 		}
+		else if(levelN == 6)
+		{
+			tileMap     = getMediumL6T();
+			cubesterMap = getMediumL6C();
+			name        = getMediumL6N();
+		}
 	}
 	else if(levelCat == 3)
 	{

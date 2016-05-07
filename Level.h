@@ -25,7 +25,7 @@ public:
     }
 
     static int numIntroLevels() { return 6;}
-    static int numMediumLevels() { return 5;}
+    static int numMediumLevels() { return 6;}
     static int numHardLevels() { return 5;}
     static int numExtremeLevels() { return 5;}
     static int numCreditLevels() { return 2;}
@@ -506,6 +506,55 @@ private:
         cubesters.push_back("xaxxxxAxxaxxxxAx");
         cubesters.push_back("xxaxxAxxxxaxxAxx");
         cubesters.push_back("xxxaAxxxxxxaAxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        return cubesters;
+    }
+
+    static string getMediumL6N()
+    {
+        return "Testing for Rakan";
+    }
+
+    static vector<string> getMediumL6T()
+    {
+        vector<string> tile;
+        tile.push_back("xxxxxxxxxxxxxxxx");
+        tile.push_back("x+++++++++++*t*x");
+        tile.push_back("x++s+++++++***+x");
+        tile.push_back("x+++++++++*+*++x");
+        tile.push_back("x+*+++++++*+*++x");
+        tile.push_back("x***+++++****t+x");
+        tile.push_back("x*t**+++++*++*+x");
+        tile.push_back("x***+++++++*+*+x");
+        tile.push_back("x******+++++**+x");
+        tile.push_back("x+++*++*+++++*+x");
+        tile.push_back("x+++*+++*++++++x");
+        tile.push_back("x+++*++++*+++++x");
+        tile.push_back("x+++*++++*+++++x");
+        tile.push_back("x+++*+++++*++++x");
+        tile.push_back("x***t******++f+x");
+        tile.push_back("xxxxxxxxxxxxxxxx");
+        return tile;
+    }
+
+    static vector<string> getMediumL6C()
+    {
+        vector<string> cubesters;
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxx1xx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxx4xx");
+        cubesters.push_back("xx2xxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxx6xxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxxxxxx");
         return cubesters;
     }

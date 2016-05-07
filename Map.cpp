@@ -138,7 +138,7 @@ void Map::simulate(const Ogre::Real elapsedTime)
 
 	for(int x = 0; x < cubesters.size(); x++)
 	{
-		cubesters[x]->simulate(elapsedTime);
+		cubesters[x]->simulate(elapsedTime, player->rootNode->getPosition());
 		if(checkCollision(player->rootNode->getPosition(), cubesters[x]->getPosition()))
 			player->kill();
 	}
@@ -302,6 +302,16 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 							break;
 						}
 					}
+				}
+
+				else if(lowerCaseEnemyType >= '0' &&  lowerCaseEnemyType <= '9' )
+				{
+					
+					int dist = (int)(lowerCaseEnemyType - 48);
+					Cubester *creature = new Cubester(mgr, pos, x, y, dist, 'z');
+					cubesters.push_back(creature);
+					//remove the creature from the parser
+					e[x][y] = 'x';
 				}
 			}
 
