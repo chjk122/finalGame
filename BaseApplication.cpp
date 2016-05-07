@@ -132,6 +132,15 @@ void BaseApplication::setupMainMenu(void)
     mTrayMgr->showCursor();  
 }
 
+void BaseApplication::removeMainMenu(void)
+{
+    mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("start");       
+    mTrayMgr->destroyWidget("sound");       
+    mTrayMgr->destroyWidget("credit");
+    mTrayMgr->destroyWidget("quit");  
+}
+
 void BaseApplication::setupLevelMenu(void)
 {
     removeGUI();
@@ -142,6 +151,7 @@ void BaseApplication::setupLevelMenu(void)
     mTrayMgr->createButton(OgreBites::TL_CENTER, "quit level", "Back to Main Menu", 250);
     mTrayMgr->showCursor();
 }
+
 void BaseApplication::removeLevelMenu(void)
 {
     mInMenu = false;
@@ -157,6 +167,12 @@ void BaseApplication::setupSoundMenu(void)
     mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "Sound OFF", 250);
 }
 
+void BaseApplication::removeSoundMenu(void)
+{
+    mTrayMgr->destroyWidget("on");
+    mTrayMgr->destroyWidget("off");
+}
+
 void BaseApplication::setupDifficultyMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 250);
@@ -165,49 +181,37 @@ void BaseApplication::setupDifficultyMenu(void)
     mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extreme level", 250);
     mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 250);
-
 }
 
-void BaseApplication::setupIntroLevelSelect(void)
+void BaseApplication::removeDifficultyMenu(void)
+{
+    mTrayMgr->destroyWidget("intro"); 
+    mTrayMgr->destroyWidget("medium"); 
+    mTrayMgr->destroyWidget("hard"); 
+    mTrayMgr->destroyWidget("extreme"); 
+    mTrayMgr->destroyWidget("back to main menu");  
+    mTrayMgr->destroyWidget("menuLabel");
+}
+
+void BaseApplication::setupLevelSelect(int diff)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
-    for(int x = 1; x <= Level::numIntroLevels(); x++)
+    for(int x = 1; x <= Level::numLevels(diff); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "intro " + patch::to_string(x), Level::getName(1,x), 250);
+        mTrayMgr->createButton(OgreBites::TL_CENTER, Level::difficultyName(diff) + " " + patch::to_string(x), Level::getName(diff,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from intro", "Back to Select Difficulty", 250);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty " + Level::difficultyName(diff), "Back to Select Difficulty", 250);
 }
 
-void BaseApplication::setupMediumLevelSelect(void)
+void BaseApplication::removeLevelSelect(int diff)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
-    for(int x = 1; x <= Level::numMediumLevels(); x++)
+    mTrayMgr->destroyWidget("menuLabel");
+    for(int x = 1; x <= Level::numLevels(diff); x++)
     {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "medium " + patch::to_string(x), Level::getName(2,x), 250);
+       mTrayMgr->destroyWidget(Level::difficultyName(diff) + " "  + patch::to_string(x));
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from medium", "Back to Select Difficulty", 250);
+    mTrayMgr->destroyWidget("back to select difficulty " + Level::difficultyName(diff)); 
 }
-
-void BaseApplication::setupHardLevelSelect(void)
-{
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
-    for(int x = 1; x <= Level::numHardLevels(); x++)
-    {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "hard " + patch::to_string(x), Level::getName(3,x), 250);
-    }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from hard", "Back to Select Difficulty", 250);
-}
-
-void BaseApplication::setupExtremeLevelSelect(void)
-{
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
-    for(int x = 1; x <= Level::numExtremeLevels(); x++)
-    {
-        mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme " + patch::to_string(x), Level::getName(4,x), 250);
-    }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty from extreme", "Back to Select Difficulty", 250);
-}
-
 
 
 void BaseApplication::setupGUI(std::string levelName)
@@ -429,31 +433,15 @@ void BaseApplication::calcNextLevel()
         mDifficulty++;
         mLevel = 1;
     }
-    if(mDifficulty == 1 && mLevel > Level::numIntroLevels()) //num intro levels
+    if(mLevel > Level::numLevels(mDifficulty)) //num intro levels
     {
         mLevel = 1;
         mDifficulty++;
     }
-    if(mDifficulty == 2 && mLevel > Level::numMediumLevels()) //num intro levels
+    if(mDifficulty == 5 && mLevel > 1) //num credit levels
     {
         mLevel = 1;
         mDifficulty++;
-    }
-    if(mDifficulty == 3 && mLevel > Level::numHardLevels()) //num intro levels
-    {
-        mLevel = 1;
-        mDifficulty++;
-    }
-    if(mDifficulty == 4 && mLevel > Level::numExtremeLevels()) //num intro levels
-    {
-        mLevel = 1;
-        mDifficulty++;
-    }
-    if(mDifficulty == 5 && mLevel > Level::numCreditLevels()) //num intro levels
-    {
-        mLevel = 1;
-        mDifficulty++;
-        // do whatever the **** we want
     }
     if(mDifficulty > Level::numDifficulties())
     {
@@ -751,44 +739,33 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 void BaseApplication::buttonHit(OgreBites::Button* button)
 {
     if(button->getName().compare("start") == 0)        
-    {       
-        mTrayMgr->destroyWidget("menuLabel");
-        mTrayMgr->destroyWidget("start");       
-        mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");
-        mTrayMgr->destroyWidget("quit");  
-        setupDifficultyMenu();        
+    {
+        removeMainMenu();
+        setupDifficultyMenu();      
         return;
     }       
     else if(button->getName().compare("sound") == 0 )
-    {
-        mTrayMgr->destroyWidget("menuLabel");
-        mTrayMgr->destroyWidget("start");       
-        mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");
-        mTrayMgr->destroyWidget("quit");   
-        setupSoundMenu();
+    {  
+        removeMainMenu();
+        setupSoundMenu();  
         return;
     }
     else if(button->getName().compare("credit") == 0)
     {
-        mTrayMgr->destroyWidget("menuLabel");
-        mTrayMgr->destroyWidget("start");       
-        mTrayMgr->destroyWidget("sound");       
-        mTrayMgr->destroyWidget("credit");
-        mTrayMgr->destroyWidget("quit");
-        deleteMap();
-        mDifficulty =5;
+        removeMainMenu(); 
+        deleteMap(); // delete loading level
+        mDifficulty = 5;
         mLevel = 1; 
         createObjects();              
         mGameStart= true;        
         mTrayMgr->hideCursor();      
         setupGUI(gameMap->getName()); 
-        return;   
+        return;
 
     }
     else if(button->getName().compare("quit") == 0)
     {
+        removeMainMenu(); 
         mShutDown = true;
     }
     else if(button->getName().compare("on") == 0 )
@@ -807,189 +784,111 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         setupMainMenu();
         return;
     }
-    else if(button->getName().compare("intro") == 0 )       
-    {       
-        mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("medium"); 
-        mTrayMgr->destroyWidget("hard"); 
-        mTrayMgr->destroyWidget("extreme"); 
-        mTrayMgr->destroyWidget("back to main menu");  
-        mTrayMgr->destroyWidget("menuLabel");
-        setupIntroLevelSelect();        
-        return;  
-    }
-    else if(button->getName().compare("medium") == 0 )       
-    {       
-        mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("medium"); 
-        mTrayMgr->destroyWidget("hard"); 
-        mTrayMgr->destroyWidget("extreme"); 
-        mTrayMgr->destroyWidget("back to main menu");  
-        mTrayMgr->destroyWidget("menuLabel");
-        setupMediumLevelSelect();        
-        return;  
-    }
-    else if(button->getName().compare("hard") == 0 )       
-    {       
-        mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("medium"); 
-        mTrayMgr->destroyWidget("hard"); 
-        mTrayMgr->destroyWidget("extreme"); 
-        mTrayMgr->destroyWidget("back to main menu");  
-        mTrayMgr->destroyWidget("menuLabel");
-        setupHardLevelSelect();        
-        return;  
-    }
-    else if(button->getName().compare("extreme") == 0 )       
-    {       
-        mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("medium"); 
-        mTrayMgr->destroyWidget("hard"); 
-        mTrayMgr->destroyWidget("extreme"); 
-        mTrayMgr->destroyWidget("back to main menu");  
-        mTrayMgr->destroyWidget("menuLabel");
-        setupExtremeLevelSelect();        
-        return;  
-    }
-    else if(button->getName().compare("back to main menu") == 0 )
+    for(int x = 1; x <= Level::numDifficulties(); x++)
     {
-        mTrayMgr->destroyWidget("intro"); 
-        mTrayMgr->destroyWidget("medium"); 
-        mTrayMgr->destroyWidget("hard"); 
-        mTrayMgr->destroyWidget("extreme"); 
-        mTrayMgr->destroyWidget("back to main menu");  
-        mTrayMgr->destroyWidget("menuLabel");
+        // for clicking on the difficulty and loading the levels
+        if(button->getName().compare(Level::difficultyName(x)) == 0 )       
+        {       
+            removeDifficultyMenu();
+            setupLevelSelect(x);
+            return;
+        }
+        // for clicking back to select difficulty
+        if(button->getName().compare("back to select difficulty " + Level::difficultyName(x)) == 0)
+        {
+            removeLevelSelect(x);
+            setupDifficultyMenu();   
+            return;
+        }
+    }
+    if(button->getName().compare("back to main menu") == 0 )
+    {
+        removeDifficultyMenu();
         setupMainMenu(); 
         return;
     }
-    else if(button->getName().compare("back to select difficulty from intro") == 0 )
+    for(int x = 1; x <= Level::numDifficulties(); x++)
     {
-        mTrayMgr->destroyWidget("menuLabel");
-        for(int x = 1; x <= Level::numIntroLevels(); x++)
+        for(int y = 1; y <= Level::numLevels(x); y++)
         {
-            mTrayMgr->destroyWidget("intro " + patch::to_string(x));
-        }
-        mTrayMgr->destroyWidget("back to select difficulty from intro");
-        setupDifficultyMenu();   
-        return;
-    }  
-    else if(button->getName().compare("back to select difficulty from medium") == 0 )
-    {
-        mTrayMgr->destroyWidget("menuLabel");
-        for(int x = 1; x <= Level::numMediumLevels(); x++)
-        {
-            mTrayMgr->destroyWidget("medium " + patch::to_string(x));
-        } 
-        mTrayMgr->destroyWidget("back to select difficulty from medium");
-        setupDifficultyMenu();   
-        return;
-    }  
-    else if(button->getName().compare("back to select difficulty from hard") == 0 )
-    {
-        mTrayMgr->destroyWidget("menuLabel");
-        for(int x = 1; x <= Level::numHardLevels(); x++)
-        {
-            mTrayMgr->destroyWidget("hard " + patch::to_string(x));
-        } 
-        mTrayMgr->destroyWidget("back to select difficulty from hard");
-        setupDifficultyMenu();   
-        return;
-    }  
-    else if(button->getName().compare("back to select difficulty from extreme") == 0 )
-    {
-        mTrayMgr->destroyWidget("menuLabel");
-        for(int x = 1; x <= Level::numExtremeLevels(); x++)
-        {
-            mTrayMgr->destroyWidget("extreme " + patch::to_string(x));
-        } 
-        mTrayMgr->destroyWidget("back to select difficulty from extreme");
-        setupDifficultyMenu();   
-        return;
-    }  
-    for(int i = 1; i <= Level::numIntroLevels(); i++)
-    {
-        std::string name = "intro "+ patch::to_string(i);
-        if(button->getName().compare(name) == 0 )
-        {
-            mTrayMgr->destroyWidget("menuLabel");
-            for(int x = 1; x <= Level::numIntroLevels(); x++)
+            std::string name = Level::difficultyName(x) + " " + patch::to_string(y);
+            if(button->getName().compare(name) == 0)
             {
-                mTrayMgr->destroyWidget("intro " + patch::to_string(x));
-            } 
-            mTrayMgr->destroyWidget("back to select difficulty from intro");
-            deleteMap();
-            mDifficulty =1;
-            mLevel = i; 
-            createObjects();              
-            mGameStart = true;        
-            mTrayMgr->hideCursor();      
-            setupGUI(gameMap->getName()); 
-            return;   
+                removeLevelSelect(x);
+                deleteMap();
+                mDifficulty =x;
+                mLevel = y; 
+                createObjects();              
+                mGameStart = true;        
+                mTrayMgr->hideCursor();      
+                setupGUI(gameMap->getName()); 
+                return;   
+            }
         }
     }
-    for(int i = 1; i <= Level::numMediumLevels(); i++)
-    {
-        std::string name = "medium "+ patch::to_string(i);
-        if(button->getName().compare(name) == 0 )
-        {
-            mTrayMgr->destroyWidget("menuLabel");
-            for(int x = 1; x <= Level::numMediumLevels(); x++)
-            {
-                mTrayMgr->destroyWidget("medium " + patch::to_string(x));
-            } 
-            mTrayMgr->destroyWidget("back to select difficulty from medium");
-            deleteMap();
-            mDifficulty =2;
-            mLevel = i; 
-            createObjects();              
-            mGameStart= true;        
-            mTrayMgr->hideCursor();      
-            setupGUI(gameMap->getName()); 
-            return;   
-        }
-    }
-    for(int i = 1; i <= Level::numHardLevels(); i++)
-    {
-        std::string name = "hard "+ patch::to_string(i);
-        if(button->getName().compare(name) == 0 )
-        {
-            mTrayMgr->destroyWidget("menuLabel");
-            for(int x = 1; x <= Level::numHardLevels(); x++)
-            {
-                mTrayMgr->destroyWidget("hard " + patch::to_string(x));
-            } 
-            mTrayMgr->destroyWidget("back to select difficulty from hard");
-            deleteMap();
-            mDifficulty =3;
-            mLevel = i; 
-            createObjects();              
-            mGameStart= true;        
-            mTrayMgr->hideCursor();      
-            setupGUI(gameMap->getName()); 
-            return;   
-        }
-    }
-    for(int i = 1; i <= Level::numExtremeLevels(); i++)
-    {
-        std::string name = "extreme "+ patch::to_string(i);
-        if(button->getName().compare(name) == 0 )
-        {
-            mTrayMgr->destroyWidget("menuLabel");
-            for(int x = 1; x <= Level::numExtremeLevels(); x++)
-            {
-                mTrayMgr->destroyWidget("extreme " + patch::to_string(x));
-            } 
-            mTrayMgr->destroyWidget("back to select difficulty from extreme");
-            deleteMap();
-            mDifficulty =4;
-            mLevel = i; 
-            createObjects();              
-            mGameStart= true;        
-            mTrayMgr->hideCursor();      
-            setupGUI(gameMap->getName()); 
-            return; 
-        }
-    }
+    // for(int i = 1; i <= Level::numMediumLevels(); i++)
+    // {
+    //     std::string name = "medium "+ patch::to_string(i);
+    //     if(button->getName().compare(name) == 0 )
+    //     {
+    //         mTrayMgr->destroyWidget("menuLabel");
+    //         for(int x = 1; x <= Level::numMediumLevels(); x++)
+    //         {
+    //             mTrayMgr->destroyWidget("medium " + patch::to_string(x));
+    //         } 
+    //         mTrayMgr->destroyWidget("back to select difficulty from medium");
+    //         deleteMap();
+    //         mDifficulty =2;
+    //         mLevel = i; 
+    //         createObjects();              
+    //         mGameStart= true;        
+    //         mTrayMgr->hideCursor();      
+    //         setupGUI(gameMap->getName()); 
+    //         return;   
+    //     }
+    // }
+    // for(int i = 1; i <= Level::numHardLevels(); i++)
+    // {
+    //     std::string name = "hard "+ patch::to_string(i);
+    //     if(button->getName().compare(name) == 0 )
+    //     {
+    //         mTrayMgr->destroyWidget("menuLabel");
+    //         for(int x = 1; x <= Level::numHardLevels(); x++)
+    //         {
+    //             mTrayMgr->destroyWidget("hard " + patch::to_string(x));
+    //         } 
+    //         mTrayMgr->destroyWidget("back to select difficulty from hard");
+    //         deleteMap();
+    //         mDifficulty =3;
+    //         mLevel = i; 
+    //         createObjects();              
+    //         mGameStart= true;        
+    //         mTrayMgr->hideCursor();      
+    //         setupGUI(gameMap->getName()); 
+    //         return;   
+    //     }
+    // }
+    // for(int i = 1; i <= Level::numExtremeLevels(); i++)
+    // {
+    //     std::string name = "extreme "+ patch::to_string(i);
+    //     if(button->getName().compare(name) == 0 )
+    //     {
+    //         mTrayMgr->destroyWidget("menuLabel");
+    //         for(int x = 1; x <= Level::numExtremeLevels(); x++)
+    //         {
+    //             mTrayMgr->destroyWidget("extreme " + patch::to_string(x));
+    //         } 
+    //         mTrayMgr->destroyWidget("back to select difficulty from extreme");
+    //         deleteMap();
+    //         mDifficulty =4;
+    //         mLevel = i; 
+    //         createObjects();              
+    //         mGameStart= true;        
+    //         mTrayMgr->hideCursor();      
+    //         setupGUI(gameMap->getName()); 
+    //         return; 
+    //     }
+    // }
 
 
 
