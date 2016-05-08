@@ -24,12 +24,23 @@ public:
         return temp.getName();
     }
 
-    static int numIntroLevels() { return 6;}
-    static int numMediumLevels() { return 6;}
-    static int numHardLevels() { return 5;}
-    static int numExtremeLevels() { return 5;}
-    static int numCreditLevels() { return 2;}
-    static int numDifficulties() { return 5;}
+    static int numLevels(int diff)
+    {
+        if(diff == 1)      {return 6;} // intro
+        else if(diff == 2) {return 6;} // medium
+        else if(diff == 3) {return 5;} // hard
+        else if(diff == 4) {return 5;} // extreme
+        else if(diff == 5) {return 2;} // credit
+    }
+    static string difficultyName(int diff)
+    {
+        if(diff == 1)      {return "intro";}
+        else if(diff == 2) {return "medium";}
+        else if(diff == 3) {return "hard";}
+        else if(diff == 4) {return "extreme";}
+        else if(diff == 5) {return "credit";}
+    }
+    static int numDifficulties() { return 4;}
 
     static vector<string> getLoadingLevelT()
     {

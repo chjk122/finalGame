@@ -125,7 +125,7 @@ void SpikeTile::event(Player* p)
     p->breath();
     p->damageTaken(Player::spikeDamage());
     Mix_Chunk* chunk;
-    chunk = Mix_LoadWAV("Ball_Single_Kick_Sound_Effect.wav");
+    chunk = Mix_LoadWAV("Music/0/spike.wav");
     Mix_PlayChannel( -1, chunk, 0 );
     if(p->health <=0)
     {
@@ -188,7 +188,6 @@ void IceTile::event(Player* p)
     }
     else if(p->direction == 1 && right != NULL && right->getIsWalkable(p))
     { 
-         std::cout << "sliding to the right " << std::endl;
         p->move(1, Ogre::Vector3(pos.x+50, pos.y , pos.z));
     }
     else if(p->direction == 2 && down != NULL && down->getIsWalkable(p))
@@ -197,7 +196,6 @@ void IceTile::event(Player* p)
     }
     else if(p->direction == 3 && left != NULL && left->getIsWalkable(p))
     {
-        std::cout << "sliding to the left " << std::endl;
         p->move(3, Ogre::Vector3(pos.x-50, pos.y , pos.z));
     }
 }
@@ -331,6 +329,12 @@ CureTile::~CureTile()
 
 void CureTile::event(Player* p)
 {
+    if(p->poison == true)
+    {
+        Mix_Chunk* chunk;
+        chunk = Mix_LoadWAV("Music/0/cure.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
+    }
     p->breath();
     p->poison = false;
 }
@@ -360,7 +364,6 @@ void DoorTile::event(Player* p)
 
 bool DoorTile::getIsWalkable(Player *p)
 {
-    std::cout << "numKeys is " << p->key << std::endl;
     if(unlocked)
         return true;
     else if(p->hasKey()) 

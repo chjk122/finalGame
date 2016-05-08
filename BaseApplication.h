@@ -115,16 +115,17 @@ protected:
     // Unattach OIS before window shutdown (very important under Linux)
     virtual void windowClosed(Ogre::RenderWindow* rw);
     virtual void setupMainMenu(void);
+    virtual void removeMainMenu(void);
     virtual void setupLevelMenu(void);
     virtual void removeLevelMenu(void);
     virtual void setupGUI(std::string name);
     virtual void removeGUI(void);
     virtual void setupDifficultyMenu(void);
-    virtual void setupIntroLevelSelect(void);
-    virtual void setupHardLevelSelect(void);
-    virtual void setupMediumLevelSelect(void);
-    virtual void setupExtremeLevelSelect(void);
+    virtual void removeDifficultyMenu(void);
+    virtual void setupLevelSelect(int diff);
+    virtual void removeLevelSelect(int diff);
     virtual void setupSoundMenu(void);
+    virtual void removeSoundMenu(void);
 
     Ogre::Root*                 mRoot;
     Ogre::Camera*               mCamera;
@@ -164,6 +165,7 @@ protected:
 
     Ogre::Real                  mGameState;
     int                         mDifficulty;
+    int                         mOldDifficulty;
     int                         mLevel;
     bool                        mGameStart;
     bool                        mInMenu;
