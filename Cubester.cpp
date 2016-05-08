@@ -469,7 +469,8 @@ int CubesterChase::getAction(Ogre::Vector3 playerPos){
 
     int distanceFromPlayer = Ogre::Math::Sqrt(Ogre::Math::Pow((startPosition.x - playerPos.x),2) + Ogre::Math::Pow((startPosition.z - playerPos.z),2));
 
-    if(distanceFromPlayer <= pathLength){
+    if(distanceFromPlayer <= pathLength ){
+
         return moveTowardsPos(playerPos);
     }
     else if(position != startPosition){
@@ -483,42 +484,79 @@ int CubesterChase::getAction(Ogre::Vector3 playerPos){
 
 int CubesterChase::moveTowardsPos(Ogre::Vector3 pos){
 
-    bool sameZ = Ogre::Math::Abs(pos.z - position.z) > 3;
-    bool sameX = Ogre::Math::Abs(pos.x - position.x) > 3;
-
-    if (pos.x < position.x ){
-        if(pos.z > position.z && !sameZ){
-            return((int)rand()%2 ? move(2) : move(3)); 
-
-        }
-        else if (pos.z < position.z ){
-            return((int)rand()%2 ? move(0) : move(3)); 
-
-        }
-        else{
+    bool closerToX = (abs(pos.x - position.x) > abs(pos.z - position.z)) && ((abs(Ogre::Math::Ceil(pos.x)) - abs(Ogre::Math::Ceil(position.x))) != 0) ;
+    bool closerToZ = (abs(pos.x - position.x) < abs(pos.z - position.z))  && ((abs(Ogre::Math::Ceil(pos.z)) - abs(Ogre::Math::Ceil(position.z))) != 0);
+    //is it closer on the X axis? Okay cool, choose left or right and go that way
+    if(closerToX){
+        std::cout <<"CLOSER TO X" << std::endl;
+        //left
+        if (pos.x < position.x ){
+        
             return(move(3));
+        
+        }
+        //right
+        else if (pos.x > position.x ){
+            
+            return(move(1));
+            
         }
     }
-    else if (pos.x > position.x ){
+    if (closerToZ){
+        //down
+                std::cout <<"CLOSER TO Z" << std::endl;
+
         if(pos.z > position.z ){
-            return((int)rand()%2 ? move(2) : move(1)); 
+            return(move(2)); 
+
+        }
+        //up
+        else if (pos.z < position.z ){
+            return(move(0)); 
+        }
+    }
+    //if they're equal, do some random mumbo jumbo
+    else{
+                std::cout <<"TO BOTH" << std::endl;
+
+        if (pos.x < position.x ){
+
+            if(pos.z > position.z){
+                return((int)rand()%2 ? move(2) : move(3)); 
+
+            }
+            else if (pos.z < position.z ){
+                return((int)rand()%2 ? move(0) : move(3)); 
+
+            }
+            else{
+                return(move(3));
+            }
+        }
+
+        else if (pos.x > position.x ){
+            if(pos.z > position.z ){
+                return((int)rand()%2 ? move(2) : move(1)); 
+
+            }
+            else if (pos.z < position.z ){
+                return((int)rand()%2 ? move(0) : move(1)); 
+
+            }
+            else{
+                return(move(1));
+            }
+        }
+        else if(pos.z > position.z ){
+            return(move(2)); 
 
         }
         else if (pos.z < position.z ){
-            return((int)rand()%2 ? move(0) : move(1)); 
+            return(move(0)); 
+        }
 
-        }
-        else{
-            return(move(1));
-        }
+
     }
-    else if(pos.z > position.z ){
-        return(move(2)); 
-
-        }
-    else if (pos.z < position.z ){
-        return(move(0)); 
-        }
 }
 
 
