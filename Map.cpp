@@ -204,7 +204,6 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		for(int y = 0; y < v.size(); y++)
 		{
 			// code for the tiles
-			std::cout << v[x][y];
 			if(isdigit(v[x][y]) /* || symbol stuff here and change the -48 */)
 			{
 				mode = ((int)v[x][y]) - '0'; //put character down to int
@@ -314,12 +313,9 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 					e[x][y] = 'x';
 				}
 			}
-
-
 			//increment position
 			pos.x += AbstractTile::length(); // + length to the right in 2d
 		}
-		std::cout << std::endl;
 		pos.z += AbstractTile::length(); // + length downward in 2d
 		pos.x = centerOfTopleftTilePos.x; // reset the x 
 	}

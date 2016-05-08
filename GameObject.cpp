@@ -232,7 +232,6 @@ void Player::updateStatus()
     {
         chunk = Mix_LoadWAV("Music/0/burn.wav");
         Mix_PlayChannel( -1, chunk, 0 );
-        std::cout << "player killed" << std::endl;
         std::string newMaterial = "Cube/Burn" + patch::to_string(burn);
         mEntity->setMaterialName(newMaterial);
         damageTaken(burnDamage());
@@ -290,7 +289,6 @@ void Player::kill()
     Mix_Chunk* chunk;
     chunk = Mix_LoadWAV("Music/0/death.wav");
     Mix_PlayChannel( -1, chunk, 0 );
-    std::cout << "player killed" << std::endl;
     health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
     if(poison)   
@@ -329,7 +327,7 @@ void Player::setBackPlayer(){
     playerX = startPlayerX;
     playerY = startPlayerY;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    mEntity->setMaterialName("Cube/Blend");
+    mEntity->setMaterialName("Cube/Jinx");
     endPos = position;
     inMotion = false;
 }

@@ -48,6 +48,7 @@ BaseApplication::BaseApplication(void)
     mMouse(0),
     mKeyboard(0),
     mOverlaySystem(0),
+    mOldDifficulty(0),
     mDifficulty(0),
     mLevel(1),
     mGameStart(false),
@@ -238,10 +239,24 @@ void BaseApplication::createObjects()
     Ogre::SceneNode* node;
     Ogre::SceneNode* playerNode;
     //name doesnt mater rakans code is boosted
-    player = new Player("playerNode", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.));
- 
+    player = new Player("playerNode", mSceneMgr, playerNode, 10., Ogre::Vector3(-25.,-250.,225.)); 
     gameMap = new Map(player, mSceneMgr, Ogre::Vector3(-225.0,-250.0, -225.0), mDifficulty, mLevel);
-   
+    if(mDifficulty >=3 && mDifficulty<=4)
+    {
+        if(mOldDifficulty != mDifficulty &&(mOldDifficulty!=3))
+        {
+            music = Mix_LoadMUS("Music/0/bgm.wav");
+            Mix_PlayMusic(music,-1);
+        }
+    }
+    else 
+    {
+            if(mOldDifficulty == 3 || mOldDifficulty ==4)
+            {
+                music = Mix_LoadMUS("Music/0/bgm2.mp3");
+                Mix_PlayMusic(music,-1);
+            }
+    }
 }
 
 void BaseApplication::deleteMap()
@@ -417,7 +432,7 @@ bool BaseApplication::setup(void)
 
     SDL_Init(SDL_INIT_EVERYTHING);
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
-    music = Mix_LoadMUS("Music/0/bgm.mp3");
+    music = Mix_LoadMUS("Music/0/bgm2.mp3");
     Mix_PlayMusic(music,-1);
           
     setupMainMenu();
@@ -427,6 +442,7 @@ bool BaseApplication::setup(void)
 //---------------------------------------------------------------------------
 void BaseApplication::calcNextLevel()
 {
+    mOldDifficulty = mDifficulty;
     mLevel++;
     if(mDifficulty == 0)
     {
@@ -490,6 +506,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             createObjects();
             mLevelName->setCaption(gameMap->getName());
         }
+
         mPlayerHp->setProgress((player->health)/100.0);
         mPlayerHp->setCaption("current HP is " + patch::to_string(player->health) + "/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
@@ -512,6 +529,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             mDifficulty = 0;
             mLevel = 0;
+            mOldDifficulty =0;
             createObjects();       
             levelLoaded = true;   
             Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
@@ -523,6 +541,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             gameMap->simulate(evt.timeSinceLastFrame);
         }
     }
+   
+
 
     mTrayMgr->frameRenderingQueued(evt);
 
@@ -826,70 +846,6 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             }
         }
     }
-    // for(int i = 1; i <= Level::numMediumLevels(); i++)
-    // {
-    //     std::string name = "medium "+ patch::to_string(i);
-    //     if(button->getName().compare(name) == 0 )
-    //     {
-    //         mTrayMgr->destroyWidget("menuLabel");
-    //         for(int x = 1; x <= Level::numMediumLevels(); x++)
-    //         {
-    //             mTrayMgr->destroyWidget("medium " + patch::to_string(x));
-    //         } 
-    //         mTrayMgr->destroyWidget("back to select difficulty from medium");
-    //         deleteMap();
-    //         mDifficulty =2;
-    //         mLevel = i; 
-    //         createObjects();              
-    //         mGameStart= true;        
-    //         mTrayMgr->hideCursor();      
-    //         setupGUI(gameMap->getName()); 
-    //         return;   
-    //     }
-    // }
-    // for(int i = 1; i <= Level::numHardLevels(); i++)
-    // {
-    //     std::string name = "hard "+ patch::to_string(i);
-    //     if(button->getName().compare(name) == 0 )
-    //     {
-    //         mTrayMgr->destroyWidget("menuLabel");
-    //         for(int x = 1; x <= Level::numHardLevels(); x++)
-    //         {
-    //             mTrayMgr->destroyWidget("hard " + patch::to_string(x));
-    //         } 
-    //         mTrayMgr->destroyWidget("back to select difficulty from hard");
-    //         deleteMap();
-    //         mDifficulty =3;
-    //         mLevel = i; 
-    //         createObjects();              
-    //         mGameStart= true;        
-    //         mTrayMgr->hideCursor();      
-    //         setupGUI(gameMap->getName()); 
-    //         return;   
-    //     }
-    // }
-    // for(int i = 1; i <= Level::numExtremeLevels(); i++)
-    // {
-    //     std::string name = "extreme "+ patch::to_string(i);
-    //     if(button->getName().compare(name) == 0 )
-    //     {
-    //         mTrayMgr->destroyWidget("menuLabel");
-    //         for(int x = 1; x <= Level::numExtremeLevels(); x++)
-    //         {
-    //             mTrayMgr->destroyWidget("extreme " + patch::to_string(x));
-    //         } 
-    //         mTrayMgr->destroyWidget("back to select difficulty from extreme");
-    //         deleteMap();
-    //         mDifficulty =4;
-    //         mLevel = i; 
-    //         createObjects();              
-    //         mGameStart= true;        
-    //         mTrayMgr->hideCursor();      
-    //         setupGUI(gameMap->getName()); 
-    //         return; 
-    //     }
-    // }
-
 
 
     if(button->getName().compare("quit level") == 0 )
@@ -899,6 +855,8 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         mGameStart = false;
         setupMainMenu();
         levelLoaded = false;
+        music = Mix_LoadMUS("Music/0/bgm2.mp3");
+        Mix_PlayMusic(music,-1);
         return;
     }
     else if(button->getName().compare("resume level") == 0 )

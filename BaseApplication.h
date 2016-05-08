@@ -165,6 +165,7 @@ protected:
 
     Ogre::Real                  mGameState;
     int                         mDifficulty;
+    int                         mOldDifficulty;
     int                         mLevel;
     bool                        mGameStart;
     bool                        mInMenu;
