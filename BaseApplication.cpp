@@ -447,6 +447,8 @@ bool BaseApplication::setup(void)
     Mix_OpenAudio(22050,MIX_DEFAULT_FORMAT,2,4096);
     music = Mix_LoadMUS("Music/0/bgm2.mp3");
     Mix_PlayMusic(music,-1);
+    Mix_VolumeMusic(50);
+    Mix_Volume(-1, 110);
           
     setupMainMenu();
     mStats = new Stats();
