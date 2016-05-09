@@ -51,8 +51,8 @@ public:
         tile.push_back("xt*****tx");
         tile.push_back("xbd+++kdx");
         tile.push_back("xpcrfrcpx");
-        tile.push_back("x*++x++*x");
-        tile.push_back("x*x+++x*x");
+        tile.push_back("x+++x+++x");
+        tile.push_back("x+x+++x+x");
         tile.push_back("xxxxxxxxx");
         return tile;
     }
@@ -60,15 +60,15 @@ public:
     static vector<string> getLoadingLevelC()
     {
         vector<string> cubesters;
-        cubesters.push_back("aaxxxxxdd");
-        cubesters.push_back("aaxxxxxdd");  //y, q, e, z
-        cubesters.push_back("xrxrxlxlx");
+        cubesters.push_back("xxxxxxxxx");
+        cubesters.push_back("xxxxxxxxx");  //y, q, e, z
+        cubesters.push_back("xxxxxxxxx");
         cubesters.push_back("xixxxxxix");
         cubesters.push_back("mmxxxxxpp");
         cubesters.push_back("mmxxxxxpp");
-        cubesters.push_back("xy++x++ux");
+        cubesters.push_back("xx++x++xx");
         cubesters.push_back("x+x+++x+x");
-        cubesters.push_back("xyxxxxxux");
+        cubesters.push_back("xxxxxxxxx");
         return cubesters;
     }
 
