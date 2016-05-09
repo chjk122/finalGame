@@ -103,7 +103,8 @@ am_assignment2_OBJECTS = assignment2-Assignment2.$(OBJEXT) \
 	assignment2-Tile.$(OBJEXT) assignment2-Cubester.$(OBJEXT) \
 	assignment2-Level.$(OBJEXT) assignment2-Leaderboard.$(OBJEXT) \
 	assignment2-LevelStats.$(OBJEXT) \
-	assignment2-PlayerStats.$(OBJEXT) assignment2-Stats.$(OBJEXT)
+	assignment2-PlayerStats.$(OBJEXT) assignment2-Stats.$(OBJEXT) \
+	assignment2-Stopwatch.$(OBJEXT)
 assignment2_OBJECTS = $(am_assignment2_OBJECTS)
 am__DEPENDENCIES_1 =
 assignment2_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -326,9 +327,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h Cubester.h Level.h Leaderboard.h LevelStats.h PlayerStats.h Stats.h
+noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h Cubester.h Level.h Leaderboard.h LevelStats.h PlayerStats.h Stats.h Stopwatch.h
 assignment2_CPPFLAGS = -I$(top_srcdir)
-assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp Cubester.cpp Level.cpp Leaderboard.cpp LevelStats.cpp PlayerStats.cpp Stats.cpp
+assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp Cubester.cpp Level.cpp Leaderboard.cpp LevelStats.cpp PlayerStats.cpp Stats.cpp Stopwatch.cpp
 assignment2_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 assignment2_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 assignment2_LDFLAGS = -lOgreOverlay -lboost_system -lSDL -lSDL_net -lSDL_mixer
@@ -458,6 +459,7 @@ include ./$(DEPDIR)/assignment2-LevelStats.Po
 include ./$(DEPDIR)/assignment2-Map.Po
 include ./$(DEPDIR)/assignment2-PlayerStats.Po
 include ./$(DEPDIR)/assignment2-Stats.Po
+include ./$(DEPDIR)/assignment2-Stopwatch.Po
 include ./$(DEPDIR)/assignment2-Tile.Po
 
 .cpp.o:
@@ -634,6 +636,20 @@ assignment2-Stats.obj: Stats.cpp
 #	$(AM_V_CXX)source='Stats.cpp' object='assignment2-Stats.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Stats.obj `if test -f 'Stats.cpp'; then $(CYGPATH_W) 'Stats.cpp'; else $(CYGPATH_W) '$(srcdir)/Stats.cpp'; fi`
+
+assignment2-Stopwatch.o: Stopwatch.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Stopwatch.o -MD -MP -MF $(DEPDIR)/assignment2-Stopwatch.Tpo -c -o assignment2-Stopwatch.o `test -f 'Stopwatch.cpp' || echo '$(srcdir)/'`Stopwatch.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Stopwatch.Tpo $(DEPDIR)/assignment2-Stopwatch.Po
+#	$(AM_V_CXX)source='Stopwatch.cpp' object='assignment2-Stopwatch.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Stopwatch.o `test -f 'Stopwatch.cpp' || echo '$(srcdir)/'`Stopwatch.cpp
+
+assignment2-Stopwatch.obj: Stopwatch.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Stopwatch.obj -MD -MP -MF $(DEPDIR)/assignment2-Stopwatch.Tpo -c -o assignment2-Stopwatch.obj `if test -f 'Stopwatch.cpp'; then $(CYGPATH_W) 'Stopwatch.cpp'; else $(CYGPATH_W) '$(srcdir)/Stopwatch.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Stopwatch.Tpo $(DEPDIR)/assignment2-Stopwatch.Po
+#	$(AM_V_CXX)source='Stopwatch.cpp' object='assignment2-Stopwatch.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Stopwatch.obj `if test -f 'Stopwatch.cpp'; then $(CYGPATH_W) 'Stopwatch.cpp'; else $(CYGPATH_W) '$(srcdir)/Stopwatch.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
