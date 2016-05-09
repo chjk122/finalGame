@@ -258,7 +258,7 @@ void BaseApplication::createObjects()
     {
         if(mOldDifficulty != mDifficulty &&(mOldDifficulty!=3))
         {
-            music = Mix_LoadMUS("Music/0/bgm.wav");
+            music = Mix_LoadMUS("Music/0/bgm.mp3");
             Mix_PlayMusic(music,-1);
         }
     }
