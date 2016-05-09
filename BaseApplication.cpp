@@ -498,7 +498,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //run save code then shut down
 
     if(mShutDown)
+    {
+        //SAVE AND LOAD
         return false;
+    }
 
     // Need to capture/update each device
     mKeyboard->capture();
@@ -520,6 +523,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             deleteMap();
             createObjects();
             mLevelName->setCaption(gameMap->getName());
+            mStopwatch->reset();
+            mDeathCounter = 0;
+            mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
+            //SAVE AND LOAD
         }
 
         mPlayerHp->setProgress((player->health)/100.0);
@@ -896,6 +903,8 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         music = Mix_LoadMUS("Music/0/bgm2.mp3");
         Mix_PlayMusic(music,-1);
         mStopwatch->reset();
+        mDeathCounter = 0;
+        //SAVE AND LOAD
         return;
     }
     else if(button->getName().compare("resume level") == 0 )
