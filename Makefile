@@ -101,7 +101,9 @@ am_assignment2_OBJECTS = assignment2-Assignment2.$(OBJEXT) \
 	assignment2-BaseApplication.$(OBJEXT) \
 	assignment2-GameObject.$(OBJEXT) assignment2-Map.$(OBJEXT) \
 	assignment2-Tile.$(OBJEXT) assignment2-Cubester.$(OBJEXT) \
-	assignment2-Level.$(OBJEXT)
+	assignment2-Level.$(OBJEXT) assignment2-Leaderboard.$(OBJEXT) \
+	assignment2-LevelStats.$(OBJEXT) \
+	assignment2-PlayerStats.$(OBJEXT) assignment2-Stats.$(OBJEXT)
 assignment2_OBJECTS = $(am_assignment2_OBJECTS)
 am__DEPENDENCIES_1 =
 assignment2_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -194,13 +196,13 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} "/v/filer4b/v38q001/williamz/csr354/final project/finalGame/missing" aclocal-1.14
+ACLOCAL = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
 AR = ar
-AUTOCONF = ${SHELL} "/v/filer4b/v38q001/williamz/csr354/final project/finalGame/missing" autoconf
-AUTOHEADER = ${SHELL} "/v/filer4b/v38q001/williamz/csr354/final project/finalGame/missing" autoheader
-AUTOMAKE = ${SHELL} "/v/filer4b/v38q001/williamz/csr354/final project/finalGame/missing" automake-1.14
+AUTOCONF = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoconf
+AUTOHEADER = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing autoheader
+AUTOMAKE = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing automake-1.14
 AWK = gawk
 BULLET_CFLAGS = 
 BULLET_LIBS = 
@@ -239,7 +241,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} "/v/filer4b/v38q001/williamz/csr354/final project/finalGame/missing" makeinfo
+MAKEINFO = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
@@ -269,10 +271,10 @@ SET_MAKE =
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.1
-abs_builddir = /v/filer4b/v38q001/williamz/csr354/final project/finalGame
-abs_srcdir = /v/filer4b/v38q001/williamz/csr354/final project/finalGame
-abs_top_builddir = /v/filer4b/v38q001/williamz/csr354/final project/finalGame
-abs_top_srcdir = /v/filer4b/v38q001/williamz/csr354/final project/finalGame
+abs_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_builddir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
+abs_top_srcdir = /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -304,7 +306,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} '/v/filer4b/v38q001/williamz/csr354/final project/finalGame/install-sh'
+install_sh = ${SHELL} /v/filer4b/v38q001/chjk122/Documents/cs354R/finalGame/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -324,9 +326,9 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
-noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h Cubester.h Level.h
+noinst_HEADERS = Assignment2.h BaseApplication.h GameObject.h Map.h Tile.h Cubester.h Level.h Leaderboard.h LevelStats.h PlayerStats.h Stats.h
 assignment2_CPPFLAGS = -I$(top_srcdir)
-assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp Cubester.cpp Level.cpp
+assignment2_SOURCES = Assignment2.cpp BaseApplication.cpp GameObject.cpp Map.cpp Tile.cpp Cubester.cpp Level.cpp Leaderboard.cpp LevelStats.cpp PlayerStats.cpp Stats.cpp
 assignment2_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS)
 assignment2_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS)
 assignment2_LDFLAGS = -lOgreOverlay -lboost_system -lSDL -lSDL_net -lSDL_mixer
@@ -450,8 +452,12 @@ include ./$(DEPDIR)/assignment2-Assignment2.Po
 include ./$(DEPDIR)/assignment2-BaseApplication.Po
 include ./$(DEPDIR)/assignment2-Cubester.Po
 include ./$(DEPDIR)/assignment2-GameObject.Po
+include ./$(DEPDIR)/assignment2-Leaderboard.Po
 include ./$(DEPDIR)/assignment2-Level.Po
+include ./$(DEPDIR)/assignment2-LevelStats.Po
 include ./$(DEPDIR)/assignment2-Map.Po
+include ./$(DEPDIR)/assignment2-PlayerStats.Po
+include ./$(DEPDIR)/assignment2-Stats.Po
 include ./$(DEPDIR)/assignment2-Tile.Po
 
 .cpp.o:
@@ -572,6 +578,62 @@ assignment2-Level.obj: Level.cpp
 #	$(AM_V_CXX)source='Level.cpp' object='assignment2-Level.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Level.obj `if test -f 'Level.cpp'; then $(CYGPATH_W) 'Level.cpp'; else $(CYGPATH_W) '$(srcdir)/Level.cpp'; fi`
+
+assignment2-Leaderboard.o: Leaderboard.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Leaderboard.o -MD -MP -MF $(DEPDIR)/assignment2-Leaderboard.Tpo -c -o assignment2-Leaderboard.o `test -f 'Leaderboard.cpp' || echo '$(srcdir)/'`Leaderboard.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Leaderboard.Tpo $(DEPDIR)/assignment2-Leaderboard.Po
+#	$(AM_V_CXX)source='Leaderboard.cpp' object='assignment2-Leaderboard.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Leaderboard.o `test -f 'Leaderboard.cpp' || echo '$(srcdir)/'`Leaderboard.cpp
+
+assignment2-Leaderboard.obj: Leaderboard.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Leaderboard.obj -MD -MP -MF $(DEPDIR)/assignment2-Leaderboard.Tpo -c -o assignment2-Leaderboard.obj `if test -f 'Leaderboard.cpp'; then $(CYGPATH_W) 'Leaderboard.cpp'; else $(CYGPATH_W) '$(srcdir)/Leaderboard.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Leaderboard.Tpo $(DEPDIR)/assignment2-Leaderboard.Po
+#	$(AM_V_CXX)source='Leaderboard.cpp' object='assignment2-Leaderboard.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Leaderboard.obj `if test -f 'Leaderboard.cpp'; then $(CYGPATH_W) 'Leaderboard.cpp'; else $(CYGPATH_W) '$(srcdir)/Leaderboard.cpp'; fi`
+
+assignment2-LevelStats.o: LevelStats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-LevelStats.o -MD -MP -MF $(DEPDIR)/assignment2-LevelStats.Tpo -c -o assignment2-LevelStats.o `test -f 'LevelStats.cpp' || echo '$(srcdir)/'`LevelStats.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-LevelStats.Tpo $(DEPDIR)/assignment2-LevelStats.Po
+#	$(AM_V_CXX)source='LevelStats.cpp' object='assignment2-LevelStats.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-LevelStats.o `test -f 'LevelStats.cpp' || echo '$(srcdir)/'`LevelStats.cpp
+
+assignment2-LevelStats.obj: LevelStats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-LevelStats.obj -MD -MP -MF $(DEPDIR)/assignment2-LevelStats.Tpo -c -o assignment2-LevelStats.obj `if test -f 'LevelStats.cpp'; then $(CYGPATH_W) 'LevelStats.cpp'; else $(CYGPATH_W) '$(srcdir)/LevelStats.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-LevelStats.Tpo $(DEPDIR)/assignment2-LevelStats.Po
+#	$(AM_V_CXX)source='LevelStats.cpp' object='assignment2-LevelStats.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-LevelStats.obj `if test -f 'LevelStats.cpp'; then $(CYGPATH_W) 'LevelStats.cpp'; else $(CYGPATH_W) '$(srcdir)/LevelStats.cpp'; fi`
+
+assignment2-PlayerStats.o: PlayerStats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-PlayerStats.o -MD -MP -MF $(DEPDIR)/assignment2-PlayerStats.Tpo -c -o assignment2-PlayerStats.o `test -f 'PlayerStats.cpp' || echo '$(srcdir)/'`PlayerStats.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-PlayerStats.Tpo $(DEPDIR)/assignment2-PlayerStats.Po
+#	$(AM_V_CXX)source='PlayerStats.cpp' object='assignment2-PlayerStats.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-PlayerStats.o `test -f 'PlayerStats.cpp' || echo '$(srcdir)/'`PlayerStats.cpp
+
+assignment2-PlayerStats.obj: PlayerStats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-PlayerStats.obj -MD -MP -MF $(DEPDIR)/assignment2-PlayerStats.Tpo -c -o assignment2-PlayerStats.obj `if test -f 'PlayerStats.cpp'; then $(CYGPATH_W) 'PlayerStats.cpp'; else $(CYGPATH_W) '$(srcdir)/PlayerStats.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-PlayerStats.Tpo $(DEPDIR)/assignment2-PlayerStats.Po
+#	$(AM_V_CXX)source='PlayerStats.cpp' object='assignment2-PlayerStats.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-PlayerStats.obj `if test -f 'PlayerStats.cpp'; then $(CYGPATH_W) 'PlayerStats.cpp'; else $(CYGPATH_W) '$(srcdir)/PlayerStats.cpp'; fi`
+
+assignment2-Stats.o: Stats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Stats.o -MD -MP -MF $(DEPDIR)/assignment2-Stats.Tpo -c -o assignment2-Stats.o `test -f 'Stats.cpp' || echo '$(srcdir)/'`Stats.cpp
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Stats.Tpo $(DEPDIR)/assignment2-Stats.Po
+#	$(AM_V_CXX)source='Stats.cpp' object='assignment2-Stats.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Stats.o `test -f 'Stats.cpp' || echo '$(srcdir)/'`Stats.cpp
+
+assignment2-Stats.obj: Stats.cpp
+	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -MT assignment2-Stats.obj -MD -MP -MF $(DEPDIR)/assignment2-Stats.Tpo -c -o assignment2-Stats.obj `if test -f 'Stats.cpp'; then $(CYGPATH_W) 'Stats.cpp'; else $(CYGPATH_W) '$(srcdir)/Stats.cpp'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/assignment2-Stats.Tpo $(DEPDIR)/assignment2-Stats.Po
+#	$(AM_V_CXX)source='Stats.cpp' object='assignment2-Stats.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
+#	$(AM_V_CXX_no)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(assignment2_CPPFLAGS) $(CPPFLAGS) $(assignment2_CXXFLAGS) $(CXXFLAGS) -c -o assignment2-Stats.obj `if test -f 'Stats.cpp'; then $(CYGPATH_W) 'Stats.cpp'; else $(CYGPATH_W) '$(srcdir)/Stats.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

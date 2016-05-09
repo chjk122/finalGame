@@ -556,7 +556,7 @@ private:
         cubesters.push_back("xxxxxxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxx4xx");
+        cubesters.push_back("xxxxxxxxxxxxx2xx");
         cubesters.push_back("xx2xxxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxxxxxx");
         cubesters.push_back("xxxxxxxxxxxxxxxx");
@@ -1101,8 +1101,8 @@ private:
         tile.push_back("xxxxxxxxxOx      MUSIC      ixOxxxxxxxxx");
         tile.push_back("xxxxxxxxxYxhiiiiiiiiiiiiiiiigxYxxxxxxxxx");
         tile.push_back("xxxxxxxxxExiTHIS CREDIT PAGE xExxxxxxxxx");
-        tile.push_back("xxxxxxxxxDxjiiiiiiiiiiiiiiiiixDxxxxxxxxx");
-        tile.push_back("9xxxxxxxxxx  RAKAN MAYBE AI fxxxxxxxxxxx");
+        tile.push_back("xxxxxxxxxDxjiiiiiiiiiiiiiiiihxDxxxxxxxxx");
+        tile.push_back("9xxxxxxxxxxRAKAN ONE CUBESTERfxxxxxxxxxx");
         return tile;
     }
     static vector<string> getCreditL2C()
