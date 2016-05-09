@@ -36,6 +36,8 @@ public:
 	void parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 		 	   std::vector< std::string > v, std::vector< std::string > e);
 	std::string getName();
+	bool isPlayerAlive();
+	void respawn();
 
 private:
 	bool canMove(int tileX, int tileY, int direction);

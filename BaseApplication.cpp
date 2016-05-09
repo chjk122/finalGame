@@ -53,8 +53,10 @@ BaseApplication::BaseApplication(void)
     mLevel(1),
     mGameStart(false),
     mInMenu(false),
-    mMusic(true)//,
-    // mButtonLevels()
+    mMusic(true),
+    mDeathCounter(0),
+    mStats(),
+    mStopwatch()
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -70,13 +72,15 @@ BaseApplication::~BaseApplication(void)
     if (mTrayMgr) delete mTrayMgr;
     if (mCameraMan) delete mCameraMan;
     if (mOverlaySystem) delete mOverlaySystem;
+    delete player;
+    delete gameMap;
+    delete mStats;
+    delete mStopwatch;
 
     // Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
     delete mRoot;
-    delete player;
-    delete gameMap;
 }
 
 //---------------------------------------------------------------------------
@@ -221,16 +225,25 @@ void BaseApplication::setupGUI(std::string levelName)
     mLevelName->show();
     mPlayerHp = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "hpBar", "100/100", 200, 20);
     mPlayerHp->show();
+    mNumDeaths = mTrayMgr->createLabel(OgreBites::TL_TOP, "deaths", "0 deaths", 220);
+    mNumDeaths->show();
+    mTime = mTrayMgr->createLabel(OgreBites::TL_TOP, "time", "0 seconds", 220);
+    mTime->show();
 
     /************************************select menu Gui ****************************************************/
     mTrayMgr->moveWidgetToTray(mPlayerHp, OgreBites::TL_TOP, 0);
     mTrayMgr->moveWidgetToTray(mLevelName, OgreBites::TL_TOP, 0);
+
+    mTrayMgr->moveWidgetToTray(mTime, OgreBites::TL_TOPRIGHT, 0);
+    mTrayMgr->moveWidgetToTray(mNumDeaths, OgreBites::TL_TOPRIGHT, 0);
 }
 
 void BaseApplication::removeGUI()
 {
     mTrayMgr->destroyWidget("levelName");
     mTrayMgr->destroyWidget("hpBar");
+    mTrayMgr->destroyWidget("deaths");
+    mTrayMgr->destroyWidget("time");
 }
 //---------------------------------------------------------------------------
 
@@ -436,6 +449,8 @@ bool BaseApplication::setup(void)
     Mix_PlayMusic(music,-1);
           
     setupMainMenu();
+    mStats = new Stats();
+    mStopwatch = new Stopwatch();
 
     return true;
 };
@@ -509,17 +524,38 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
         mPlayerHp->setProgress((player->health)/100.0);
         mPlayerHp->setCaption("current HP is " + patch::to_string(player->health) + "/100");
+        mTime->setCaption(patch::to_string(int(mStopwatch->elapsedTime() / 100.0 ) / 10.0) + " seconds");
+        // float(int(floatValue * 10 + 0.5)) / 10;
+        mPlayerHp->setCaption(" " + patch::to_string(player->health) + "/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
         Ogre::Vector3 position = tem->getPosition();
         mCamera->setPosition(position.x , 300, position.z+200);
-        if(wisDown)
-            gameMap->move(0);
-        else if(disDown)
-            gameMap->move(1);
-        else if(sisDown)
-            gameMap->move(2);
-        else if(aisDown)
-            gameMap->move(3);
+        if(gameMap->isPlayerAlive())
+        {
+            if(wisDown)
+                gameMap->move(0);
+            else if(disDown)
+                gameMap->move(1);
+            else if(sisDown)
+                gameMap->move(2);
+            else if(aisDown)
+                gameMap->move(3);
+            if(!mStopwatch->isRunning() && (sisDown || wisDown || disDown || aisDown))
+            {
+                mStopwatch->start();
+            }
+        }
+        else
+        {
+            mDeathCounter += 1;
+            if(mDeathCounter == 1)
+            {
+                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " death");
+            }
+            else
+                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
+            gameMap->respawn();
+        }
         gameMap->simulate(evt.timeSinceLastFrame);
         // mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
     }
@@ -667,11 +703,13 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(!mInMenu)
         {
             setupLevelMenu();
+            mStopwatch->pause();
         }
         else if(mInMenu)
         {
             removeLevelMenu();
             setupGUI(gameMap->getName());
+            mStopwatch->unpause();
         }
     }
     else if(arg.key == OIS::KC_W || arg.key == OIS::KC_UP )
@@ -857,12 +895,14 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         levelLoaded = false;
         music = Mix_LoadMUS("Music/0/bgm2.mp3");
         Mix_PlayMusic(music,-1);
+        mStopwatch->reset();
         return;
     }
     else if(button->getName().compare("resume level") == 0 )
     {
         removeLevelMenu();
         setupGUI(gameMap->getName());
+        mStopwatch->unpause();
         return;
     }
 

@@ -28,6 +28,8 @@ http://www.ogre3d.org/wiki/
 #include <OgreConfigFile.h>
 #include <btBulletDynamicsCommon.h>
 #include "GameObject.h"
+#include "Stats.h"
+#include "Stopwatch.h"
 #include "Map.h"
 #include <sstream>
 #include <vector>
@@ -147,6 +149,9 @@ protected:
 
     OgreBites::Label*           mLevelName;
     OgreBites::ProgressBar*     mPlayerHp;
+    OgreBites::Label*           mNumDeaths;
+    int                         mDeathCounter;
+    OgreBites::Label*           mTime;
     
     bool                        mCursorWasVisible;	// Was cursor visible before dialog appeared?
     bool                        mShutDown;
@@ -162,6 +167,8 @@ protected:
 
     Player*                     player;
     Map*                        gameMap;
+    Stats*                      mStats;
+    Stopwatch*                  mStopwatch;
 
     Ogre::Real                  mGameState;
     int                         mDifficulty;

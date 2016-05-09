@@ -143,21 +143,10 @@ void Map::simulate(const Ogre::Real elapsedTime)
 			player->kill();
 	}
 
-	if(!player->isAlive())
-	{
-		player->respawn();
-		for(int x = 0; x < map.size(); x++)
-		{
-			for(int y = 0; y < map.size(); y++)
-			{
-				map[x][y]->reload();
-			}
-		}
-		for(int x = 0; x < cubesters.size(); x++)
-		{
-			cubesters[x]->reload();
-		}
-	}
+	// if(!isPlayerAlive())
+	// {
+	// 	respawn();
+	// }
 }
 
 void Map::destroyNode(Ogre::SceneNode* node)
@@ -344,6 +333,30 @@ void Map::parseMaps(Ogre::Vector3 centerOfTopleftTilePos,
 					left = map[x][y-1];
 				map[x][y]->setNeighbors(up,right,down,left);
 			}
+		}
+	}
+}
+
+
+bool Map::isPlayerAlive()
+{
+	return (player->isAlive());
+}
+void Map::respawn()
+{
+	if(!isPlayerAlive())
+	{
+		player->respawn();
+		for(int x = 0; x < map.size(); x++)
+		{
+			for(int y = 0; y < map.size(); y++)
+			{
+				map[x][y]->reload();
+			}
+		}
+		for(int x = 0; x < cubesters.size(); x++)
+		{
+			cubesters[x]->reload();
 		}
 	}
 }
