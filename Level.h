@@ -551,26 +551,22 @@ private:
     static vector<string> getMediumL6C()
     {
         vector<string> cubesters;
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxaxxxaxbxxxbxcxxxcx");
-        cubesters.push_back("xxrxxxxxxxxxxxxxxxrx");
-        cubesters.push_back("xxlxxxxxxxxxxxxxxxlx");
-        cubesters.push_back("xxrxxxxxxxxxxxxxxxrx");
-        cubesters.push_back("xxaxxxaxbxxxbxcxxxcx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxuxxxyxuxxxuxyxuxxx");
-        cubesters.push_back("xaxxxaxoxxxoxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xaxxxaxoxxxoxxxxxxxx");
-        cubesters.push_back("xxuxxxyxuxxxuxyxuxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
+        cubesters.push_back("0000000000000000");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
+        cubesters.push_back("xxxxxxxxxxxxxxxx");
         return cubesters;
     }
     static string getMediumL7N()
