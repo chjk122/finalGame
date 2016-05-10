@@ -136,6 +136,7 @@ void BaseApplication::setupMainMenu(void)
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "account", "Account Info", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "help", "Help", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "quit", "Quit Game", 250);
@@ -147,7 +148,8 @@ void BaseApplication::removeMainMenu(void)
 
     mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("account");
-    mTrayMgr->destroyWidget("start");       
+    mTrayMgr->destroyWidget("start");
+    mTrayMgr->destroyWidget("help");        
     mTrayMgr->destroyWidget("sound");       
     mTrayMgr->destroyWidget("credit");
     mTrayMgr->destroyWidget("quit");  
@@ -171,6 +173,44 @@ void BaseApplication::removeLevelMenu(void)
     mTrayMgr->destroyWidget("quit level");
     mTrayMgr->destroyWidget("resume level");
     mTrayMgr->hideCursor();
+}
+
+void BaseApplication::setupHelpMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Help Menu", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "control", "Controls", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "info", "Info", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "helpToMain", "Back To Main Menu", 250);
+}
+
+void BaseApplication::removeHelpMenu(void)
+{
+    mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("label");
+    mTrayMgr->destroyWidget("control");
+    mTrayMgr->destroyWidget("info");
+    mTrayMgr->destroyWidget("helpToMain");
+}
+
+void BaseApplication::setupControlMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", "W/Arrow up key for moving up\n S/Arrow down key for moving down\n A/Arrow left key for moving left\n D/Arrow right key for moving right\n Esc key for pause the game or quit", 400);
+    OgreBites::Label *will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label2", "S/Arrow down key for moving down", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label3", "A/Arrow left key for moving left", 400);
+    will->hide();
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "controlToMain", "Back To Main Menu", 400);
+}
+
+void BaseApplication::removeControlMenu(void)
+{
+    mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("label1");
+    mTrayMgr->destroyWidget("label2");
+    mTrayMgr->destroyWidget("label3");
+    mTrayMgr->destroyWidget("controlToMain");
 }
 
 void BaseApplication::setupAccountMenu(void)
@@ -579,7 +619,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         //SAVE AND LOAD
         return false;
     }
-
     // Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
@@ -587,33 +626,28 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     {
         Mix_PauseMusic();
         Mix_Volume(-1, 0);
+        if(bgm)
+        {
+             Mix_ResumeMusic();
+        }
+        if(soundeffect)
+        {
+             Mix_Volume(-1, 110);
+        }
     }
     else if(mMusic)
     {
         Mix_ResumeMusic();
         Mix_Volume(-1, 110);
+        if(!bgm)
+        {
+             Mix_PauseMusic();
+        }
+        if(!soundeffect)
+        {
+             Mix_Volume(-1, 0);
+        }
     }
-    if(soundeffect)
-    {
-        if(mMusic)
-            Mix_Volume(-1, 110);
-    }
-    else if(!soundeffect)
-    {
-        if(mMusic) 
-            Mix_Volume(-1, 0);
-    }
-    if(!bgm)
-    {
-        if(mMusic)
-            Mix_PauseMusic();
-    }
-    else
-    {
-        if(mMusic)
-            Mix_ResumeMusic();
-    }
-
     if(mGameStart && !mInMenu)
     {
         if(player->levelFinished)
@@ -1047,6 +1081,30 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         setupSoundMenu();  
         return;
     }
+    else if(button->getName().compare("help") == 0 )
+    {  
+        removeMainMenu();
+        setupHelpMenu();  
+        return;
+    }
+    else if(button->getName().compare("helpToMain") == 0 )
+    {  
+        removeHelpMenu();
+        setupMainMenu();  
+        return;
+    }
+    else if(button->getName().compare("control") == 0 )
+    {  
+        removeHelpMenu();
+        setupControlMenu();  
+        return;
+    }
+    else if(button->getName().compare("controlToMain") == 0 )
+    {  
+        removeControlMenu();
+        setupMainMenu();  
+        return;
+    }
     else if(button->getName().compare("credit") == 0)
     {
         removeMainMenu(); 
@@ -1068,14 +1126,18 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     else if(button->getName().compare("on") == 0 )
     {
         removeSoundMenu();
-        mMusic = true;        
+        mMusic = true;
+        bgm = true;
+        soundeffect =true;        
         setupMainMenu();
         return;
     }
     else if(button->getName().compare("off") == 0 )
     {
         removeSoundMenu();   
-        mMusic = false;       
+        mMusic = false;
+        bgm = false;
+        soundeffect =false;       
         setupMainMenu();
         return;
     }
