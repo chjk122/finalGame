@@ -223,14 +223,22 @@ void BaseApplication::setupInfoMenu(void)
     mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", std::string("DAMAGE TILES\n") +
                                                           std::string("Poison: 2 Hp/Tile removed on Cure Tile\n")+
                                                           std::string("Lava: 5 Hp/Tile removed in water or wears off\n")+
-                                                          std::string("\n")+
-                                                          std::string("Esc key for pause the game or quit\n")+
-                                                          std::string("Space to respawn when dead"), 400);
+                                                          std::string("Spike: Deals 39 Hp\n")+
+                                                          std::string("SPECIAL TILES\n")+
+                                                          std::string("Ice: Slide on it\n")+
+                                                          std::string("Water: Drown when bubbles is 0\n")+
+                                                          std::string("Cure: Removes Poison\n")+
+                                                          std::string("Door: Needs a key to open\n")+
+                                                          std::string("Key: Gives one key\n"), 400);
     OgreBites::Label *will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label2", "S/Arrow down key for moving down", 400);
     will->hide();
     will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label3", "A/Arrow left key for moving left", 400);
     will->hide();
     will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label4", "A/Arrow left key for moving left", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label5", "A/Arrow left key for moving left", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label6", "A/Arrow left key for moving left", 400);
     will->hide();
     mTrayMgr->createButton(OgreBites::TL_CENTER, "back from info", "Back", 400);
 }
@@ -242,6 +250,8 @@ void BaseApplication::removeInfoMenu(void)
     mTrayMgr->destroyWidget("label2");
     mTrayMgr->destroyWidget("label3");
     mTrayMgr->destroyWidget("label4");
+    mTrayMgr->destroyWidget("label5");
+    mTrayMgr->destroyWidget("label6");
     mTrayMgr->destroyWidget("back from info");
 }
 
