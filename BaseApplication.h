@@ -123,6 +123,8 @@ protected:
     virtual void setupCreateAccountMenu(void);
     virtual void removeCreateAccountMenu(void);
     virtual void setupLevelMenu(void);
+    virtual void setupDeathMenu(void);
+    virtual void removeDeathMenu(void);
     virtual void removeLevelMenu(void);
     virtual void setupGUI(std::string name);
     virtual void removeGUI(void);

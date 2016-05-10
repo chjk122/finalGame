@@ -66,7 +66,7 @@ void Player::create(Ogre::Degree p, Ogre::Degree r, Ogre::Degree y)
     rootNode->setScale(length()/100.0, length()/100.0, length()/100.0);
     rootNode->attachObject(entity);
     // rootNode->setScale(.6, .6, .6);
-    entity->setMaterialName("Cube/Jinx"); 
+    entity->setMaterialName("Cube/Blend"); 
     rootNode->pitch(Ogre::Degree(p));
     rootNode->roll(Ogre::Degree(r));
     startPosition = position;
@@ -210,7 +210,6 @@ void Player::updateStatus()
     }
     else if(poison && burn >0)
     {
-        chunk = Mix_LoadWAV("Music/0/poison.wav");
         chunk2 = Mix_LoadWAV("Music/0/burn.wav");
         Mix_PlayChannel( -1, chunk, 0 );
         Mix_PlayChannel( -1, chunk2, 0 );
@@ -220,7 +219,6 @@ void Player::updateStatus()
     }
     else if(poison && oxygen<10)
     {
-        chunk = Mix_LoadWAV("Music/0/poison.wav");
         chunk2 = Mix_LoadWAV("Music/0/water.wav");
         Mix_PlayChannel( -1, chunk, 0 );
         Mix_PlayChannel( -1, chunk2, 0 );
@@ -238,8 +236,6 @@ void Player::updateStatus()
     }
     else if (poison)
     {
-        chunk = Mix_LoadWAV("Music/0/poison.wav");
-        Mix_PlayChannel( -1, chunk, 0 );
         mEntity->setMaterialName("Cube/Poison");
         damageTaken(poisonDamage());
     }
@@ -251,7 +247,7 @@ void Player::updateStatus()
         mEntity->setMaterialName(newMaterial);
     }
     else
-            mEntity->setMaterialName("Cube/Jinx");
+            mEntity->setMaterialName("Cube/Blend");
      burn -= 1;
 }
 
@@ -265,7 +261,7 @@ void Player::damageTaken(double damage)
     health -= damage;
     if(health <= 0)
     {
-        kill();
+        kill("");
     }
 }
 
@@ -274,7 +270,7 @@ void Player::oxygenLost(int amount)
     oxygen -= amount;
     if(oxygen <= 0)
     {
-        kill();
+        kill("");
     }
 }
 
@@ -284,14 +280,18 @@ void Player::breath()
         oxygen = 10;
 }
 
-void Player::kill()
+void Player::kill(std::string s)
 {
     Mix_Chunk* chunk;
     chunk = Mix_LoadWAV("Music/0/death.wav");
     Mix_PlayChannel( -1, chunk, 0 );
     health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    if(poison)   
+    if(s.compare("Cube/deathNormal")==0)
+    {
+        mEntity->setMaterialName(s); 
+    }
+    else if(poison)   
     {       
         mEntity->setMaterialName("Cube/DeathPoison");       
     }       
@@ -299,7 +299,7 @@ void Player::kill()
     {       
          mEntity->setMaterialName("Cube/DeathFire");        
     }       
-    else        
+    else if(oxygen<=0)      
     {       
         mEntity->setMaterialName("Cube/DeathDrown");        
     }
@@ -327,7 +327,7 @@ void Player::setBackPlayer(){
     playerX = startPlayerX;
     playerY = startPlayerY;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    mEntity->setMaterialName("Cube/Jinx");
+    mEntity->setMaterialName("Cube/Blend");
     endPos = position;
     inMotion = false;
 }

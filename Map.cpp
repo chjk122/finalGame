@@ -140,7 +140,10 @@ void Map::simulate(const Ogre::Real elapsedTime)
 	{
 		cubesters[x]->simulate(elapsedTime, player->rootNode->getPosition());
 		if(checkCollision(player->rootNode->getPosition(), cubesters[x]->getPosition()))
-			player->kill();
+		{
+			player->kill("Cube/deathNormal");
+		}
+			
 	}
 
 	// if(!isPlayerAlive())

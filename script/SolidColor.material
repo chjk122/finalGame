@@ -106,7 +106,7 @@ material Cube/Dragon
     {
        pass
        {
-        ambient .2 .2 .2
+        ambient 1 1 1
           texture_unit
           {
             texture teleport.jpg
@@ -3223,3 +3223,26 @@ material Cube/Jinx
     }
 }
 
+material Cube/deathNormal
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture fire.jpg
+        }
+        texture_unit
+        {
+             texture deathNormal.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture whiteOutline.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}

@@ -215,14 +215,22 @@ void BaseApplication::removeCreateAccountMenu(void)
 
 void BaseApplication::setupSoundMenu(void)
 {
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "Sound ON", 250);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "Sound OFF", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "All Sound ON", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "All Sound OFF", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm on", "Background Sound ON", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm off", "Background Sound OFF", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "effect on", "Sound Effect ON", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "effect off", "Sound Effect OFF", 250);
 }
 
 void BaseApplication::removeSoundMenu(void)
 {
     mTrayMgr->destroyWidget("on");
     mTrayMgr->destroyWidget("off");
+    mTrayMgr->destroyWidget("bgm on");
+    mTrayMgr->destroyWidget("bgm off");
+    mTrayMgr->destroyWidget("effect on");
+    mTrayMgr->destroyWidget("effect off");
 }
 
 void BaseApplication::setupDifficultyMenu(void)
@@ -291,6 +299,23 @@ void BaseApplication::removeGUI()
     mTrayMgr->destroyWidget("hpBar");
     mTrayMgr->destroyWidget("deaths");
     mTrayMgr->destroyWidget("time");
+}
+
+void BaseApplication::setupDeathMenu(void)
+{
+    removeGUI();
+    mInMenu = true;
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Surrender or Be Better? The Choice Is Yours.", 400);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "better", "Try To Get Better", 400);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "surrender", "Surrender To the Cubester", 400);
+}
+
+void BaseApplication::removeDeathMenu(void)
+{
+    mInMenu = false;
+    mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("better");
+    mTrayMgr->destroyWidget("surrender");
 }
 //---------------------------------------------------------------------------
 
@@ -539,6 +564,9 @@ bool disDown = false;
 bool sisDown = false;
 bool aisDown = false;
 bool levelLoaded = false;
+bool countDeath = false;
+bool soundeffect = true;
+bool bgm = true;
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
     if(mWindow->isClosed())
@@ -558,10 +586,32 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if(!mMusic)
     {
         Mix_PauseMusic();
+        Mix_Volume(-1, 0);
+    }
+    else if(mMusic)
+    {
+        Mix_ResumeMusic();
+        Mix_Volume(-1, 110);
+    }
+    if(soundeffect)
+    {
+        if(mMusic)
+            Mix_Volume(-1, 110);
+    }
+    else if(!soundeffect)
+    {
+        if(mMusic) 
+            Mix_Volume(-1, 0);
+    }
+    if(!bgm)
+    {
+        if(mMusic)
+            Mix_PauseMusic();
     }
     else
     {
-        Mix_ResumeMusic();
+        if(mMusic)
+            Mix_ResumeMusic();
     }
 
     if(mGameStart && !mInMenu)
@@ -603,16 +653,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
         else
         {
-            mDeathCounter += 1;
-            if(mDeathCounter == 1)
-            {
-                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " death");
-            }
-            else
-                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
-            gameMap->respawn();
+            setupDeathMenu();  
+            mTrayMgr->showCursor();
         }
-        gameMap->simulate(evt.timeSinceLastFrame);
+        gameMap->simulate(evt.timeSinceLastFrame);  
         // mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
     }
     else if (!mGameStart) //should be the loadinglevel
@@ -633,8 +677,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             gameMap->simulate(evt.timeSinceLastFrame);
         }
     }
-   
-
 
     mTrayMgr->frameRenderingQueued(evt);
 
@@ -663,6 +705,54 @@ string letterFromKey(int keyTyped)
         return "a";
     if(keyTyped == OIS::KC_B)
         return "b";
+    if(keyTyped == OIS::KC_C)
+        return "c";
+    if(keyTyped == OIS::KC_D)
+        return "d";
+    if(keyTyped == OIS::KC_E)
+        return "e";
+    if(keyTyped == OIS::KC_F)
+        return "f";
+    if(keyTyped == OIS::KC_G)
+        return "g";
+    if(keyTyped == OIS::KC_H)
+        return "h";
+    if(keyTyped == OIS::KC_I)
+        return "i";
+    if(keyTyped == OIS::KC_J)
+        return "j";
+    if(keyTyped == OIS::KC_K)
+        return "k";
+    if(keyTyped == OIS::KC_L)
+        return "l";
+    if(keyTyped == OIS::KC_M)
+        return "m";
+    if(keyTyped == OIS::KC_N)
+        return "n";
+    if(keyTyped == OIS::KC_O)
+        return "o";
+    if(keyTyped == OIS::KC_P)
+        return "p";
+    if(keyTyped == OIS::KC_Q)
+        return "q";
+    if(keyTyped == OIS::KC_R)
+        return "r";
+    if(keyTyped == OIS::KC_S)
+        return "s";
+    if(keyTyped == OIS::KC_T)
+        return "t";
+    if(keyTyped == OIS::KC_U)
+        return "u";
+    if(keyTyped == OIS::KC_V)
+        return "v";
+    if(keyTyped == OIS::KC_W)
+        return "w";
+    if(keyTyped == OIS::KC_X)
+        return "x";
+    if(keyTyped == OIS::KC_Y)
+        return "y";
+    if(keyTyped == OIS::KC_Z)
+        return "z";
     if(keyTyped == OIS::KC_BACK)
         return ".";
     return "";
@@ -803,7 +893,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(mInMenu)
         {
             removeLevelMenu();
-            setupGUI(gameMap->getName());
+            setupGUI("");
             mStopwatch->unpause();
         }
     }
@@ -977,20 +1067,47 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     }
     else if(button->getName().compare("on") == 0 )
     {
-        mTrayMgr->destroyWidget("on");       
-        mTrayMgr->destroyWidget("off");  
+        removeSoundMenu();
         mMusic = true;        
         setupMainMenu();
         return;
     }
     else if(button->getName().compare("off") == 0 )
     {
-        mTrayMgr->destroyWidget("on");       
-        mTrayMgr->destroyWidget("off");   
+        removeSoundMenu();   
         mMusic = false;       
         setupMainMenu();
         return;
     }
+    else if(button->getName().compare("bgm on") == 0 )
+    {
+        removeSoundMenu();
+        bgm = true;        
+        setupMainMenu();
+        return;
+    }
+    else if(button->getName().compare("bgm off") == 0 )
+    {
+        removeSoundMenu();   
+        bgm = false;       
+        setupMainMenu();
+        return;
+    }
+    else if(button->getName().compare("effect on") == 0 )
+    {
+        removeSoundMenu();
+        soundeffect = true;        
+        setupMainMenu();
+        return;
+    }
+    else if(button->getName().compare("effect off") == 0 )
+    {
+        removeSoundMenu();   
+        soundeffect = false;       
+        setupMainMenu();
+        return;
+    }
+
     for(int x = 1; x <= Level::numDifficulties(); x++)
     {
         // for clicking on the difficulty and loading the levels
@@ -1054,6 +1171,37 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         removeLevelMenu();
         setupGUI(gameMap->getName());
         mStopwatch->unpause();
+        return;
+    }
+    else if(button->getName().compare("surrender") == 0 )
+    {
+        removeDeathMenu();
+        deleteMap();
+        mGameStart = false;
+        setupMainMenu();
+        levelLoaded = false;
+        music = Mix_LoadMUS("Music/0/bgm2.mp3");
+        Mix_PlayMusic(music,-1);
+        mStopwatch->reset();
+        mDeathCounter = 0;
+        return;
+    }
+    else if(button->getName().compare("better") == 0 )
+    {
+        removeDeathMenu();
+        setupGUI(gameMap->getName());
+        gameMap->respawn();
+        mDeathCounter += 1;
+        if(mDeathCounter == 1)
+        {
+            mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " death");
+        }
+        else
+        {
+            mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
+        }
+        mTrayMgr->hideCursor();
+        printf("boosted chris\n");
         return;
     }
 

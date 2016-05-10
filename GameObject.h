@@ -87,7 +87,7 @@ public:
 	void damageTaken(double damage);
 	void oxygenLost(int amount);
 	void breath();
-	void kill();
+	void kill(std::string s);
 	bool isAlive();
 	void respawn();
 

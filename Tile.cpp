@@ -129,7 +129,7 @@ void SpikeTile::event(Player* p)
     Mix_PlayChannel( -1, chunk, 0 );
     if(p->health <=0)
     {
-        p->kill();
+        p->kill("");
     }
 }
 
@@ -163,6 +163,9 @@ PoisonTile::~PoisonTile()
 
 void PoisonTile::event(Player* p)
 {
+    Mix_Chunk* chunk;
+    chunk = Mix_LoadWAV("Music/0/poison.wav");
+    Mix_PlayChannel( -1, chunk, 0 );
     p->breath();
     p->poison = true;
 }
@@ -368,6 +371,9 @@ bool DoorTile::getIsWalkable(Player *p)
         return true;
     else if(p->hasKey()) 
     {
+        Mix_Chunk* chunk;
+        chunk = Mix_LoadWAV("Music/0/unlock.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
         unlocked = true;
         p->usedKey();
         ent->setMaterialName("Tile/DoorUnlocked");
@@ -401,6 +407,9 @@ void KeyTile::event(Player* p)
     p->breath();
     if(!takenKey)
     {
+        Mix_Chunk* chunk;
+        chunk = Mix_LoadWAV("Music/0/key.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
         p->gotKey();
         takenKey = true;
     }
@@ -429,6 +438,9 @@ void BloodKeyTile::event(Player* p)
     p->breath();
     if(!takenKey)
     {
+        Mix_Chunk* chunk;
+        chunk = Mix_LoadWAV("Music/0/key.wav");
+        Mix_PlayChannel( -1, chunk, 0 );
         p->gotKey();
         takenKey = true;
     }
