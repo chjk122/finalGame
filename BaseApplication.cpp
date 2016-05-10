@@ -56,7 +56,11 @@ BaseApplication::BaseApplication(void)
     mMusic(true),
     mDeathCounter(0),
     mStats(),
-    mStopwatch()
+    mStopwatch(),
+    mUsername(""),
+    mPassword(""),
+    mTypingUsername(false),
+    mTypingPassword(false)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -128,8 +132,9 @@ void BaseApplication::createCamera(void)
 //*-----------------------------------menu setup ------------------------------*//
 void BaseApplication::setupMainMenu(void)
 {
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Cubester's Path", 250);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Cubester's Maze", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "account", "Account Info", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "sound", "Sound Option", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "credit", "Credit Page", 250);
@@ -139,7 +144,9 @@ void BaseApplication::setupMainMenu(void)
 
 void BaseApplication::removeMainMenu(void)
 {
+
     mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("account");
     mTrayMgr->destroyWidget("start");       
     mTrayMgr->destroyWidget("sound");       
     mTrayMgr->destroyWidget("credit");
@@ -164,6 +171,46 @@ void BaseApplication::removeLevelMenu(void)
     mTrayMgr->destroyWidget("quit level");
     mTrayMgr->destroyWidget("resume level");
     mTrayMgr->hideCursor();
+}
+
+void BaseApplication::setupAccountMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "accoutLabel", "Account Info", 250);
+    mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "create", "New Account", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "login", "Log In", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "logout", "Log Out", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "backfromsetup", "Back", 250);
+    mTrayMgr->showCursor();
+}
+
+void BaseApplication::removeAccountMenu(void)
+{
+    mTrayMgr->destroyWidget("accoutLabel");
+    mTrayMgr->destroyWidget("create");
+    mTrayMgr->destroyWidget("login");
+    mTrayMgr->destroyWidget("logout");
+    mTrayMgr->destroyWidget("backfromsetup");
+}
+
+void BaseApplication::setupCreateAccountMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "createAccoutLabel", "Click Then Type", 250);
+    mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
+    mUsernameButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "create uname", "Enter Username", 250);
+    mPasswordButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "create pass", "Enter Password", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "confirm account", "Create Account", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back from create account", "Back", 250);
+    mTrayMgr->showCursor();
+}
+
+void BaseApplication::removeCreateAccountMenu(void)
+{
+    mTrayMgr->destroyWidget("createAccoutLabel");
+    mTrayMgr->destroyWidget("create uname");
+    mTrayMgr->destroyWidget("create pass");
+    mTrayMgr->destroyWidget("confirm account");
+    mTrayMgr->destroyWidget("back from create account");
 }
 
 void BaseApplication::setupSoundMenu(void)
@@ -471,11 +518,11 @@ void BaseApplication::calcNextLevel()
         mLevel = 1;
         mDifficulty++;
     }
-    if(mDifficulty == 5 && mLevel > 1) //num credit levels
-    {
-        mLevel = 1;
-        mDifficulty++;
-    }
+    // if(mDifficulty == 5 && mLevel > 1) //num credit levels
+    // {
+    //     mLevel = 1;
+    //     mDifficulty++;
+    // }
     if(mDifficulty > Level::numDifficulties())
     {
         //ran out of levels sad face
@@ -610,8 +657,47 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 }
 //---------------------------------------------------------------------------
 bool playingMusic = true;
+string letterFromKey(int keyTyped)
+{
+    if(keyTyped == OIS::KC_A)
+        return "a";
+    if(keyTyped == OIS::KC_B)
+        return "b";
+    if(keyTyped == OIS::KC_BACK)
+        return ".";
+    return "";
+}
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 {
+    if(mTypingUsername)
+    {
+        string newLetter = letterFromKey(arg.key);
+        if(newLetter == ".")
+        {
+            mUsername = mUsername.substr(0, mUsername.length() - 1);
+        }
+        else
+            mUsername += newLetter;
+        mUsernameButton->setCaption(mUsername);
+
+        return true;
+    }
+    if(mTypingPassword)
+    {
+        string newLetter = letterFromKey(arg.key);
+        if(newLetter == ".")
+        {
+            mPassword = mPassword.substr(0, mPassword.length() - 1);
+        }
+        else
+            mPassword += newLetter;
+        mPasswordButton->setCaption(mPassword);
+
+        return true;
+    }
+
+
+
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
 
     if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
@@ -805,6 +891,60 @@ bool BaseApplication::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButton
 }
 void BaseApplication::buttonHit(OgreBites::Button* button)
 {
+    //over kill for now
+    mTypingPassword = false;
+    mTypingUsername = false;
+
+    if(button->getName().compare("account") == 0)        
+    {
+        removeMainMenu();
+        setupAccountMenu();      
+        return;
+    }
+        if(button->getName().compare("create") == 0)
+        {
+            removeAccountMenu();
+            setupCreateAccountMenu();
+            return;
+        }
+            if(button->getName().compare("create uname") == 0)
+            {
+                mTypingUsername = true;
+                mUsername = "";
+                mUsernameButton->setCaption(mUsername);
+                return;
+            }
+            if(button->getName().compare("create pass") == 0)
+            {
+                mTypingPassword = true;
+                mPassword = "";
+                mPasswordButton->setCaption(mPassword);
+                return;
+            }
+            if(button->getName().compare("confirm account") == 0)
+            {
+                return;
+            }
+            if(button->getName().compare("back from create account") == 0)
+            {
+                removeCreateAccountMenu();
+                setupAccountMenu();
+                return;
+            }
+        if(button->getName().compare("login") == 0)
+        {
+            return;
+        }
+        if(button->getName().compare("logout") == 0)
+        {
+            return;
+        }
+        if(button->getName().compare("backfromsetup") == 0)
+        {
+            removeAccountMenu();
+            setupMainMenu();
+            return;
+        }
     if(button->getName().compare("start") == 0)        
     {
         removeMainMenu();

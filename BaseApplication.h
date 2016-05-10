@@ -118,6 +118,10 @@ protected:
     virtual void windowClosed(Ogre::RenderWindow* rw);
     virtual void setupMainMenu(void);
     virtual void removeMainMenu(void);
+    virtual void setupAccountMenu(void);
+    virtual void removeAccountMenu(void);
+    virtual void setupCreateAccountMenu(void);
+    virtual void removeCreateAccountMenu(void);
     virtual void setupLevelMenu(void);
     virtual void removeLevelMenu(void);
     virtual void setupGUI(std::string name);
@@ -176,6 +180,13 @@ protected:
     int                         mLevel;
     bool                        mGameStart;
     bool                        mInMenu;
+
+    OgreBites::Button*          mUsernameButton;
+    OgreBites::Button*          mPasswordButton;
+    std::string                 mUsername;
+    std::string                 mPassword;
+    bool                        mTypingUsername;
+    bool                        mTypingPassword;
 
 
     // Added for Mac compatibility

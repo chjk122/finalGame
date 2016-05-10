@@ -30,7 +30,7 @@ public:
         else if(diff == 2) {return 6;} // medium
         else if(diff == 3) {return 5;} // hard
         else if(diff == 4) {return 5;} // extreme
-        else if(diff == 5) {return 2;} // credit
+        else if(diff == 5) {return 1;} // credit
     }
     static string difficultyName(int diff)
     {
@@ -40,7 +40,7 @@ public:
         else if(diff == 4) {return "extreme";}
         else if(diff == 5) {return "credit";}
     }
-    static int numDifficulties() { return 4;}
+    static int numDifficulties() { return 5;}
 
     static vector<string> getLoadingLevelT()
     {
@@ -995,72 +995,12 @@ private:
         return cubesters;
     }
 
-
     static string getCreditL1N()
-    {
-        return "Credits";
-    }
-
-    static vector<string> getCreditL1T()
-    {
-        vector<string> tile;
-        tile.push_back("7xxxxxxxxxxxxxxxxxxx");
-        tile.push_back("xs  CREDIT  PAGE   x");
-        tile.push_back("x   CHRISTOPHER J  x");
-        tile.push_back("x      KOMPLIN     x");
-        tile.push_back("x  PROJECT OUTLINE x");
-        tile.push_back("x   LEVEL DESIGN   x");
-        tile.push_back("x    ENEMY CODE    x");
-        tile.push_back("x    PLAYER CODE   x");
-        tile.push_back("x TEXTURE BLENDING x");
-        tile.push_back("x    GUI SETUP     x");//10
-        tile.push_back("x iiiiiiiiiiiiiiii x");
-        tile.push_back("8     YU ZHONG     x");
-        tile.push_back("x  CAMERA   MUSIC  x");
-        tile.push_back("x   PLAYER  CODE   x");
-        tile.push_back("x    TILE  CODE    x");
-        tile.push_back("x   LEVEL DESIGN   x");
-        tile.push_back("x TEXTURE BLENDING x");
-        tile.push_back("x    GUI  SETUP    x");
-        tile.push_back("x iiiiiiiiiiiiiiii x");
-        tile.push_back("9 RAKAN           fx");
-
-    
-        return tile;
-    }
-
-    static vector<string> getCreditL1C()
-    {
-        vector<string> cubesters;
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        cubesters.push_back("xxxxxxxxxxxxxxxxxxxx");
-        return cubesters;
-    }
-
-    static string getCreditL2N()
     {
         return "Enjoy The Credit Page";
     }
 
-    static vector<string> getCreditL2T()
+    static vector<string> getCreditL1T()
     {
         vector<string> tile;
         tile.push_back("7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -1105,7 +1045,7 @@ private:
         tile.push_back("9xxxxxxxxxxRAKAN ONE CUBESTERfxxxxxxxxxx");
         return tile;
     }
-    static vector<string> getCreditL2C()
+    static vector<string> getCreditL1C()
     {
         vector<string> cubesters;
         cubesters.push_back("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
