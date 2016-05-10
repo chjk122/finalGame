@@ -135,6 +135,7 @@ void BaseApplication::setupMainMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Cubester's Maze", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Main Menu", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "account", "Account Info", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "help", "Help", 250);
@@ -146,7 +147,7 @@ void BaseApplication::setupMainMenu(void)
 
 void BaseApplication::removeMainMenu(void)
 {
-
+    mTrayMgr->destroyWidget("label");
     mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("account");
     mTrayMgr->destroyWidget("start");
@@ -331,22 +332,26 @@ void BaseApplication::removeLoginMenu(void)
 
 void BaseApplication::setupSoundMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Sound Option", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "All Sound ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "All Sound OFF", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm on", "Background Sound ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm off", "Background Sound OFF", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "effect on", "Sound Effect ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "effect off", "Sound Effect OFF", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "sound to main", "Back To Main Menu", 250);
 }
 
 void BaseApplication::removeSoundMenu(void)
 {
+    mTrayMgr->destroyWidget("label");
     mTrayMgr->destroyWidget("on");
     mTrayMgr->destroyWidget("off");
     mTrayMgr->destroyWidget("bgm on");
     mTrayMgr->destroyWidget("bgm off");
     mTrayMgr->destroyWidget("effect on");
     mTrayMgr->destroyWidget("effect off");
+    mTrayMgr->destroyWidget("sound to main");
 }
 
 void BaseApplication::setupDifficultyMenu(void)
@@ -1346,51 +1351,44 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     }
     else if(button->getName().compare("on") == 0 )
     {
-        removeSoundMenu();
         mMusic = true;
         bgm = true;
         soundeffect =true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         mMusic = false;
         bgm = false;
         soundeffect =false;       
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("bgm on") == 0 )
     {
-        removeSoundMenu();
         bgm = true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("bgm off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         bgm = false;       
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("effect on") == 0 )
     {
-        removeSoundMenu();
         soundeffect = true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("effect off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         soundeffect = false;       
+        return;
+    }
+    else if(button->getName().compare("sound to main") == 0 )
+    {
+        removeSoundMenu();         
         setupMainMenu();
         return;
     }
-
     for(int x = 1; x <= Level::numDifficulties(); x++)
     {
         // for clicking on the difficulty and loading the levels
