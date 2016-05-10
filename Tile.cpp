@@ -129,7 +129,7 @@ void SpikeTile::event(Player* p)
     Mix_PlayChannel( -1, chunk, 0 );
     if(p->health <=0)
     {
-        p->kill("");
+        p->kill("Cube/deathSpike");
     }
 }
 
