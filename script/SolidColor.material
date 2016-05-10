@@ -1244,11 +1244,11 @@ material Cube/DeathFire
       {
         texture_unit
         {
-          texture fire.jpg
+          texture fire3.jpg
         }
         texture_unit
         {
-             texture death.png            
+             texture deathNormal.png            
              colour_op alpha_blend
         }
         texture_unit
@@ -1271,12 +1271,12 @@ material Cube/DeathPoison
         }
         texture_unit
         {
-             texture death.png            
+             texture deathNormal.png            
              colour_op alpha_blend
         }
         texture_unit
         {
-             texture black.png
+             texture whiteOutline.png
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -1294,12 +1294,12 @@ material Cube/DeathDrown
         }
         texture_unit
         {
-             texture death.png            
+             texture deathNormal.png            
              colour_op alpha_blend
         }
         texture_unit
         {
-             texture black.png
+             texture whiteOutline.png
              colour_op_ex blend_current_alpha src_texture src_current
         }
       }
@@ -3232,6 +3232,30 @@ material Cube/deathNormal
         texture_unit
         {
           texture fire.jpg
+        }
+        texture_unit
+        {
+             texture deathNormal.png            
+             colour_op alpha_blend
+        }
+        texture_unit
+        {
+             texture whiteOutline.png
+             colour_op_ex blend_current_alpha src_texture src_current
+        }
+      }
+    }
+}
+
+material Cube/deathSpike
+{
+    technique
+    {
+      pass
+      {
+        texture_unit
+        {
+          texture gray.png
         }
         texture_unit
         {

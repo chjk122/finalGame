@@ -287,9 +287,13 @@ void Player::kill(std::string s)
     Mix_PlayChannel( -1, chunk, 0 );
     health = 0;
     Ogre::Entity* mEntity = static_cast<Ogre::Entity*>(rootNode->getAttachedObject(0));
-    if(s.compare("Cube/deathNormal")==0)
+    if(s.compare("Cube/deathNormal") == 0)
     {
         mEntity->setMaterialName(s); 
+    }
+    else if(s.compare("Cube/deathSpike") == 0)
+    {
+         mEntity->setMaterialName(s); 
     }
     else if(poison)   
     {       

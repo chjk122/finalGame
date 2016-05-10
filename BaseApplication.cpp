@@ -135,6 +135,7 @@ void BaseApplication::setupMainMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Cubester's Maze", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_TOP, 0);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Main Menu", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "account", "Account Info", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "start", "Start Game", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "help", "Help", 250);
@@ -146,7 +147,7 @@ void BaseApplication::setupMainMenu(void)
 
 void BaseApplication::removeMainMenu(void)
 {
-
+    mTrayMgr->destroyWidget("label");
     mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("account");
     mTrayMgr->destroyWidget("start");
@@ -223,14 +224,22 @@ void BaseApplication::setupInfoMenu(void)
     mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", std::string("DAMAGE TILES\n") +
                                                           std::string("Poison: 2 Hp/Tile removed on Cure Tile\n")+
                                                           std::string("Lava: 5 Hp/Tile removed in water or wears off\n")+
-                                                          std::string("\n")+
-                                                          std::string("Esc key for pause the game or quit\n")+
-                                                          std::string("Space to respawn when dead"), 400);
+                                                          std::string("Spike: Deals 39 Hp\n")+
+                                                          std::string("SPECIAL TILES\n")+
+                                                          std::string("Ice: Slide on it\n")+
+                                                          std::string("Water: Drown when bubbles is 0\n")+
+                                                          std::string("Cure: Removes Poison\n")+
+                                                          std::string("Door: Needs a key to open\n")+
+                                                          std::string("Key: Gives one key\n"), 400);
     OgreBites::Label *will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label2", "S/Arrow down key for moving down", 400);
     will->hide();
     will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label3", "A/Arrow left key for moving left", 400);
     will->hide();
     will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label4", "A/Arrow left key for moving left", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label5", "A/Arrow left key for moving left", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label6", "A/Arrow left key for moving left", 400);
     will->hide();
     mTrayMgr->createButton(OgreBites::TL_CENTER, "back from info", "Back", 400);
 }
@@ -242,6 +251,8 @@ void BaseApplication::removeInfoMenu(void)
     mTrayMgr->destroyWidget("label2");
     mTrayMgr->destroyWidget("label3");
     mTrayMgr->destroyWidget("label4");
+    mTrayMgr->destroyWidget("label5");
+    mTrayMgr->destroyWidget("label6");
     mTrayMgr->destroyWidget("back from info");
 }
 
@@ -321,22 +332,26 @@ void BaseApplication::removeLoginMenu(void)
 
 void BaseApplication::setupSoundMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Sound Option", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "All Sound ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "All Sound OFF", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm on", "Background Sound ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "bgm off", "Background Sound OFF", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "effect on", "Sound Effect ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "effect off", "Sound Effect OFF", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "sound to main", "Back To Main Menu", 250);
 }
 
 void BaseApplication::removeSoundMenu(void)
 {
+    mTrayMgr->destroyWidget("label");
     mTrayMgr->destroyWidget("on");
     mTrayMgr->destroyWidget("off");
     mTrayMgr->destroyWidget("bgm on");
     mTrayMgr->destroyWidget("bgm off");
     mTrayMgr->destroyWidget("effect on");
     mTrayMgr->destroyWidget("effect off");
+    mTrayMgr->destroyWidget("sound to main");
 }
 
 void BaseApplication::setupDifficultyMenu(void)
@@ -411,9 +426,9 @@ void BaseApplication::setupDeathMenu(void)
 {
     removeGUI();
     mInMenu = true;
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Surrender or Be Better? The Choice Is Yours.", 400);
-    mTrayMgr->createButton(OgreBites::TL_TOP, "better", "Try To Get Better", 400);
-    mTrayMgr->createButton(OgreBites::TL_TOP, "surrender", "Surrender To the Cubester", 400);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "You Died (Sapce to respawn)", 320);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "better", "Retry", 320);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "surrender", "Quit Level", 320);
 }
 
 void BaseApplication::removeDeathMenu(void)
@@ -1336,51 +1351,44 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     }
     else if(button->getName().compare("on") == 0 )
     {
-        removeSoundMenu();
         mMusic = true;
         bgm = true;
         soundeffect =true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         mMusic = false;
         bgm = false;
         soundeffect =false;       
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("bgm on") == 0 )
     {
-        removeSoundMenu();
         bgm = true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("bgm off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         bgm = false;       
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("effect on") == 0 )
     {
-        removeSoundMenu();
         soundeffect = true;        
-        setupMainMenu();
         return;
     }
     else if(button->getName().compare("effect off") == 0 )
-    {
-        removeSoundMenu();   
+    {  
         soundeffect = false;       
+        return;
+    }
+    else if(button->getName().compare("sound to main") == 0 )
+    {
+        removeSoundMenu();         
         setupMainMenu();
         return;
     }
-
     for(int x = 1; x <= Level::numDifficulties(); x++)
     {
         // for clicking on the difficulty and loading the levels
