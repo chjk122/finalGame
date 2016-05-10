@@ -122,6 +122,8 @@ protected:
     virtual void removeAccountMenu(void);
     virtual void setupCreateAccountMenu(void);
     virtual void removeCreateAccountMenu(void);
+    virtual void setupLoginMenu(void);
+    virtual void removeLoginMenu(void);
     virtual void setupLevelMenu(void);
     virtual void setupDeathMenu(void);
     virtual void removeDeathMenu(void);
@@ -189,6 +191,7 @@ protected:
     std::string                 mPassword;
     bool                        mTypingUsername;
     bool                        mTypingPassword;
+    bool                        mCanRespawn;
 
 
     // Added for Mac compatibility

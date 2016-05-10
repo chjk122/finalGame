@@ -60,7 +60,8 @@ BaseApplication::BaseApplication(void)
     mUsername(""),
     mPassword(""),
     mTypingUsername(false),
-    mTypingPassword(false)
+    mTypingPassword(false),
+    mCanRespawn(false)
 {
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
     m_ResourcePath = Ogre::macBundlePath() + "/Contents/Resources/";
@@ -176,10 +177,24 @@ void BaseApplication::removeLevelMenu(void)
 void BaseApplication::setupAccountMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "accoutLabel", "Account Info", 250);
+    if(mUsername != "")
+        mMenuLabel->setCaption("Hello " + mUsername);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "create", "New Account", 250);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "login", "Log In", 250);
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "logout", "Log Out", 250);
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "create", "New Account", 250);
+    if(mUsername != "")
+    {
+        mButtonBack->hide();
+    }
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "login", "Log In", 250);
+    if(mUsername != "")
+    {
+        mButtonBack->hide();
+    }
+    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "logout", "Log Out", 250);
+    if(mUsername == "")
+    {
+        mButtonBack->hide();
+    }
     mTrayMgr->createButton(OgreBites::TL_CENTER, "backfromsetup", "Back", 250);
     mTrayMgr->showCursor();
 }
@@ -213,6 +228,26 @@ void BaseApplication::removeCreateAccountMenu(void)
     mTrayMgr->destroyWidget("back from create account");
 }
 
+void BaseApplication::setupLoginMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "loginLabel", "Click Then Type", 250);
+    mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
+    mUsernameButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "login uname", "Enter Username", 250);
+    mPasswordButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "login pass", "Enter Password", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "login to account", "Login", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back from login", "Back", 250);
+    mTrayMgr->showCursor();
+}
+
+void BaseApplication::removeLoginMenu(void)
+{
+    mTrayMgr->destroyWidget("loginLabel");
+    mTrayMgr->destroyWidget("login uname");
+    mTrayMgr->destroyWidget("login pass");
+    mTrayMgr->destroyWidget("login to account");
+    mTrayMgr->destroyWidget("back from login");
+}
+
 void BaseApplication::setupSoundMenu(void)
 {
     mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "All Sound ON", 250);
@@ -240,7 +275,7 @@ void BaseApplication::setupDifficultyMenu(void)
     mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "hard", "Hard level", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "extreme", "Extreme level", 250);
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back to main menu", "Back to Main Menu", 250);
 }
 
 void BaseApplication::removeDifficultyMenu(void)
@@ -260,7 +295,7 @@ void BaseApplication::setupLevelSelect(int diff)
     {
         mTrayMgr->createButton(OgreBites::TL_CENTER, Level::difficultyName(diff) + " " + patch::to_string(x), Level::getName(diff,x), 250);
     }
-    mButtonBack = mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty " + Level::difficultyName(diff), "Back to Select Difficulty", 250);
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back to select difficulty " + Level::difficultyName(diff), "Back to Select Difficulty", 250);
 }
 
 void BaseApplication::removeLevelSelect(int diff)
@@ -576,7 +611,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     if(mShutDown)
     {
-        //SAVE AND LOAD
+        if(mStats->isLoggedIn())
+        {
+            mStats->save();
+        }
         return false;
     }
 
@@ -618,6 +656,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     {
         if(player->levelFinished)
         {
+            if(mStats->isLoggedIn())
+            {
+                mStats->update(mDifficulty, mLevel, mDeathCounter, mStopwatch->elapsedTime(), true);
+            }
             calcNextLevel();
             deleteMap();
             createObjects();
@@ -655,6 +697,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             setupDeathMenu();  
             mTrayMgr->showCursor();
+            mCanRespawn = true;
         }
         gameMap->simulate(evt.timeSinceLastFrame);  
         // mSimulator->stepSimulation(evt.timeSinceLastFrame, music2);
@@ -753,6 +796,26 @@ string letterFromKey(int keyTyped)
         return "y";
     if(keyTyped == OIS::KC_Z)
         return "z";
+    if(keyTyped == OIS::KC_0)
+        return "0";
+    if(keyTyped == OIS::KC_1)
+        return "1";
+    if(keyTyped == OIS::KC_2)
+        return "2";
+    if(keyTyped == OIS::KC_3)
+        return "3";
+    if(keyTyped == OIS::KC_4)
+        return "4";
+    if(keyTyped == OIS::KC_5)
+        return "5";
+    if(keyTyped == OIS::KC_6)
+        return "6";
+    if(keyTyped == OIS::KC_7)
+        return "7";
+    if(keyTyped == OIS::KC_8)
+        return "8";
+    if(keyTyped == OIS::KC_9)
+        return "9";
     if(keyTyped == OIS::KC_BACK)
         return ".";
     return "";
@@ -841,7 +904,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         Ogre::MaterialManager::getSingleton().setDefaultAnisotropy(aniso);
         mDetailsPanel->setParamValue(9, newVal);
     }
-    else if(arg.key == OIS::KC_SPACE)
+    else if(arg.key == OIS::KC_END)
     {
         mShutDown = true;
     }
@@ -849,7 +912,26 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
 
     }
-
+    else if(arg.key == OIS::KC_SPACE)
+    {
+        if(mCanRespawn)
+        {
+            mCanRespawn = false;
+            removeDeathMenu();
+            setupGUI(gameMap->getName());
+            gameMap->respawn();
+            mDeathCounter += 1;
+            if(mDeathCounter == 1)
+            {
+                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " death");
+            }
+            else
+            {
+                mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
+            }
+            mTrayMgr->hideCursor();
+        }
+    }
     else if (arg.key == OIS::KC_R)   // cycle polygon rendering mode
     {
         Ogre::String newVal;
@@ -1013,20 +1095,102 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             }
             if(button->getName().compare("confirm account") == 0)
             {
+                if(mUsername == "")
+                {
+                    mMenuLabel->setCaption("Please Enter a Username");
+                    return;
+                }
+                if(mPassword == "")
+                {
+                    mMenuLabel->setCaption("Please Enter a Password");
+                    return;
+                }
+                if(mStats->createAccount(mUsername, mPassword))
+                {
+                    mStats->save();
+                    removeCreateAccountMenu();
+                    setupMainMenu();
+                }   
+                else
+                {
+                    mMenuLabel->setCaption("Username is Taken :(");
+                }
+
                 return;
             }
             if(button->getName().compare("back from create account") == 0)
             {
+                if(!mStats->isLoggedIn())
+                {
+                    mUsername = "";
+                    mPassword = "";
+                }
                 removeCreateAccountMenu();
                 setupAccountMenu();
                 return;
             }
         if(button->getName().compare("login") == 0)
         {
+            removeAccountMenu();
+            setupLoginMenu();
             return;
         }
+            if(button->getName().compare("login uname") == 0)
+            {
+                mTypingUsername = true;
+                mUsername = "";
+                mUsernameButton->setCaption(mUsername);
+                return;
+            }
+            if(button->getName().compare("login pass") == 0)
+            {
+                mTypingPassword = true;
+                mPassword = "";
+                mPasswordButton->setCaption(mPassword);
+                return;
+            }
+            if(button->getName().compare("login to account") == 0)
+            {
+                if(mUsername == "")
+                {
+                    mMenuLabel->setCaption("Please Enter a Username");
+                    return;
+                }
+                if(mPassword == "")
+                {
+                    mMenuLabel->setCaption("Please Enter a Password");
+                    return;
+                }
+                if(mStats->login(mUsername, mPassword))
+                {
+                    removeLoginMenu();
+                    setupMainMenu();
+                }   
+                else
+                {
+                    mMenuLabel->setCaption("Failed to Log in :(");
+                }
+
+                return;
+            }
+            if(button->getName().compare("back from login") == 0)
+            {
+                if(!mStats->isLoggedIn())
+                {
+                    mUsername = "";
+                    mPassword = "";
+                }
+                removeLoginMenu();
+                setupAccountMenu();
+                return;
+            }
         if(button->getName().compare("logout") == 0)
         {
+            mStats->logout();
+            mUsername = "";
+            mPassword = "";
+            removeAccountMenu();
+            setupAccountMenu();
             return;
         }
         if(button->getName().compare("backfromsetup") == 0)
@@ -1062,7 +1226,11 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
     }
     else if(button->getName().compare("quit") == 0)
     {
-        removeMainMenu(); 
+        removeMainMenu();
+        if(mStats->isLoggedIn())
+        {
+            mStats->save();
+        }
         mShutDown = true;
     }
     else if(button->getName().compare("on") == 0 )
@@ -1161,9 +1329,12 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         levelLoaded = false;
         music = Mix_LoadMUS("Music/0/bgm2.mp3");
         Mix_PlayMusic(music,-1);
+        if(mStats->isLoggedIn())
+        {
+            mStats->update(mDifficulty, mLevel, mDeathCounter, mStopwatch->elapsedTime(), false);
+        }
         mStopwatch->reset();
         mDeathCounter = 0;
-        //SAVE AND LOAD
         return;
     }
     else if(button->getName().compare("resume level") == 0 )
@@ -1182,12 +1353,18 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         levelLoaded = false;
         music = Mix_LoadMUS("Music/0/bgm2.mp3");
         Mix_PlayMusic(music,-1);
+        if(mStats->isLoggedIn())
+        {
+            mStats->update(mDifficulty, mLevel, mDeathCounter+1, mStopwatch->elapsedTime(), false);
+        }
         mStopwatch->reset();
         mDeathCounter = 0;
+        //SAVE AND LOAD
         return;
     }
     else if(button->getName().compare("better") == 0 )
     {
+        mCanRespawn = false;
         removeDeathMenu();
         setupGUI(gameMap->getName());
         gameMap->respawn();
@@ -1201,7 +1378,6 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
             mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
         }
         mTrayMgr->hideCursor();
-        printf("boosted chris\n");
         return;
     }
 
