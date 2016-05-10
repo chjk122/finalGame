@@ -421,9 +421,9 @@ void BaseApplication::setupDeathMenu(void)
 {
     removeGUI();
     mInMenu = true;
-    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Surrender or Be Better? The Choice Is Yours.", 400);
-    mTrayMgr->createButton(OgreBites::TL_TOP, "better", "Try To Get Better", 400);
-    mTrayMgr->createButton(OgreBites::TL_TOP, "surrender", "Surrender To the Cubester", 400);
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "You Died (Sapce to respawn)", 320);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "better", "Retry", 320);
+    mTrayMgr->createButton(OgreBites::TL_TOP, "surrender", "Quit Level", 320);
 }
 
 void BaseApplication::removeDeathMenu(void)
