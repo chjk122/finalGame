@@ -459,7 +459,10 @@ CubesterChase::CubesterChase(Ogre::SceneManager* sceneMgr, Ogre::Vector3 pos, in
     mgr = sceneMgr;
     position = pos;
     endPos = position;
-    pathLength = distance; 
+    pathLength = distance;
+    if(distance == 0){
+        pathLength = 1000;
+    } 
 
 }
 CubesterChase::~CubesterChase(){}

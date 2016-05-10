@@ -112,6 +112,11 @@ void Level::setMaps(int levelCat, int levelN)
 			cubesterMap = getMediumL6C();
 			name        = getMediumL6N();
 		}
+		else if(levelN == 7){
+			tileMap     = getMediumL7T();
+			cubesterMap = getMediumL7C();
+			name        = getMediumL7N();
+		}
 	}
 	else if(levelCat == 3)
 	{
@@ -162,22 +167,29 @@ void Level::setMaps(int levelCat, int levelN)
 		}
 		else if(levelN == 3)
 		{
+			tileMap     = getExtremeL3T();
+			cubesterMap = getExtremeL3C();
+			name        = getExtremeL3N();
+		}
+		else if(levelN == 4)
+		{
 			tileMap     = getExtremeL4T();
 			cubesterMap = getExtremeL4C();
 			name        = getExtremeL4N();
 		}
-		else if(levelN == 4)
+		else if(levelN == 5)
 		{
 			tileMap     = getExtremeL5T();
 			cubesterMap = getExtremeL5C();
 			name        = getExtremeL5N();
 		}
-		else if(levelN == 5)
+		else if(levelN == 6)
 		{
 			tileMap     = getExtremeL6T();
 			cubesterMap = getExtremeL6C();
 			name        = getExtremeL6N();
 		}
+		
 	}
 	else if(levelCat == 5)
 	{
