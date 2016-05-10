@@ -27,7 +27,7 @@ void Stats::logout()
 {
 	if(!loggedIn)
 		return; //nothing to logout of
-	save(false, true); // save the old player stats
+	save(true, true); // save the old player stats
 	player = PlayerStats(); //be ready for new player
 	loggedIn = false;
 }
@@ -44,7 +44,7 @@ void Stats::update(int diff, int lvl, int timesDied, unsigned long timeTaken, bo
 }
 bool Stats::save(bool saveLB, bool savePlayer)
 {
-	if(saveLB && loggedIn)
+	if(saveLB)
 		lb.save();
 	if(savePlayer && loggedIn)
 		player.save();

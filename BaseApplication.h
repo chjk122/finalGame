@@ -124,6 +124,8 @@ protected:
     virtual void removeHelpMenu(void);
     virtual void setupControlMenu(void);
     virtual void removeControlMenu(void);
+    virtual void setupInfoMenu(void);
+    virtual void removeInfoMenu(void);
     virtual void setupCreateAccountMenu(void);
     virtual void removeCreateAccountMenu(void);
     virtual void setupLoginMenu(void);

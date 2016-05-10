@@ -197,12 +197,14 @@ void BaseApplication::removeHelpMenu(void)
 void BaseApplication::setupControlMenu(void)
 {
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
-    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", "W/Arrow up key for moving up\n S/Arrow down key for moving down\n A/Arrow left key for moving left\n D/Arrow right key for moving right\n Esc key for pause the game or quit", 400);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", "W/Arrow up key for moving up\nS/Arrow down key for moving down\nA/Arrow left key for moving left\nD/Arrow right key for moving right\nEsc key for pause the game or quit\nSpace to respawn when dead", 400);
     OgreBites::Label *will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label2", "S/Arrow down key for moving down", 400);
     will->hide();
     will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label3", "A/Arrow left key for moving left", 400);
     will->hide();
-    mTrayMgr->createButton(OgreBites::TL_CENTER, "controlToMain", "Back To Main Menu", 400);
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label4", "A/Arrow left key for moving left", 400);
+    will->hide();
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back from control", "Back", 400);
 }
 
 void BaseApplication::removeControlMenu(void)
@@ -211,7 +213,36 @@ void BaseApplication::removeControlMenu(void)
     mTrayMgr->destroyWidget("label1");
     mTrayMgr->destroyWidget("label2");
     mTrayMgr->destroyWidget("label3");
-    mTrayMgr->destroyWidget("controlToMain");
+    mTrayMgr->destroyWidget("label4");
+    mTrayMgr->destroyWidget("back from control");
+}
+
+void BaseApplication::setupInfoMenu(void)
+{
+    mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
+    mTrayMgr->createLabel(OgreBites::TL_CENTER, "label1", std::string("DAMAGE TILES\n") +
+                                                          std::string("Poison: 2 Hp/Tile removed on Cure Tile\n")+
+                                                          std::string("Lava: 5 Hp/Tile removed in water or wears off\n")+
+                                                          std::string("\n")+
+                                                          std::string("Esc key for pause the game or quit\n")+
+                                                          std::string("Space to respawn when dead"), 400);
+    OgreBites::Label *will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label2", "S/Arrow down key for moving down", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label3", "A/Arrow left key for moving left", 400);
+    will->hide();
+    will = mTrayMgr->createLabel(OgreBites::TL_CENTER, "label4", "A/Arrow left key for moving left", 400);
+    will->hide();
+    mTrayMgr->createButton(OgreBites::TL_CENTER, "back from info", "Back", 400);
+}
+
+void BaseApplication::removeInfoMenu(void)
+{
+    mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("label1");
+    mTrayMgr->destroyWidget("label2");
+    mTrayMgr->destroyWidget("label3");
+    mTrayMgr->destroyWidget("label4");
+    mTrayMgr->destroyWidget("back from info");
 }
 
 void BaseApplication::setupAccountMenu(void)
@@ -1251,24 +1282,36 @@ void BaseApplication::buttonHit(OgreBites::Button* button)
         setupHelpMenu();  
         return;
     }
-    else if(button->getName().compare("helpToMain") == 0 )
-    {  
-        removeHelpMenu();
-        setupMainMenu();  
-        return;
-    }
-    else if(button->getName().compare("control") == 0 )
-    {  
-        removeHelpMenu();
-        setupControlMenu();  
-        return;
-    }
-    else if(button->getName().compare("controlToMain") == 0 )
-    {  
-        removeControlMenu();
-        setupMainMenu();  
-        return;
-    }
+        else if(button->getName().compare("helpToMain") == 0 )
+        {  
+            removeHelpMenu();
+            setupMainMenu();  
+            return;
+        }
+        else if(button->getName().compare("control") == 0 )
+        {  
+            removeHelpMenu();
+            setupControlMenu();  
+            return;
+        }
+            else if(button->getName().compare("back from control") == 0 )
+            {  
+                removeControlMenu();
+                setupHelpMenu();  
+                return;
+            }
+        else if(button->getName().compare("info") == 0)
+        {
+            removeHelpMenu();
+            setupInfoMenu();
+            return;
+        }
+            else if(button->getName().compare("back from info") == 0 )
+            {  
+                removeInfoMenu();
+                setupHelpMenu();  
+                return;
+            }
     else if(button->getName().compare("credit") == 0)
     {
         removeMainMenu(); 
