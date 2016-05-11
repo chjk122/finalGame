@@ -258,6 +258,7 @@ void BaseApplication::removeInfoMenu(void)
 
 void BaseApplication::setupAccountMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "accoutLabel", "Account Info", 250);
     if(mUsername != "")
         mMenuLabel->setCaption("Hello " + mUsername);
@@ -283,6 +284,7 @@ void BaseApplication::setupAccountMenu(void)
 
 void BaseApplication::removeAccountMenu(void)
 {
+    mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("accoutLabel");
     mTrayMgr->destroyWidget("create");
     mTrayMgr->destroyWidget("login");
@@ -292,6 +294,7 @@ void BaseApplication::removeAccountMenu(void)
 
 void BaseApplication::setupCreateAccountMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "createAccoutLabel", "Click Then Type", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
     mUsernameButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "create uname", "Enter Username", 250);
@@ -303,6 +306,7 @@ void BaseApplication::setupCreateAccountMenu(void)
 
 void BaseApplication::removeCreateAccountMenu(void)
 {
+    mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("createAccoutLabel");
     mTrayMgr->destroyWidget("create uname");
     mTrayMgr->destroyWidget("create pass");
@@ -312,6 +316,7 @@ void BaseApplication::removeCreateAccountMenu(void)
 
 void BaseApplication::setupLoginMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "loginLabel", "Click Then Type", 250);
     mTrayMgr->moveWidgetToTray(mMenuLabel, OgreBites::TL_CENTER, 0);
     mUsernameButton = mTrayMgr->createButton(OgreBites::TL_CENTER, "login uname", "Enter Username", 250);
@@ -323,6 +328,7 @@ void BaseApplication::setupLoginMenu(void)
 
 void BaseApplication::removeLoginMenu(void)
 {
+    mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("loginLabel");
     mTrayMgr->destroyWidget("login uname");
     mTrayMgr->destroyWidget("login pass");
@@ -332,6 +338,7 @@ void BaseApplication::removeLoginMenu(void)
 
 void BaseApplication::setupSoundMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel", "Cubester's Maze", 250);
     mTrayMgr->createLabel(OgreBites::TL_CENTER, "label", "Sound Option", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "on", "All Sound ON", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "off", "All Sound OFF", 250);
@@ -344,6 +351,7 @@ void BaseApplication::setupSoundMenu(void)
 
 void BaseApplication::removeSoundMenu(void)
 {
+    mTrayMgr->destroyWidget("menuLabel");
     mTrayMgr->destroyWidget("label");
     mTrayMgr->destroyWidget("on");
     mTrayMgr->destroyWidget("off");
@@ -356,6 +364,7 @@ void BaseApplication::removeSoundMenu(void)
 
 void BaseApplication::setupDifficultyMenu(void)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabelName", "Cubester's Maze", 250);
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Difficulty", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "intro", "Intro level", 250);
     mTrayMgr->createButton(OgreBites::TL_CENTER, "medium", "Medium level", 250);
@@ -372,10 +381,12 @@ void BaseApplication::removeDifficultyMenu(void)
     mTrayMgr->destroyWidget("extreme"); 
     mTrayMgr->destroyWidget("back to main menu");  
     mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("menuLabelName");
 }
 
 void BaseApplication::setupLevelSelect(int diff)
 {
+    mTrayMgr->createLabel(OgreBites::TL_TOP, "menuLabel2", "Cubester's Maze", 250);
     mMenuLabel = mTrayMgr->createLabel(OgreBites::TL_CENTER, "menuLabel", "Select Level", 250);
     for(int x = 1; x <= Level::numLevels(diff); x++)
     {
@@ -387,6 +398,7 @@ void BaseApplication::setupLevelSelect(int diff)
 void BaseApplication::removeLevelSelect(int diff)
 {
     mTrayMgr->destroyWidget("menuLabel");
+    mTrayMgr->destroyWidget("menuLabel2");
     for(int x = 1; x <= Level::numLevels(diff); x++)
     {
        mTrayMgr->destroyWidget(Level::difficultyName(diff) + " "  + patch::to_string(x));
@@ -401,7 +413,15 @@ void BaseApplication::setupGUI(std::string levelName)
     mLevelName->show();
     mPlayerHp = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "hpBar", "100/100", 200, 20);
     mPlayerHp->show();
-    mNumDeaths = mTrayMgr->createLabel(OgreBites::TL_TOP, "deaths", "0 deaths", 220);
+    mNumDeaths = mTrayMgr->createLabel(OgreBites::TL_TOP, "deaths", patch::to_string(mDeathCounter) + "deaths", 220);
+    if(mDeathCounter == 1)
+    {
+        mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " death");
+    }
+    else
+    {
+        mNumDeaths->setCaption(patch::to_string(mDeathCounter) + " deaths");
+    }
     mNumDeaths->show();
     mTime = mTrayMgr->createLabel(OgreBites::TL_TOP, "time", "0 seconds", 220);
     mTime->show();
@@ -753,8 +773,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         mPlayerHp->setProgress((player->health)/100.0);
         mPlayerHp->setCaption("current HP is " + patch::to_string(player->health) + "/100");
         mTime->setCaption(patch::to_string(int(mStopwatch->elapsedTime() / 100.0 ) / 10.0) + " seconds");
-        // float(int(floatValue * 10 + 0.5)) / 10;
-        mPlayerHp->setCaption(" " + patch::to_string(player->health) + "/100");
         Ogre::SceneNode* tem = mSceneMgr->getSceneNode("playerNode");    
         Ogre::Vector3 position = tem->getPosition();
         mCamera->setPosition(position.x , 300, position.z+200);
@@ -1047,15 +1065,15 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         if(!mGameStart)
             ;
-        else if(!mInMenu)
+        else if(!mInMenu && gameMap->isPlayerAlive())
         {
             setupLevelMenu();
             mStopwatch->pause();
         }
-        else if(mInMenu)
+        else if(mInMenu && gameMap->isPlayerAlive())
         {
             removeLevelMenu();
-            setupGUI("");
+            setupGUI(gameMap->getName());
             mStopwatch->unpause();
         }
     }

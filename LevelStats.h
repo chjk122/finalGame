@@ -32,7 +32,9 @@ public:
 	// bool compare(LevelStats& rhs);
 	virtual bool operator < (const LevelStats& rhs) const
     {
-        return (((bool)timesBeaten <= (bool)rhs.timesBeaten) && difficulty <= rhs.difficulty && levelNum <= rhs.levelNum); 
+    	if(difficulty != rhs.difficulty)
+    		return difficulty < rhs.difficulty;
+    	return levelNum < rhs.levelNum;
     }
 };
 
