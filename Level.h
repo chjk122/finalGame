@@ -27,7 +27,7 @@ public:
     static int numLevels(int diff)
     {
         if(diff == 1)      {return 6;} // intro
-        else if(diff == 2) {return 7;} // medium
+        else if(diff == 2) {return 6;} // medium
         else if(diff == 3) {return 5;} // hard
         else if(diff == 4) {return 6;} // extreme
         else if(diff == 5) {return 1;} // credit
